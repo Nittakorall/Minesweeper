@@ -2,7 +2,7 @@ import java.sql.SQLOutput;
 
 public class Board {
 
-    Cell [][] board;
+    Cell[][] board;
     int row;
     int column;
     int mines;
@@ -13,7 +13,6 @@ public class Board {
         this.column = column;
         this.mines = mines;
     }
-
 
 
     public void initializeBoard() {
@@ -27,8 +26,9 @@ public class Board {
 
     public void printBoard() {
 
-        public void addBombs() {
+        public void addBombs () {
+
+        }
 
     }
-
 }
