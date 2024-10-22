@@ -31,15 +31,15 @@ public class Game {
                         switch (a) {
                             case 1:
                                 Board easyBoard = new Board(7, 7, 6);
-                                easyBoard.printEasyBoard();
+                                easyBoard.printBoard();
                                 break;
                             case 2:
                                 Board mediumBoard = new Board(12, 12, 10);
-                                mediumBoard.printMediumBoard();
+                                mediumBoard.printBoard();
                                 break;
                             case 3:
                                 Board hardBoard = new Board(15, 15, 12);
-                                hardBoard.printHardBoard();
+                                hardBoard.printBoard();
                                 break;
                             default:
                                 System.out.println("Invalid choice");
