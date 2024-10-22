@@ -16,6 +16,7 @@ public class Game {
         while (true) {//checks is input is either 1 or 2, crashes if input is anythinig but number, need try catch
             rulesOrGame = scanner.nextInt();
             if (rulesOrGame == 2) {
+                scanner.nextLine();
                 System.out.println("Print your name: ");
                 String userName = scanner.nextLine();
                 Player player = new Player(userName);
