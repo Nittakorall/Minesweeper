@@ -2,7 +2,7 @@ import java.sql.SQLOutput;
 
 public class Board {
 
-    Cell [][] board;
+    Cell[][] board;
     int row;
     int column;
     int mines;
@@ -13,7 +13,6 @@ public class Board {
         this.column = column;
         this.mines = mines;
     }
-
 
 
     public void initializeBoard() {
@@ -28,8 +27,31 @@ public class Board {
     public void printBoard() {
 
 
-    public void addBombs() {
+        for (char letter = 'A'; letter < 'G'; letter++) {
+            System.out.print("     " + letter);
+        }
+        System.out.println();
+        System.out.println("---+-----+-----+-----+-----+-----+-----+");
+
+
+        for (int r = 1; r < 7; r++) {
+            for ( r = 1; r < row; r++) {
+                System.out.print(r);
+                for (int c = 0; c < 6; c++) {
+                    for ( c = 0; c < column - 1; c++) {
+
+                        System.out.print("  |  " + board[r][c]);
+                        if (c == 5) {
+                            System.out.println("  | ");
+                        }
+                    }
+                    System.out.println("---+-----+-----+-----+-----+-----+-----+");
+                }
+            }
 
     }
 
+//    public void addBombs() {
+
+    }
 }

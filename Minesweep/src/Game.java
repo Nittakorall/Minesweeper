@@ -16,6 +16,7 @@ public class Game {
         while (true) {//checks is input is either 1 or 2, crashes if input is anythinig but number, need try catch
             rulesOrGame = scanner.nextInt();
             if (rulesOrGame == 2) {
+                scanner.nextLine();
                 System.out.println("Print your name: ");
                 String userName = scanner.nextLine();
                 Player player = new Player(userName);
@@ -31,15 +32,15 @@ public class Game {
                         switch (a) {
                             case 1:
                                 Board easyBoard = new Board(7, 7, 6);
-                                easyBoard.printEasyBoard();
+                                easyBoard.printBoard();
                                 break;
                             case 2:
                                 Board mediumBoard = new Board(12, 12, 10);
-                                mediumBoard.printMediumBoard();
+                                mediumBoard.printBoard();
                                 break;
                             case 3:
                                 Board hardBoard = new Board(15, 15, 12);
-                                hardBoard.printHardBoard();
+                                hardBoard.printBoard();
                                 break;
                             default:
                                 System.out.println("Invalid choice");
