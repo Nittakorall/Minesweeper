@@ -24,17 +24,17 @@ public class Game {
             int a = scanner.nextInt();
             switch (a) {
                 case 1:
-                    Board board = new Board(7, 7, 6);
-                    board.printBoard();
+                    Board easyBoard = new Board(7, 7, 6);
+                    easyBoard.printEasyBoard();
                     break;
                 case 2:
-//                Board board = new Board(7, 7, 6);
-//                board.printBoard();
-//                break;
+               Board mediumBoard = new Board(12, 12, 10);
+                mediumBoard.printMediumBoard();
+                break;
                 case 3:
-                    // Board board = new Board(7, 7, 6);
-//                board.printBoard();
-//                break;
+                    Board hardBoard = new Board(15, 15, 12);
+               hardBoard.printHardBoard();
+               break;
                 default:
                     System.out.println("Invalid choice");
             }
