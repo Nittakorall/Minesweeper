@@ -1,16 +1,28 @@
+import java.sql.SQLOutput;
+
 public class Board {
 
-    char [][] board;
+    Cell [][] board;
     int row;
     int column;
     int mines;
 
     public Board(int row, int column, int mines) {
-        this.board = new char[7][7];
+        this.board = new Cell[20][20];
         this.row = row;
         this.column = column;
         this.mines = mines;
     }
+
+
+    public void initializeBoard() {
+        for (int r = 0; r < row; r++) {
+            for (int c = 0; c < column - 1; c++) {
+                board[r][c] = new Cell();
+            }
+        }
+    }
+
 
     public void printBoard() {
 
@@ -21,9 +33,9 @@ public class Board {
         System.out.println("---+-----+-----+-----+-----+-----+-----+");
 
 
-        for (int r = 1; r < 7; r++) {
+        for (int r = 1; r < row; r++) {
             System.out.print(r);
-            for (int c = 0; c < 6; c++) {
+            for (int c = 0; c < column - 1; c++) {
 
                     System.out.print("  |  " + board[r][c]);
                 if (c == 5) {
@@ -32,6 +44,10 @@ public class Board {
             }
             System.out.println("---+-----+-----+-----+-----+-----+-----+");
         }
+    }
+
+    public void addBombs() {
+
     }
 
 }

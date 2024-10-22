@@ -7,8 +7,9 @@ public class Main {
         Game game = new Game();
         game.game();
 
-        Board board = new Board(7, 7, 6);
 
+        Board board = new Board(7, 7, 6);
+        board.initializeBoard();
         board.printBoard();
 
 
