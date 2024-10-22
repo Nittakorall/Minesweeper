@@ -16,7 +16,8 @@ public class Player {
     }
 public void move(Scanner scanner) {
 
-    System.out.println();   String cellName = scanner.nextLine();
+    System.out.println();
+    String cellName = scanner.nextLine();
 
 }
 
