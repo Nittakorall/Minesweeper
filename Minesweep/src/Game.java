@@ -12,6 +12,7 @@ public class Game {
         System.out.println("Press 1 for rules \n Press 2 to start the game");
         int rulesOrGame;
 
+
         while (true) {//checks is input is either 1 or 2, crashes if input is anythinig but number, need try catch
             rulesOrGame = scanner.nextInt();
             if (rulesOrGame == 2) {
@@ -56,6 +57,8 @@ public class Game {
                 System.out.println("Invalid input");
             }
         }
+
+       
     }
 
     public Game() {
