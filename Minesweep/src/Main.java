@@ -11,10 +11,8 @@ public class Main {
 
         Board board = new Board(7, 7, 6);
         board.initializeBoard();
+        board.addMines();
         board.printBoard();
-
-
-
 
 
     }

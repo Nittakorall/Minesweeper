@@ -1,10 +1,10 @@
 public class Cell {
 
-    boolean isBomb;
+    boolean isMine;
     boolean isAvailable;
 
     public Cell() {
-        this.isBomb = false;
+        this.isMine = false;
         this.isAvailable = false;
     }
 }
