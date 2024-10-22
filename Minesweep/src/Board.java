@@ -32,6 +32,7 @@ public class Board {
         System.out.println("---+-----+-----+-----+-----+-----+-----+-----+");
 
 
+
         for (int r = 0; r <= row - 1; r++) {
             System.out.print(r + 1);
             for (int c = 0; c < column; c++) {
@@ -61,5 +62,23 @@ public class Board {
             }
 
         }
+     
+        for (int r = 1; r < 7; r++) {
+            for ( r = 1; r < row; r++) {
+                System.out.print(r);
+                for (int c = 0; c < 6; c++) {
+                    for ( c = 0; c < column - 1; c++) {
+
+                        System.out.print("  |  " + board[r][c]);
+                        if (c == 5) {
+                            System.out.println("  | ");
+                        }
+                    }
+                    System.out.println("---+-----+-----+-----+-----+-----+-----+");
+                }
+            }
+
+          }
+
     }
 }
