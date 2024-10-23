@@ -1,3 +1,6 @@
+import java.util.Arrays;
+import java.util.Scanner;
+
 public class Board {
     /**
      * 2d arrays for visible board and hidden board (contains mines later).
@@ -16,6 +19,7 @@ public class Board {
         this.hiddenBoard = new char[row][column];
     }
 
+    Scanner scanner = new Scanner(System.in);
     Cell cell = new Cell();
 
 
@@ -38,7 +42,7 @@ public class Board {
      * Prints visible board in terminal for user.
      */
 
-    public void printBoard() {
+    public void printBoard(char[][]chooseBoard) {
 
         System.out.print("    ");
         for (int c = 0; c < column; c++) {
@@ -57,7 +61,7 @@ public class Board {
             System.out.printf("%2d", r + 1);
             for (int c = 0; c < column; c++) {
 
-                    System.out.print("  |  " + board[r][c]);
+                    System.out.print("  |  " + chooseBoard[r][c]);
                 if (c == column - 1) {
                     System.out.println("  | ");
                 }
@@ -68,6 +72,38 @@ public class Board {
             }
             System.out.println();
         }
+    }
+    public void makeMove(){
+        boolean isRunning = true;
+        while(isRunning){
+            printBoard(hiddenBoard);
+            System.out.println("Choose row: ");
+            int inputRow = scanner.nextInt();
+            scanner.nextLine();
+            System.out.println("Choose column: ");
+
+            String inputColumn = scanner.nextLine();
+            System.out.println(inputRow + inputColumn);
+            int columnIndex = inputColumn.charAt(0) - 'A';
+
+            if(hiddenBoard[inputRow -1][columnIndex]== 'X'){
+                System.out.println("Boom");
+                printBoard(hiddenBoard);
+                isRunning = false;
+                Menu menu = new Menu();
+                menu.menu();
+                //break;
+            }else {
+                board[inputRow -1][columnIndex]= 'O';
+                System.out.println("make next move");
+                printBoard(board);
+
+            }
+
+        }
+
+
+
     }
 
     /**
@@ -88,6 +124,7 @@ public class Board {
             }
 
         }
+
      
        /* for (int r = 1; r < 7; r++) {
             for ( r = 1; r < row; r++) {
