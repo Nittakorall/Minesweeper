@@ -22,6 +22,8 @@ public class Board {
         }
     }
 
+    public Board() { //created to try to fix main manu  problem. Can be removed later if not needed
+    }
 
     public void printBoard() {
 

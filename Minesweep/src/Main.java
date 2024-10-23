@@ -3,16 +3,17 @@
 public class Main {
     public static void main(String[] args) {
 
-        System.out.println("Hello");
-        Game game = new Game();
-        game.game();
+        System.out.println("Welcome to MineSweeper!");
+        Menu menu = new Menu();
+        menu.menu();
 
 
+//
+//        Board board = new Board();
+//        board.initializeBoard();
+//     //   board.printBoard();
+//        board.addMines();
 
-        Board board = new Board(7, 7, 6);
-        board.initializeBoard();
-        board.addMines();
-        board.printBoard();
 
 
     }
