@@ -105,32 +105,49 @@ public class Board {
         while (true) {
             inputColumn = scanner.nextLine();
             inputColumnUpperCase = inputColumn.toUpperCase();
-            if(inputColumnUpperCase.length() == 1) {
-            char columnLetter = inputColumnUpperCase.charAt(0);
-            if (sb.indexOf(String.valueOf(columnLetter)) != -1) {
-                System.out.println("Chosen column: " + inputColumnUpperCase);
-                columnIndex = inputColumnUpperCase.charAt(0) - 'A';
-                break;
+            if (inputColumnUpperCase.length() == 1) {
+                char columnLetter = inputColumnUpperCase.charAt(0);
+                if (sb.indexOf(String.valueOf(columnLetter)) != -1) {
+                    System.out.println("Chosen column: " + inputColumnUpperCase);
+                    columnIndex = inputColumnUpperCase.charAt(0) - 'A';
+                    break;
+                } else {
+                    System.out.println("Looks like the column you want to check doesn't exist, try again");
+                }
             } else {
-                System.out.println("Looks like the column you want to check doesn't exist, try again");
-            }}else {
-                System.out.println("Hm. Can a column be called " + inputColumnUpperCase+ "? Try again");
+                System.out.println("Hm. Can a column be called " + inputColumnUpperCase + "? Try again");
             }
         }
 
-
         if (hiddenBoard[inputRowNumber - 1][columnIndex] == 'X') {
-            System.out.println("Boom");
+            System.out.println("Boom. There was a mine on " + inputColumnUpperCase + inputRowNumber);
             printBoard(hiddenBoard);
-            // isRunning = false;
-            Menu menu = new Menu();
-            menu.menu();
+            System.out.println("Would you like to play again? yes or no");
+            String answer;
+            String answerLowerCase;
+            while(true) {
+                answer = scanner.nextLine();
+                answerLowerCase = answer.toLowerCase();
+                if (answerLowerCase.equals("yes")) {
+                    Menu menu = new Menu();
+                    menu.menu();
+                    break;
+                }
+                else if (answerLowerCase.equals("no")) {
+                    System.out.println("Thank you for coming!");// program doesn't end if you press np
+                    System.exit(0);
+                }
+                else {
+                    System.out.println("Yes or no?");
+                }
+            }
+
             //break;
         } else {
             board[inputRowNumber - 1][columnIndex] = 'O';
-            System.out.println("There was no bomb on "+inputColumnUpperCase +inputRowNumber+ ". You can make next move:");
+            System.out.println("There was no bomb on " + inputColumnUpperCase + inputRowNumber + ". You can make next move:");
 
-              printBoard(board);
+            printBoard(board);
             makeMove();
         }
 
