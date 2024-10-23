@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Board {
@@ -41,7 +42,8 @@ public class Board {
     /**
      * Prints visible board in terminal for user.
      */
-StringBuilder sb = new StringBuilder();
+    StringBuilder sb = new StringBuilder();
+
     public void printBoard(char[][] chooseBoard) {
 
         System.out.print("    ");
@@ -78,18 +80,25 @@ StringBuilder sb = new StringBuilder();
     public void makeMove() {
         printBoard(hiddenBoard);
         System.out.println("Choose row: ");
-        int inputRow;
+        String inputRow;
+        int inputRowNumber;
         while (true) {
-            inputRow = scanner.nextInt();
-            if (inputRow < row) {
-                scanner.nextLine();
-                System.out.println("Chosen row: " + inputRow);
-                System.out.println("Choose column: ");
-                break;
-            } else {
-                System.out.println("There's no such row, try again");
+            inputRow = scanner.nextLine();
+            try {
+                inputRowNumber = Integer.parseInt(inputRow);
+                if (inputRowNumber < row) {
+
+                    System.out.println("Chosen row: " + inputRowNumber);
+                    System.out.println("Choose column: ");
+                    break;
+                } else {
+                    System.out.println("There aren't that many rows, try again");
+                }
+            } catch (Exception e) {
+                System.out.println("That doesn't look like a row number, try again");
             }
         }
+
         String inputColumn;
         String inputColumnUpperCase;
         int columnIndex;
@@ -99,15 +108,16 @@ StringBuilder sb = new StringBuilder();
             System.out.println(inputRow + inputColumn + inputColumnUpperCase);
             char columnLetter = inputColumnUpperCase.charAt(0);
             if (sb.indexOf(String.valueOf(columnLetter)) != -1) {
+                System.out.println("Chosen column: " + inputColumnUpperCase);
                 columnIndex = inputColumnUpperCase.charAt(0) - 'A';
                 break;
             } else {
-                System.out.println("That's not a column");
+                System.out.println("Looks like the column you want to check doesn't exist, try again");
             }
         }
 
 
-        if (hiddenBoard[inputRow - 1][columnIndex] == 'X') {
+        if (hiddenBoard[inputRowNumber - 1][columnIndex] == 'X') {
             System.out.println("Boom");
             printBoard(hiddenBoard);
             // isRunning = false;
@@ -115,8 +125,8 @@ StringBuilder sb = new StringBuilder();
             menu.menu();
             //break;
         } else {
-            board[inputRow - 1][columnIndex] = 'O';
-            System.out.println("make next move");
+            board[inputRowNumber - 1][columnIndex] = 'O';
+            System.out.println("There was no bomb on "+inputColumnUpperCase +inputRowNumber+ ". You can make next move:");
             printBoard(board);
 
         }
@@ -143,23 +153,6 @@ StringBuilder sb = new StringBuilder();
 
         }
 
-     
-       /* for (int r = 1; r < 7; r++) {
-            for ( r = 1; r < row; r++) {
-                System.out.print(r);
-                for (int c = 0; c < 6; c++) {
-                    for ( c = 0; c < column - 1; c++) {
 
-                        System.out.print("  |  " + board[r][c]);
-                        if (c == 5) {
-                            System.out.println("  | ");
-                        }
-                    }
-                    System.out.println("---+-----+-----+-----+-----+-----+-----+");
-                }
-            }
-
-          }
-*/
     }
 }
