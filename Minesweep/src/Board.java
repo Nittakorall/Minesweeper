@@ -48,7 +48,7 @@ public class Board {
                     System.out.println("  | ");
                 }
             }
-            System.out.print("----");
+            System.out.print("---");
             for (int c = 0; c < column; c++) {
                 System.out.print("+-----");
             }
