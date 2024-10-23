@@ -8,8 +8,6 @@ public class Game {
 
     public void game() {
         Scanner scanner = new Scanner(System.in);
-
-
         System.out.println("Print your name: ");
         String userName = scanner.nextLine();
         Player player = new Player(userName);
