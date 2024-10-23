@@ -1,5 +1,7 @@
 public class Board {
-
+    /**
+     * 2d arrays for visible board and hidden board (contains mines later).
+     */
     char [][] board;
     char [][] hiddenBoard;
     int row;
@@ -16,6 +18,10 @@ public class Board {
 
     Cell cell = new Cell();
 
+
+    /**
+     * Fills board and hiddenBoard with empty places.
+     */
     public void initializeBoard() {
         for (int r = 0; r < row; r++) {
             for (int c = 0; c < column; c++) {
@@ -27,6 +33,10 @@ public class Board {
 
     public Board() { //created to try to fix main manu  problem. Can be removed later if not needed
     }
+
+    /**
+     * Prints visible board in terminal for user.
+     */
 
     public void printBoard() {
 
@@ -41,8 +51,6 @@ public class Board {
             System.out.print("+-----");
         }
         System.out.println();
-
-
 
         for (int r = 0; r <= row - 1; r++) {
             System.out.print(r + 1);
@@ -61,6 +69,9 @@ public class Board {
         }
     }
 
+    /**
+     * adds mines to hiddenBoard, randomly according to board size.
+     */
    public void addMines() {
         int minesCount = 0;
 
