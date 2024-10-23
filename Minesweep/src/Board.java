@@ -105,7 +105,7 @@ public class Board {
         while (true) {
             inputColumn = scanner.nextLine();
             inputColumnUpperCase = inputColumn.toUpperCase();
-            System.out.println(inputRow + inputColumn + inputColumnUpperCase);
+            if(inputColumnUpperCase.length() == 1) {
             char columnLetter = inputColumnUpperCase.charAt(0);
             if (sb.indexOf(String.valueOf(columnLetter)) != -1) {
                 System.out.println("Chosen column: " + inputColumnUpperCase);
@@ -113,6 +113,8 @@ public class Board {
                 break;
             } else {
                 System.out.println("Looks like the column you want to check doesn't exist, try again");
+            }}else {
+                System.out.println("Hm. Can a column be called " + inputColumnUpperCase+ "? Try again");
             }
         }
 
@@ -127,8 +129,9 @@ public class Board {
         } else {
             board[inputRowNumber - 1][columnIndex] = 'O';
             System.out.println("There was no bomb on "+inputColumnUpperCase +inputRowNumber+ ". You can make next move:");
-            printBoard(board);
 
+              printBoard(board);
+            makeMove();
         }
 
     }
