@@ -13,10 +13,6 @@ public class Menu {
                 rulesOrGame = scanner.nextInt();
                 if (rulesOrGame == 2) {
                     scanner.nextLine();
-                    System.out.println("Print your name: ");
-                    String userName = scanner.nextLine();
-                    Player player = new Player(userName);
-                    System.out.println("Nice to meet you, " + player.getName());
                     System.out.println("Please choose difficulty level: ");
                     System.out.println("1. Easy");
                     System.out.println("2. Medium");
@@ -26,18 +22,20 @@ public class Menu {
                         try {
                             a = scanner.nextInt();
                             if (a == 1 || a == 2 || a == 3) {
+                                Game game = new Game();
                                 switch (a) {
                                     case 1:
                                         Board easyBoard = new Board(7, 7, 6);
-                                        easyBoard.printBoard();
+                                        game.game(easyBoard);
+
                                         break;
                                     case 2:
                                         Board mediumBoard = new Board(12, 12, 10);
-                                        mediumBoard.printBoard();
+                                        game.game(mediumBoard);
                                         break;
                                     case 3:
                                         Board hardBoard = new Board(15, 15, 12);
-                                        hardBoard.printBoard();
+                                        game.game(hardBoard);
                                         break;
                                 }
                                 break;
@@ -50,7 +48,9 @@ public class Menu {
                         }
                     }
                 } else if (rulesOrGame == 1) {
-                    System.out.println("rules");
+                    System.out.println("To win a game of Minesweeper, all non-mine cells must be opened without opening a mine.\n" +
+                            " Difficulty can be increased by adding mines or starting with a larger grid.\n\n");
+                    menu();
                     break;
                 } else {
                     System.out.println("Invalid input");
