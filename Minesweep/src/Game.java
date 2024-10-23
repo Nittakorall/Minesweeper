@@ -1,12 +1,15 @@
 import java.sql.SQLOutput;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Game {
 
-    int winn = 0;
+    int win = 0;
     int lost = 0;
 
+
     public Game() {
+
     }
 
     public void game(Board board) {
@@ -21,14 +24,14 @@ board.printBoard();
 
 
     public void totalScore() {
-        // if(user winns) winn ++
-        winn = getWinn() + 1;
+        // if(user wins) win ++
+        win = getWin() + 1;
         // else if (user lost) lost ++
     }
 
 
-    public int getWinn() {
-        return winn;
+    public int getWin() {
+        return win;
     }
 
     public int getLost() {
