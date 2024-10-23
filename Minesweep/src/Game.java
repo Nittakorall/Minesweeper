@@ -18,8 +18,9 @@ public class Game {
         String userName = scanner.nextLine();
         Player player = new Player(userName);
         System.out.println("Nice to meet you, " + player.getName());
-        board.initializeBoard();
-        board.printBoard();
+board.initializeBoard();
+board.addMines();
+board.printBoard();
     }
 
 
