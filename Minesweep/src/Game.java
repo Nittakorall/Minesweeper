@@ -19,6 +19,7 @@ public class Game {
         Player player = new Player(userName);
         System.out.println("Nice to meet you, " + player.getName());
 board.initializeBoard();
+board.addMines();
 board.printBoard();
     }
 

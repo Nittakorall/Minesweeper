@@ -8,7 +8,7 @@ public class Menu {
         System.out.println("Please press 1 for rules or press 2 to start the game");
         int rulesOrGame;
 
-        while (true) {//checks is input is either 1 or 2, crashes if input is anythinig but number, need try catch
+        while (true) {//checks is input is either 1 or 2, crashes if input is anything but number, need try catch
             try {
                 rulesOrGame = scanner.nextInt();
                 if (rulesOrGame == 2) {
