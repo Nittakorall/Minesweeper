@@ -1,7 +1,14 @@
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+
 public class Menu {
+    /**
+     * function that presents a menu.
+     * First with options 1. Rules, 2. Start game.
+     * Second with options for difficulty.
+     * Error handling added.
+     */
     public void menu() {
         Scanner scanner = new Scanner(System.in);
 
