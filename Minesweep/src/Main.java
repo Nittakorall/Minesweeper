@@ -6,6 +6,5 @@ public class Main {
         System.out.println("Welcome to MineSweeper!");
         Menu menu = new Menu();
         menu.menu();
-
     }
 }

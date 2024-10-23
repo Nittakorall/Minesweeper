@@ -40,20 +40,21 @@ public class Board {
 
     public void printBoard() {
 
+        System.out.print("    ");
         for (int c = 0; c < column; c++) {
             char letter = (char)('A' + c);
-            System.out.print("     " + letter);
+            System.out.printf("  %2s  " , letter);
         }
         System.out.println();
 
-        System.out.print("---");
+        System.out.print("----");
         for (int c = 0; c < column; c++) {
             System.out.print("+-----");
         }
         System.out.println();
 
         for (int r = 0; r <= row - 1; r++) {
-            System.out.print(r + 1);
+            System.out.printf("%2d", r + 1);
             for (int c = 0; c < column; c++) {
 
                     System.out.print("  |  " + board[r][c]);
@@ -61,7 +62,7 @@ public class Board {
                     System.out.println("  | ");
                 }
             }
-            System.out.print("---");
+            System.out.print("----");
             for (int c = 0; c < column; c++) {
                 System.out.print("+-----");
             }
