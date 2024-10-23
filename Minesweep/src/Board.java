@@ -25,11 +25,17 @@ public class Board {
 
     public void printBoard() {
 
-        for (char letter = 'A'; letter < 'H'; letter++) {
+        for (int c = 0; c < column; c++) {
+            char letter = (char)('A' + c);
             System.out.print("     " + letter);
         }
         System.out.println();
-        System.out.println("---+-----+-----+-----+-----+-----+-----+-----+");
+
+        System.out.print("---");
+        for (int c = 0; c < column; c++) {
+            System.out.print("+-----");
+        }
+        System.out.println();
 
 
 
@@ -38,11 +44,15 @@ public class Board {
             for (int c = 0; c < column; c++) {
 
                     System.out.print("  |  " + board[r][c]);
-                if (c == 6) {
+                if (c == column - 1) {
                     System.out.println("  | ");
                 }
             }
-            System.out.println("---+-----+-----+-----+-----+-----+-----+-----+");
+            System.out.print("---");
+            for (int c = 0; c < column; c++) {
+                System.out.print("+-----");
+            }
+            System.out.println();
         }
     }
 
@@ -63,7 +73,7 @@ public class Board {
 
         }
      
-        for (int r = 1; r < 7; r++) {
+       /* for (int r = 1; r < 7; r++) {
             for ( r = 1; r < row; r++) {
                 System.out.print(r);
                 for (int c = 0; c < 6; c++) {
@@ -79,6 +89,6 @@ public class Board {
             }
 
           }
-
+*/
     }
 }
