@@ -21,6 +21,7 @@ public class Game {
 board.initializeBoard();
 board.addMines();
 board.printBoard();
+board.makeMove();
     }
 
 

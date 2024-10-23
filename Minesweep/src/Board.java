@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class Board {
     /**
      * 2d arrays for visible board and hidden board (contains mines later).
@@ -16,6 +18,7 @@ public class Board {
         this.hiddenBoard = new char[row][column];
     }
 
+    Scanner scanner = new Scanner(System.in);
     Cell cell = new Cell();
 
 
@@ -69,6 +72,31 @@ public class Board {
             System.out.println();
         }
     }
+    public void makeMove(){
+        boolean isRunning = true;
+        while(isRunning){
+            System.out.println("Choose row: ");
+            int inputRow = scanner.nextInt();
+            scanner.nextLine();
+            System.out.println("Choose column: ");
+
+            String inputColumn = scanner.nextLine();
+            System.out.println(inputRow + inputColumn);
+            int columnIndex = inputColumn.charAt(0) - 'A';
+
+            if(hiddenBoard[inputRow -1][columnIndex]== 'X'){
+                System.out.println("Boom");
+                isRunning = false;
+            }else{
+                System.out.println("make next move");
+
+            }
+
+        }
+
+
+
+    }
 
     /**
      * adds mines to hiddenBoard, randomly according to board size.
@@ -88,6 +116,7 @@ public class Board {
             }
 
         }
+
      
        /* for (int r = 1; r < 7; r++) {
             for ( r = 1; r < row; r++) {
