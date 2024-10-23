@@ -1,6 +1,7 @@
 public class Board {
 
     char [][] board;
+    char [][] hiddenBoard;
     int row;
     int column;
     int mines;
@@ -10,6 +11,7 @@ public class Board {
         this.row = row;
         this.column = column;
         this.mines = mines;
+        this.hiddenBoard = new char[row][column];
     }
 
     Cell cell = new Cell();
@@ -18,6 +20,7 @@ public class Board {
         for (int r = 0; r < row; r++) {
             for (int c = 0; c < column; c++) {
                 board[r][c] = ' ';
+                hiddenBoard[r][c]= ' ';
             }
         }
     }
@@ -61,16 +64,15 @@ public class Board {
    public void addMines() {
         int minesCount = 0;
 
-        while (mines > minesCount) {
 
-            int x = (int) (Math.random() * row);
-            int y = (int) (Math.random() * column);
+        while ( minesCount < mines) {
 
-            if (board[x][y] == ' ') {
-            board[x][y] = 'X';
+            int x = (int) (Math.random() * hiddenBoard.length);
+            int y = (int) (Math.random() * hiddenBoard[0].length);
+
+            if (hiddenBoard[x][y] == ' ') {
+            hiddenBoard[x][y] = 'X';
             minesCount++;
-            } else {
-                continue;
             }
 
         }
