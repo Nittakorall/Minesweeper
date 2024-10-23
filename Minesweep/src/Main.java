@@ -7,14 +7,5 @@ public class Main {
         Menu menu = new Menu();
         menu.menu();
 
-
-//
-//        Board board = new Board();
-//        board.initializeBoard();
-//     //   board.printBoard();
-//        board.addMines();
-
-
-
     }
 }

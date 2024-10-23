@@ -9,12 +9,12 @@ public class Game {
     public void game() {
         Scanner scanner = new Scanner(System.in);
 
-       // scanner.nextLine();
+
         System.out.println("Print your name: ");
         String userName = scanner.nextLine();
         Player player = new Player(userName);
-      //  System.out.println(player.getName());
-        System.out.println("Please choose difficulty level: ");
+       System.out.println("Nice to meet you, " + player.getName());
+        System.out.println("\n Please choose difficulty level: ");
         System.out.println("1. Easy");
         System.out.println("2. Medium");
         System.out.println("3. Hard");
