@@ -32,7 +32,7 @@ public class Menu {
                                 Game game = new Game();
                                 switch (a) {
                                     case 1:
-                                        Board easyBoard = new Board(7, 7, 6);
+                                        Board easyBoard = new Board(2, 2, 1);
                                         game.game(easyBoard);
 
                                         break;

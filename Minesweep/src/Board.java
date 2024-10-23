@@ -78,6 +78,7 @@ public class Board {
     }
 
     public void makeMove() {
+        checkWin();
         printBoard(hiddenBoard);
         System.out.println("Choose row: ");
         String inputRow;
@@ -86,13 +87,13 @@ public class Board {
             inputRow = scanner.nextLine();
             try {
                 inputRowNumber = Integer.parseInt(inputRow);
-                if (inputRowNumber < row) {
+                if (inputRowNumber <= row) {
 
                     System.out.println("Chosen row: " + inputRowNumber);
                     System.out.println("Choose column: ");
                     break;
                 } else {
-                    System.out.println("There aren't that many rows, try again");
+                    System.out.println("There aren't that many rows, try again"); // it excludes last row!!!
                 }
             } catch (Exception e) {
                 System.out.println("That doesn't look like a row number, try again");
@@ -125,19 +126,18 @@ public class Board {
             System.out.println("Would you like to play again? yes or no");
             String answer;
             String answerLowerCase;
-            while(true) {
+
+            while (true) {
                 answer = scanner.nextLine();
                 answerLowerCase = answer.toLowerCase();
                 if (answerLowerCase.equals("yes")) {
                     Menu menu = new Menu();
                     menu.menu();
                     break;
-                }
-                else if (answerLowerCase.equals("no")) {
+                } else if (answerLowerCase.equals("no")) {
                     System.out.println("Thank you for coming!");// program doesn't end if you press np
                     System.exit(0);
-                }
-                else {
+                } else {
                     System.out.println("Yes or no?");
                 }
             }
@@ -173,6 +173,17 @@ public class Board {
 
         }
 
-
     }
+
+    public void checkWin() {
+        for (int x = 0; x < board.length; x++) { //check for all cells in board
+            for (int y = 0; y < board[x].length; y++) { //
+                if ((board[x][y] == ' ' && hiddenBoard[x][y] == 'X') || (board[x][y] == 'O' && hiddenBoard[x][y] != 'X')) {
+                    System.out.println("you won");//writes out 4 times
+                }  //if board[x][y] is unopened and the same cell has bomb
+            }
+        }
+    }
+
 }
+
