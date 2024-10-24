@@ -39,7 +39,9 @@ public class Board {
      * Prints visible board in terminal for user.
      */
     public void printBoard(char[][] chooseBoard) {
-        // ANSI escape code for green text
+        String blueColor = "\033[34m";
+        String magentaColor = "\u001B[35m";
+        String yellowColor = "\033[33m";// ANSI escape code for green text
         String greenColor = "\033[32m";
         // ANSI escape code for green background
         // ANSI escape code for red text
@@ -73,8 +75,16 @@ public class Board {
                 if (currentChar == 'X') {
                     // prints background color red if symbol is 'X'
                     System.out.print("  |  " + redBackground + redColor + currentChar + resetColor);
-                } else if (currentChar == 'O') {
-                    System.out.print("  |  " + greenBackground + greenColor + currentChar + resetColor);
+                } else if (currentChar == '0') {
+                    System.out.print("  |  " + blueColor + currentChar + resetColor);
+                } else if (currentChar == '1') {
+                    System.out.print("  |  " + greenColor + currentChar + resetColor);
+                } else if (currentChar == '2') {
+                    System.out.print("  |  " + yellowColor + currentChar + resetColor);
+                } else if (currentChar == '3') {
+                    System.out.print("  |  " + redColor + currentChar + resetColor);
+                } else if (currentChar == '4' || currentChar == '5' || currentChar == '6' || currentChar == '7' ||currentChar == '8') {
+                    System.out.print("  |  " + magentaColor + currentChar + resetColor);
                 } else if (currentChar == 'ꚰ') {
                     System.out.print("  |  " + orangeColor + currentChar + resetColor);
                 } else {
