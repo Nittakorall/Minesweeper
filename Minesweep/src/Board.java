@@ -125,7 +125,11 @@ public class Board {
             printBoard(hiddenBoard);
             playAgainQuestion();
 
-        } else {
+        } else if( board[inputRowNumber - 1][columnIndex] != ' '){
+            System.out.println("You've already opened this cell, please pick another one");
+            makeMove();
+        }
+        else {
             board[inputRowNumber - 1][columnIndex] = 'O';
             System.out.println("There was no bomb on " + inputColumnUpperCase + inputRowNumber + ". You can make next move:");
 
