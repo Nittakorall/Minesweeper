@@ -54,8 +54,10 @@ public class Board {
         String greenBackground = "\033[42m";
         // ANSI escape code för röd bakgrund
         String redBackground = "\033[41m";
+        String orangeColor = "\u001B[38;5;214m";
         // ANSI escape code för att återställa färgen
         String resetColor = "\033[0m";
+
 
         System.out.print("    ");
         for (int c = 0; c < column; c++) {
@@ -80,6 +82,8 @@ public class Board {
                     System.out.print("  |  " + redBackground + redColor + currentChar + resetColor);
                 } else if (currentChar == 'O') {
                     System.out.print("  |  " + greenBackground + greenColor + currentChar + resetColor);
+                } else if(currentChar == 'ꚰ') {
+                    System.out.print("  |  " + orangeColor + currentChar + resetColor);
                 } else {
                     System.out.print("  |  " + currentChar);
                 }
@@ -166,6 +170,20 @@ public class Board {
                     System.out.println("You won " + winTimes + " times");
                     System.out.println("You lost " + lostTimes + " times");
                     playAgainQuestion(winTimes, lostTimes);
+
+                } else if (board[inputRowNumber - 1][columnIndex] == 'ꚰ'){
+                    System.out.println("Do you want to remove flag?");
+                    String yesOrNo = scanner.nextLine();
+
+                    if (yesOrNo.equalsIgnoreCase("yes")) {
+                        board[inputRowNumber - 1][columnIndex] = ' ';
+                        printBoard(board);
+                        makeMove(winTimes, lostTimes);
+                    } else {
+                        printBoard(board);
+                        makeMove(winTimes, lostTimes);
+                    }
+
 
                 } else if (board[inputRowNumber - 1][columnIndex] != ' ') { //if a cell user picks isn't ' ' and has some other symbol
                     System.out.println("You've already opened this cell, please pick another one");
