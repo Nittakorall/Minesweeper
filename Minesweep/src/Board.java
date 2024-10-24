@@ -118,11 +118,13 @@ public class Board {
      * @param lostTimes add +1 if user lose
      */
     public void makeMove(int winTimes, int lostTimes) {
+
+
         checkWin(winTimes, lostTimes);
         printBoard(hiddenBoard); // better to remove later
 
 
-        while (true) {
+       while (true) {
 
 
             System.out.println("1. Open cell \n 2. Add flag");
@@ -134,16 +136,15 @@ public class Board {
             String inputRow;
             int inputRowNumber;
 
+            while (true) {
 
             inputRow = scanner.nextLine(); //made string to avoid exception to nextInt
             try {
                 inputRowNumber = Integer.parseInt(inputRow); // trying making string to int
                 if (inputRowNumber <= row && inputRowNumber > 0) {
 
-
-                    System.out.println("Chosen row: " + inputRowNumber);
                     System.out.println("Choose column: ");
-                    //break;
+                    break;
                 } else {
                     System.out.println("There's no row " + inputRowNumber + ", try again");
                     continue;
@@ -153,13 +154,14 @@ public class Board {
                 continue;
             }
 
-
+       }
 
 
             String inputColumn;
             String inputColumnUpperCase;
             int columnIndex;
             while (true) {
+
                 inputColumn = scanner.nextLine();
                 inputColumnUpperCase = inputColumn.toUpperCase();
                 if (inputColumnUpperCase.length() == 1) { //checks if input has more than 1 letter to make a char of it
@@ -174,9 +176,7 @@ public class Board {
                 } else {
                     System.out.println("Hm. Can a column be called " + inputColumnUpperCase + "? Try again");
                 }
-            } //hidwdjo
-            //while (true) {
-
+            }
 
             if (openOrFlag == 1) {
 
@@ -193,7 +193,7 @@ public class Board {
 
 
                 } else if (board[inputRowNumber - 1][columnIndex] == 'ꚰ'){
-                    System.out.println("Do you want to remove flag?");
+                    System.out.println("Do you want to remove flag? yes or no: ");
                     String yesOrNo = scanner.nextLine();
 
 
@@ -223,49 +223,8 @@ public class Board {
 
 
             } else if (openOrFlag == 2) {
-            /*   System.out.println("Choose row: ");
-             //  String inputRow;
-            //   int inputRowNumber;
-               //while (true) {
-               inputRow = scanner.nextLine(); //made string to avoid exception to nextInt
-               try {
-                   inputRowNumber = Integer.parseInt(inputRow); // trying making string to int
-                   if (inputRowNumber <= row && inputRowNumber > 0) {
 
 
-                       System.out.println("Chosen row: " + inputRowNumber);
-                       System.out.println("Choose column: ");
-                       //break;
-                   } else {
-                       System.out.println("There's no row " + inputRowNumber + ", try again");
-                       continue;
-                   }
-               } catch (Exception e) {
-                   System.out.println("That doesn't look like a row number, try again");
-                   continue;
-               }
-
-
-               /*String inputColumn;
-               String inputColumnUpperCase;
-               int columnIndex;
-               while (true) {
-                   inputColumn = scanner.nextLine();
-                   inputColumnUpperCase = inputColumn.toUpperCase();
-                   if (inputColumnUpperCase.length() == 1) { //checks if input has more than 1 letter to make a char of it
-                       char columnLetter = inputColumnUpperCase.charAt(0);
-                       if (sb.indexOf(String.valueOf(columnLetter)) != -1) {
-                           System.out.println("Chosen column: " + inputColumnUpperCase);
-                           columnIndex = inputColumnUpperCase.charAt(0) - 'A';
-                           break;
-                       } else {
-                           System.out.println("Looks like the column you want to check doesn't exist, try again");
-                       }
-                   } else {
-                       System.out.println("Hm. Can a column be called " + inputColumnUpperCase + "? Try again");
-                   }
-               }
-*/
                 if (hiddenBoard[inputRowNumber - 1][columnIndex] == ' ') {
                     board[inputRowNumber - 1][columnIndex] = 'ꚰ';
                     //printBoard(hiddenBoard); mine shows in real board too
