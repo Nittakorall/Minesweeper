@@ -43,7 +43,6 @@ public class Board {
      * Prints visible board in terminal for user.
      */
     public void printBoard(char[][] chooseBoard) {
-
         System.out.print("    ");
         for (int c = 0; c < column; c++) {
             char letter = (char) ('A' + c);
@@ -84,7 +83,7 @@ public class Board {
      */
     public void makeMove(int winTimes,int lostTimes) {
         checkWin(winTimes, lostTimes);
-        printBoard(hiddenBoard);
+        printBoard(hiddenBoard); // better to remove later
         System.out.println("Choose row: ");
         String inputRow;
         int inputRowNumber;
@@ -127,7 +126,9 @@ public class Board {
 
         if (hiddenBoard[inputRowNumber - 1][columnIndex] == 'X') {
             System.out.println("Boom. There was a mine on " + inputColumnUpperCase + inputRowNumber);
-            printBoard(hiddenBoard);
+            board[inputRowNumber - 1][columnIndex] = '!';
+            //printBoard(hiddenBoard); mine shows in real board too
+            printBoard(board);
             lostTimes++;
             System.out.println("You won " + winTimes + " times");
             System.out.println("You lost " + lostTimes + " times");
