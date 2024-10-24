@@ -9,7 +9,7 @@ public class Menu {
      * Second with options for difficulty.
      * Error handling added.
      */
-    public void menu() {
+    public void menu(int winTimes, int lostTimes) {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Please press 1 for rules or press 2 to start the game");
@@ -33,16 +33,16 @@ public class Menu {
                                 switch (a) {
                                     case 1:
                                         Board easyBoard = new Board(2, 2, 1);
-                                        game.game(easyBoard);
+                                        game.game(easyBoard, winTimes, lostTimes);
 
                                         break;
                                     case 2:
                                         Board mediumBoard = new Board(12, 12, 10);
-                                        game.game(mediumBoard);
+                                        game.game(mediumBoard, winTimes, lostTimes);
                                         break;
                                     case 3:
                                         Board hardBoard = new Board(15, 15, 12);
-                                        game.game(hardBoard);
+                                        game.game(hardBoard, winTimes, lostTimes);
                                         break;
                                 }
                                 break;
@@ -57,7 +57,7 @@ public class Menu {
                 } else if (rulesOrGame == 1) {
                     System.out.println("To win a game of Minesweeper, all non-mine cells must be opened without opening a mine.\n" +
                             " Difficulty can be increased by adding mines or starting with a larger grid.\n\n");
-                    menu();
+                    menu(winTimes, lostTimes);
                     break;
                 } else {
                     System.out.println("Invalid input");

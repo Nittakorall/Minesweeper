@@ -4,7 +4,9 @@ public class Main {
     public static void main(String[] args) {
 
         System.out.println("Welcome to MineSweeper!");
+        int winTimes=0;
+        int lostTimes=0;
         Menu menu = new Menu();
-        menu.menu();
+        menu.menu(winTimes, lostTimes);
     }
 }

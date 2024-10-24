@@ -12,7 +12,7 @@ public class Game {
 
     }
 
-    public void game(Board board) {
+    public void game(Board board, int winTimes, int lostTimes) {
 
             Scanner scanner = new Scanner(System.in);
             System.out.println("Print your name: ");
@@ -22,7 +22,7 @@ public class Game {
             board.initializeBoard();
             board.addMines();
             board.printBoard(board.board);
-            board.makeMove();
+            board.makeMove(winTimes, lostTimes);
 
 
     }

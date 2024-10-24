@@ -77,8 +77,8 @@ public class Board {
         }
     }
 
-    public void makeMove() {
-        checkWin();
+    public void makeMove(int winTimes,int lostTimes) {
+        checkWin(winTimes, lostTimes);
         printBoard(hiddenBoard);
         System.out.println("Choose row: ");
         String inputRow;
@@ -123,18 +123,21 @@ public class Board {
         if (hiddenBoard[inputRowNumber - 1][columnIndex] == 'X') {
             System.out.println("Boom. There was a mine on " + inputColumnUpperCase + inputRowNumber);
             printBoard(hiddenBoard);
-            playAgainQuestion();
+            lostTimes++;
+            System.out.println("You won " + winTimes + " times");
+            System.out.println("You lost " + lostTimes + " times");
+            playAgainQuestion(winTimes, lostTimes);
 
         } else if( board[inputRowNumber - 1][columnIndex] != ' '){
             System.out.println("You've already opened this cell, please pick another one");
-            makeMove();
+            makeMove(winTimes, lostTimes);
         }
         else {
             board[inputRowNumber - 1][columnIndex] = 'O';
             System.out.println("There was no bomb on " + inputColumnUpperCase + inputRowNumber + ". You can make next move:");
 
             printBoard(board);
-            makeMove();
+            makeMove(winTimes, lostTimes);
         }
 
     }
@@ -161,7 +164,7 @@ public class Board {
 
     }
 
-    public void checkWin() {
+    public void checkWin(int winTimes, int lostTimes) {
         boolean win = true;
         for (int x = 0; x < board.length; x++) { //check for all cells in board
             for (int y = 0; y < board[x].length; y++) { //
@@ -174,11 +177,15 @@ public class Board {
         }
         if (win) {
             System.out.println("You win!");
-            playAgainQuestion();
+            winTimes++;
+            System.out.println("You won " + winTimes + " times");
+            System.out.println("You lost " + lostTimes + " times");
+
+            playAgainQuestion(winTimes, lostTimes);
         }
     }
 
-    public void playAgainQuestion() {
+    public void playAgainQuestion(int winTimes, int lostTimes) {
         System.out.println("Would you like to play again? yes or no");
         String answer;
         String answerLowerCase;
@@ -188,7 +195,7 @@ public class Board {
             answerLowerCase = answer.toLowerCase();
             if (answerLowerCase.equals("yes")) {
                 Menu menu = new Menu();
-                menu.menu();
+                menu.menu(winTimes, lostTimes);
                 break;
             } else if (answerLowerCase.equals("no")) {
                 System.out.println("Thank you for coming!");// program doesn't end if you press np
