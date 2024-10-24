@@ -56,7 +56,7 @@ public class Menu {
                                         while (true) {
 
                                             try {
-                                                System.out.println("Minimum size is 2x2 and maximum is 50x25.\n");
+                                                System.out.println("Minimum size is 2x2 and maximum is 50x26.\n");
                                                 System.out.println("How many rows? Choose a number between 2-50!\n");
 
                                                 inputChooseRows = scanner.nextInt();
@@ -76,10 +76,11 @@ public class Menu {
 
                                             try {
 
-                                                System.out.println("How many columns? Choose a number between 2-25!\n");
+                                                System.out.println("How many columns? Choose a number between 2-26!\n");
                                                 inputChooseColumns = scanner.nextInt();
-                                                if (inputChooseColumns < 2 || inputChooseColumns > 25) {
-                                                    System.out.println("Not a number between 2-25. Choose again!\n");
+                                                //No more than 25 columns because alphabet is only 26 letters (in english).
+                                                if (inputChooseColumns < 2 || inputChooseColumns > 26) {
+                                                    System.out.println("Not a number between 2-26. Choose again!\n");
                                                     scanner.nextLine();
                                                     continue;
                                                 }
@@ -96,6 +97,8 @@ public class Menu {
                                                 System.out.println("How many mines? Choose a number between 1-" + rowsTimesColumns + "!\n");
                                                 inputChooseMines = scanner.nextInt();
 
+                                                //To make sure user doesn't put too many mines on board,
+                                                // rowsTimesColumns show user how many cells -1 there is. So user can choose to put mines on every cell except for 1.
                                                 if (inputChooseMines < 1 || inputChooseMines > rowsTimesColumns) {
                                                     System.out.println("Not a number between 1-" + rowsTimesColumns + ". Choose again!\n");
                                                     scanner.nextLine();
