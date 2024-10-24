@@ -11,11 +11,13 @@ public class Game {
 
     public void game(Board board, int winTimes, int lostTimes) {
 
-        Scanner scanner = new Scanner(System.in);
+      /*  Scanner scanner = new Scanner(System.in);
         System.out.println("Print your name: ");
         String userName = scanner.nextLine();
         Player player = new Player(userName);
         System.out.println("Nice to meet you, " + player.getName());
+
+       */
         board.initializeBoard();
         board.addMines();
         board.printBoard(board.board);
