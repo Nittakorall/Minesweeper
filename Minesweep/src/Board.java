@@ -136,6 +136,9 @@ public class Board {
             }
             String inputColumn;
             String inputColumnUpperCase;
+            int rowOfACell;
+            int columnOfACell;
+
             int columnIndex;
             while (true) {
 
@@ -160,6 +163,7 @@ public class Board {
                 if (hiddenBoard[inputRowNumber - 1][columnIndex] == 'X') { // checks if there are a bomb in choosen space
                     System.out.println("Boom. There was a mine on " + inputColumnUpperCase + inputRowNumber);
                     board[inputRowNumber - 1][columnIndex] = 'X';
+
                     //printBoard(hiddenBoard); mine shows in real board too
                     printBoard(board);
                     lostTimes++;
@@ -186,7 +190,9 @@ public class Board {
                     System.out.println("You've already opened this cell, please pick another one");
                     makeMove(winTimes, lostTimes);
                 } else {
-                    board[inputRowNumber - 1][columnIndex] = 'O';  // open cell
+                    rowOfACell = inputRowNumber - 1;//need for minesAround
+                    columnOfACell = columnIndex; //need for minesAround
+                    board[inputRowNumber - 1][columnIndex] = minesAround(board, rowOfACell, columnOfACell);
                     System.out.println("There was no bomb on " + inputColumnUpperCase + inputRowNumber + ". You can make next move:");
                     printBoard(board);
                     makeMove(winTimes, lostTimes);
@@ -306,17 +312,14 @@ public class Board {
             allCellsAround.add(hiddenBoard[rowOfACell + 1][columnOfACell + 1]);
         }
 
-        System.out.println(allCellsAround);
+
         for (Character character : allCellsAround) {
             if (character == 'X') {
                 listWithMinesAround.add(character);
             }
         }
-        System.out.println(listWithMinesAround); // seems working
         int amountMinesAround = listWithMinesAround.size();
         char amountMinesAroundChar = (char) ('0' + amountMinesAround);
-        System.out.println(amountMinesAround);
-        System.out.println(amountMinesAroundChar);
         return amountMinesAroundChar;
     }
 }
