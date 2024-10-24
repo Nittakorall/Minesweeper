@@ -11,7 +11,6 @@ public class Menu {
      */
     public void menu(int winTimes, int lostTimes) {
         Scanner scanner = new Scanner(System.in);
-
         System.out.println("Please press 1 for rules or press 2 to start the game");
         int rulesOrGame;
 
