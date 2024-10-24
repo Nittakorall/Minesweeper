@@ -6,7 +6,6 @@ public class Game {
 
 
     public Game() {
-
     }
 
     public void game(Board board, int winTimes, int lostTimes) {

@@ -14,6 +14,9 @@ public class Player {
     public void setName(String name) {
         this.name = name;
     }
+    /**
+     * Welcomes and ask for name and prints name
+     */
     public void playerName(){
         System.out.println("Welcome to Minesweeper");
         Scanner scanner = new Scanner(System.in);
