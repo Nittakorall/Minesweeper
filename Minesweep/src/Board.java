@@ -2,15 +2,16 @@ import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 public class Board {
-    /**
-     * 2d arrays for visible board and hidden board (contains mines later).
-     */
+    Scanner scanner = new Scanner(System.in);
+    StringBuilder stringBuilder = new StringBuilder(); //when creating a board, add all column letters to a new string
+
+     // 2d arrays for visible board and hidden board (contains mines later).
+
     char[][] board;
     char[][] hiddenBoard;
     int row;
     int column;
     int mines;
-
 
     public Board(int row, int column, int mines) {
         this.board = new char[row][column];
@@ -19,13 +20,6 @@ public class Board {
         this.mines = mines;
         this.hiddenBoard = new char[row][column];
     }
-
-
-    Scanner scanner = new Scanner(System.in);
-    //  Cell cell = new Cell();
-
-
-
 
     /**
      * Fills board and hiddenBoard with empty places.
@@ -39,42 +33,30 @@ public class Board {
         }
     }
 
-
-    public Board() { //created to try to fix main manu  problem. Can be removed later if not needed
-    }
-
-
-    StringBuilder sb = new StringBuilder(); //when creating a board, add all column letters to a new string
-
-
     /**
      * Prints visible board in terminal for user.
      */
     public void printBoard(char[][] chooseBoard) {
-        // ANSI escape code för grön text
+        // ANSI escape code for green text
         String greenColor = "\033[32m";
-        // ANSI escape code för grön bakgrund
-        // ANSI escape code för röd text
+        // ANSI escape code for green background
+        // ANSI escape code for red text
         String redColor = "\033[31m";
-        // ANSI escape code för grön bakgrund
+        // ANSI escape code for green background
         String greenBackground = "\033[42m";
         // ANSI escape code för röd bakgrund
         String redBackground = "\033[41m";
         String orangeColor = "\u001B[38;5;214m";
-        // ANSI escape code för att återställa färgen
+        // ANSI escape code to reset color
         String resetColor = "\033[0m";
-
-
-
 
         System.out.print("    ");
         for (int c = 0; c < column; c++) {
             char letter = (char) ('A' + c);
-            sb.append(letter); // works weird because it adds letters several times, but works
+            stringBuilder.append(letter); // works weird because it adds letters several times, but works
             System.out.printf("  %2s  ", letter);
         }
         System.out.println();
-
 
         System.out.print("----");
         for (int c = 0; c < column; c++) {
@@ -82,13 +64,12 @@ public class Board {
         }
         System.out.println();
 
-
         for (int r = 0; r <= row - 1; r++) {
             System.out.printf("%2d", r + 1);
             for (int c = 0; c < column; c++) {
                 char currentChar = chooseBoard[r][c];
                 if (currentChar == 'X') {
-                    // Skriv ut med röd bakgrund om tecknet är 'X'
+                    // prints background color red if symbol is 'X'
                     System.out.print("  |  " + redBackground + redColor + currentChar + resetColor);
                 } else if (currentChar == 'O') {
                     System.out.print("  |  " + greenBackground + greenColor + currentChar + resetColor);
@@ -109,7 +90,6 @@ public class Board {
         }
     }
 
-
     /**
      * starts checkMove in the beginning to check if user won previous time
      * if not, asks user to open new cell
@@ -123,9 +103,7 @@ public class Board {
         checkWin(winTimes, lostTimes);
         printBoard(hiddenBoard); // better to remove later
 
-
-       while (true) {
-
+        while (true) {
 
             System.out.println("1. Open cell \n 2. Add flag");
             int openOrFlag = scanner.nextInt();
@@ -147,16 +125,13 @@ public class Board {
                     break;
                 } else {
                     System.out.println("There's no row " + inputRowNumber + ", try again");
-                    continue;
+
                 }
             } catch (Exception e) {
                 System.out.println("That doesn't look like a row number, try again");
-                continue;
+
             }
-
        }
-
-
             String inputColumn;
             String inputColumnUpperCase;
             int columnIndex;
@@ -166,7 +141,7 @@ public class Board {
                 inputColumnUpperCase = inputColumn.toUpperCase();
                 if (inputColumnUpperCase.length() == 1) { //checks if input has more than 1 letter to make a char of it
                     char columnLetter = inputColumnUpperCase.charAt(0);
-                    if (sb.indexOf(String.valueOf(columnLetter)) != -1) {
+                    if (stringBuilder.indexOf(String.valueOf(columnLetter)) != -1) {
                         System.out.println("Chosen column: " + inputColumnUpperCase);
                         columnIndex = inputColumnUpperCase.charAt(0) - 'A';
                         break;
@@ -180,14 +155,13 @@ public class Board {
 
             if (openOrFlag == 1) {
 
-
-                if (hiddenBoard[inputRowNumber - 1][columnIndex] == 'X') {
+                if (hiddenBoard[inputRowNumber - 1][columnIndex] == 'X') { // checks if there are a bomb in choosen space
                     System.out.println("Boom. There was a mine on " + inputColumnUpperCase + inputRowNumber);
                     board[inputRowNumber - 1][columnIndex] = 'X';
                     //printBoard(hiddenBoard); mine shows in real board too
                     printBoard(board);
                     lostTimes++;
-                    System.out.println("You won " + winTimes + " times");
+                    System.out.println("You won " + winTimes + " times"); // prints if you win or lose
                     System.out.println("You lost " + lostTimes + " times");
                     playAgainQuestion(winTimes, lostTimes);
 
@@ -197,7 +171,7 @@ public class Board {
                     String yesOrNo = scanner.nextLine();
 
 
-                    if (yesOrNo.equalsIgnoreCase("yes")) {
+                    if (yesOrNo.equalsIgnoreCase("yes")) {  // if yes flag removes
                         board[inputRowNumber - 1][columnIndex] = ' ';
                         printBoard(board);
                         makeMove(winTimes, lostTimes);
@@ -206,31 +180,23 @@ public class Board {
                         makeMove(winTimes, lostTimes);
                     }
 
-
-
-
                 } else if (board[inputRowNumber - 1][columnIndex] != ' ') { //if a cell user picks isn't ' ' and has some other symbol
                     System.out.println("You've already opened this cell, please pick another one");
                     makeMove(winTimes, lostTimes);
                 } else {
-                    board[inputRowNumber - 1][columnIndex] = 'O';
+                    board[inputRowNumber - 1][columnIndex] = 'O';  // open cell
                     System.out.println("There was no bomb on " + inputColumnUpperCase + inputRowNumber + ". You can make next move:");
-
-
                     printBoard(board);
                     makeMove(winTimes, lostTimes);
                 }
 
-
-            } else if (openOrFlag == 2) {
-
+            } else if (openOrFlag == 2) {  // checks if opened, if not adds flag
 
                 if (hiddenBoard[inputRowNumber - 1][columnIndex] == ' ') {
                     board[inputRowNumber - 1][columnIndex] = 'ꚰ';
                     //printBoard(hiddenBoard); mine shows in real board too
                     printBoard(board);
                     makeMove(winTimes, lostTimes);
-
 
                 } else {//if a cell user picks isn't ' ' and has some other symbol
                     System.out.println("You've already opened this cell, please pick another one");
@@ -239,11 +205,7 @@ public class Board {
             }
         }
 
-
     }
-
-
-
 
     /**
      * adds mines to hiddenBoard, randomly according to board size.
@@ -251,27 +213,17 @@ public class Board {
     public void addMines() {
         int minesCount = 0;
 
-
-
-
         while (minesCount < mines) {
-
 
             int x = (int) (Math.random() * hiddenBoard.length);
             int y = (int) (Math.random() * hiddenBoard[0].length);
-
 
             if (hiddenBoard[x][y] == ' ') {
                 hiddenBoard[x][y] = 'X';
                 minesCount++;
             }
-
-
         }
-
-
     }
-
 
     /**
      * sets win and shows winning text unless there are some unopened cells that doesn't have mines according to hiddenboard
@@ -287,8 +239,6 @@ public class Board {
                     win = false;
                     break; // go back to move() and continue game
                 }
-
-
             }
         }
         if (win) {
@@ -300,12 +250,13 @@ public class Board {
         }
     }
 
-
+    /**
+     * Asks if you want to play again or not
+     */
     public void playAgainQuestion(int winTimes, int lostTimes) {
         System.out.println("Would you like to play again? yes or no");
         String answer;
         String answerLowerCase;
-
 
         while (true) {
             answer = scanner.nextLine();
