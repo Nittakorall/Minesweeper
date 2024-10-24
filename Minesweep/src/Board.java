@@ -123,26 +123,8 @@ public class Board {
         if (hiddenBoard[inputRowNumber - 1][columnIndex] == 'X') {
             System.out.println("Boom. There was a mine on " + inputColumnUpperCase + inputRowNumber);
             printBoard(hiddenBoard);
-            System.out.println("Would you like to play again? yes or no");
-            String answer;
-            String answerLowerCase;
+            playAgainQuestion();
 
-            while (true) {
-                answer = scanner.nextLine();
-                answerLowerCase = answer.toLowerCase();
-                if (answerLowerCase.equals("yes")) {
-                    Menu menu = new Menu();
-                    menu.menu();
-                    break;
-                } else if (answerLowerCase.equals("no")) {
-                    System.out.println("Thank you for coming!");// program doesn't end if you press np
-                    System.exit(0);
-                } else {
-                    System.out.println("Yes or no?");
-                }
-            }
-
-            //break;
         } else {
             board[inputRowNumber - 1][columnIndex] = 'O';
             System.out.println("There was no bomb on " + inputColumnUpperCase + inputRowNumber + ". You can make next move:");
@@ -176,14 +158,42 @@ public class Board {
     }
 
     public void checkWin() {
+        boolean win = true;
         for (int x = 0; x < board.length; x++) { //check for all cells in board
             for (int y = 0; y < board[x].length; y++) { //
-                if ((board[x][y] == ' ' && hiddenBoard[x][y] == 'X') || (board[x][y] == 'O' && hiddenBoard[x][y] != 'X')) {
-                    System.out.println("you won");//writes out 4 times
-                }  //if board[x][y] is unopened and the same cell has bomb
+                if (board[x][y] == ' ' && hiddenBoard[x][y] != 'X') {
+                    win = false;
+                    break;
+                }
+
             }
+        }
+        if (win) {
+            System.out.println("You win!");
+            playAgainQuestion();
         }
     }
 
+    public void playAgainQuestion() {
+        System.out.println("Would you like to play again? yes or no");
+        String answer;
+        String answerLowerCase;
+
+        while (true) {
+            answer = scanner.nextLine();
+            answerLowerCase = answer.toLowerCase();
+            if (answerLowerCase.equals("yes")) {
+                Menu menu = new Menu();
+                menu.menu();
+                break;
+            } else if (answerLowerCase.equals("no")) {
+                System.out.println("Thank you for coming!");// program doesn't end if you press np
+                System.exit(0);
+            } else {
+                System.out.println("Yes or no?");
+            }
+        }
+    }
 }
+
 
