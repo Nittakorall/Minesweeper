@@ -1,11 +1,13 @@
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+
 public class Board {
     Scanner scanner = new Scanner(System.in);
     StringBuilder stringBuilder = new StringBuilder(); //when creating a board, add all column letters to a new string
 
-     // 2d arrays for visible board and hidden board (contains mines later).
+    // 2d arrays for visible board and hidden board (contains mines later).
 
     char[][] board;
     char[][] hiddenBoard;
@@ -73,7 +75,7 @@ public class Board {
                     System.out.print("  |  " + redBackground + redColor + currentChar + resetColor);
                 } else if (currentChar == 'O') {
                     System.out.print("  |  " + greenBackground + greenColor + currentChar + resetColor);
-                } else if(currentChar == 'ꚰ') {
+                } else if (currentChar == 'ꚰ') {
                     System.out.print("  |  " + orangeColor + currentChar + resetColor);
                 } else {
                     System.out.print("  |  " + currentChar);
@@ -116,22 +118,22 @@ public class Board {
 
             while (true) {
 
-            inputRow = scanner.nextLine(); //made string to avoid exception to nextInt
-            try {
-                inputRowNumber = Integer.parseInt(inputRow); // trying making string to int
-                if (inputRowNumber <= row && inputRowNumber > 0) {
+                inputRow = scanner.nextLine(); //made string to avoid exception to nextInt
+                try {
+                    inputRowNumber = Integer.parseInt(inputRow); // trying making string to int
+                    if (inputRowNumber <= row && inputRowNumber > 0) {
 
-                    System.out.println("Choose column: ");
-                    break;
-                } else {
-                    System.out.println("There's no row " + inputRowNumber + ", try again");
+                        System.out.println("Choose column: ");
+                        break;
+                    } else {
+                        System.out.println("There's no row " + inputRowNumber + ", try again");
+
+                    }
+                } catch (Exception e) {
+                    System.out.println("That doesn't look like a row number, try again");
 
                 }
-            } catch (Exception e) {
-                System.out.println("That doesn't look like a row number, try again");
-
             }
-       }
             String inputColumn;
             String inputColumnUpperCase;
             int columnIndex;
@@ -166,7 +168,7 @@ public class Board {
                     playAgainQuestion(winTimes, lostTimes);
 
 
-                } else if (board[inputRowNumber - 1][columnIndex] == 'ꚰ'){
+                } else if (board[inputRowNumber - 1][columnIndex] == 'ꚰ') {
                     System.out.println("Do you want to remove flag? yes or no: ");
                     String yesOrNo = scanner.nextLine();
 
@@ -272,6 +274,50 @@ public class Board {
                 System.out.println("Yes or no?");
             }
         }
+    }
+
+    public char minesAround(char[][] board, int rowOfACell, int columnOfACell) {
+        ArrayList<Character> allCellsAround = new ArrayList<>();
+        ArrayList<Character> listWithMinesAround = new ArrayList<>();
+        int lastColumnIndex = board[0].length - 1;
+
+        if (rowOfACell - 1 >= 0) {
+            allCellsAround.add(hiddenBoard[rowOfACell - 1][columnOfACell]);
+        }
+        if (columnOfACell - 1 >= 0) {
+            allCellsAround.add(hiddenBoard[rowOfACell][columnOfACell - 1]);
+        }
+        if (rowOfACell + 1 < board.length) {
+            allCellsAround.add(hiddenBoard[rowOfACell + 1][columnOfACell]);
+        }
+        if (columnOfACell + 1 <= lastColumnIndex) {
+            allCellsAround.add(hiddenBoard[rowOfACell][columnOfACell + 1]);
+        }
+        if (rowOfACell - 1 >= 0 && columnOfACell - 1 >= 0) {
+            allCellsAround.add(hiddenBoard[rowOfACell - 1][columnOfACell - 1]);
+        }
+        if (rowOfACell + 1 < board.length && columnOfACell - 1 >= 0) {
+            allCellsAround.add(hiddenBoard[rowOfACell + 1][columnOfACell - 1]);
+        }
+        if (rowOfACell - 1 >= 0 && columnOfACell + 1 <= lastColumnIndex) {
+            allCellsAround.add(hiddenBoard[rowOfACell - 1][columnOfACell + 1]);
+        }
+        if (rowOfACell + 1 < board.length && columnOfACell + 1 <= lastColumnIndex) {
+            allCellsAround.add(hiddenBoard[rowOfACell + 1][columnOfACell + 1]);
+        }
+
+        System.out.println(allCellsAround);
+        for (Character character : allCellsAround) {
+            if (character == 'X') {
+                listWithMinesAround.add(character);
+            }
+        }
+        System.out.println(listWithMinesAround); // seems working
+        int amountMinesAround = listWithMinesAround.size();
+        char amountMinesAroundChar = (char) ('0' + amountMinesAround);
+        System.out.println(amountMinesAround);
+        System.out.println(amountMinesAroundChar);
+        return amountMinesAroundChar;
     }
 }
 
