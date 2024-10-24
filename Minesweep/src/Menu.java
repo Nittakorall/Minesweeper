@@ -144,7 +144,10 @@ public class Menu {
 
                 }
             } catch (InputMismatchException e) {
-                System.out.println("Invalid input. Choose 1 for rules or 2 for game.\n");
+                System.out.println("Invalid input. Choose:\n" +
+                        " 1. Read rules!\n" +
+                        " 2. Start the game!\n");
+            }
                 scanner.nextLine();
             }
         }
