@@ -102,10 +102,9 @@ public class Board {
 
         checkWin(winTimes, lostTimes);
         printBoard(hiddenBoard); // better to remove later
-
         while (true) {
 
-            System.out.println("\nGame starts now! What do you want to do?\n" +
+            System.out.println("\nWhat do you want to do?\n" +
                     "1. Open cell.\n" +
                     "2. Add flag\n");
             int openOrFlag = scanner.nextInt();
@@ -184,6 +183,7 @@ public class Board {
 
                 } else if (board[inputRowNumber - 1][columnIndex] != ' ') { //if a cell user picks isn't ' ' and has some other symbol
                     System.out.println("You've already opened this cell, please pick another one");
+                    printBoard(board);
                     makeMove(winTimes, lostTimes);
                 } else {
                     board[inputRowNumber - 1][columnIndex] = 'O';  // open cell
