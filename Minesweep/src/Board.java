@@ -21,7 +21,7 @@ public class Board {
     }
 
     Scanner scanner = new Scanner(System.in);
-    Cell cell = new Cell();
+  //  Cell cell = new Cell();
 
 
     /**
@@ -38,18 +38,16 @@ public class Board {
 
     public Board() { //created to try to fix main manu  problem. Can be removed later if not needed
     }
-
+    StringBuilder sb = new StringBuilder(); //when creating a board, add all column letters to a new string
     /**
      * Prints visible board in terminal for user.
      */
-    StringBuilder sb = new StringBuilder();
-
     public void printBoard(char[][] chooseBoard) {
 
         System.out.print("    ");
         for (int c = 0; c < column; c++) {
             char letter = (char) ('A' + c);
-            sb.append(letter);
+            sb.append(letter); // works weird because it adds letters several times, but works
             System.out.printf("  %2s  ", letter);
         }
         System.out.println();
@@ -77,6 +75,13 @@ public class Board {
         }
     }
 
+    /**
+     * starts checkMove in the beginning to check if user won previous time
+     * if not, asks user to open new cell
+     *
+     * @param winTimes add +1 if user wins
+     * @param lostTimes add +1 if user lose
+     */
     public void makeMove(int winTimes,int lostTimes) {
         checkWin(winTimes, lostTimes);
         printBoard(hiddenBoard);
@@ -84,16 +89,16 @@ public class Board {
         String inputRow;
         int inputRowNumber;
         while (true) {
-            inputRow = scanner.nextLine();
+            inputRow = scanner.nextLine(); //made string to avoid exception to nextInt
             try {
-                inputRowNumber = Integer.parseInt(inputRow);
-                if (inputRowNumber <= row) {
+                inputRowNumber = Integer.parseInt(inputRow); // trying making string to int
+                if (inputRowNumber <= row && inputRowNumber >0) {
 
                     System.out.println("Chosen row: " + inputRowNumber);
                     System.out.println("Choose column: ");
                     break;
                 } else {
-                    System.out.println("There aren't that many rows, try again"); // it excludes last row!!!
+                    System.out.println("There's no row " + inputRowNumber + ", try again"); // it excludes last row!!!
                 }
             } catch (Exception e) {
                 System.out.println("That doesn't look like a row number, try again");
@@ -106,7 +111,7 @@ public class Board {
         while (true) {
             inputColumn = scanner.nextLine();
             inputColumnUpperCase = inputColumn.toUpperCase();
-            if (inputColumnUpperCase.length() == 1) {
+            if (inputColumnUpperCase.length() == 1) { //checks if input has more than 1 letter to make a char of it
                 char columnLetter = inputColumnUpperCase.charAt(0);
                 if (sb.indexOf(String.valueOf(columnLetter)) != -1) {
                     System.out.println("Chosen column: " + inputColumnUpperCase);
@@ -128,7 +133,7 @@ public class Board {
             System.out.println("You lost " + lostTimes + " times");
             playAgainQuestion(winTimes, lostTimes);
 
-        } else if( board[inputRowNumber - 1][columnIndex] != ' '){
+        } else if( board[inputRowNumber - 1][columnIndex] != ' '){ //if a cell user picks isn't ' ' and has some other symbol
             System.out.println("You've already opened this cell, please pick another one");
             makeMove(winTimes, lostTimes);
         }
@@ -164,13 +169,18 @@ public class Board {
 
     }
 
+    /**
+     * sets win and shows winning text unless there are some unopened cells that doesn't have mines according to hiddenboard
+     * @param winTimes
+     * @param lostTimes
+     */
     public void checkWin(int winTimes, int lostTimes) {
         boolean win = true;
         for (int x = 0; x < board.length; x++) { //check for all cells in board
-            for (int y = 0; y < board[x].length; y++) { //
-                if (board[x][y] == ' ' && hiddenBoard[x][y] != 'X') {
+            for (int y = 0; y < board[x].length; y++) {
+                if (board[x][y] == ' ' && hiddenBoard[x][y] != 'X') { //if there's at least one cell ' ' on board that isn't X on hiddenboard
                     win = false;
-                    break;
+                    break; // go back to move() and continue game
                 }
 
             }
@@ -180,7 +190,6 @@ public class Board {
             winTimes++;
             System.out.println("You won " + winTimes + " times");
             System.out.println("You lost " + lostTimes + " times");
-
             playAgainQuestion(winTimes, lostTimes);
         }
     }
@@ -198,7 +207,7 @@ public class Board {
                 menu.menu(winTimes, lostTimes);
                 break;
             } else if (answerLowerCase.equals("no")) {
-                System.out.println("Thank you for coming!");// program doesn't end if you press np
+                System.out.println("Thank you for coming!");
                 System.exit(0);
             } else {
                 System.out.println("Yes or no?");
