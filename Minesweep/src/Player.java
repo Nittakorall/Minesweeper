@@ -18,12 +18,12 @@ public class Player {
      * Welcomes and ask for name and prints name
      */
     public void playerName(){
-        System.out.println("Welcome to Minesweeper");
+        System.out.println("Welcome to Minesweeper!\n");
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Print your name: ");
+        System.out.println("What is your name? ");
         String userName = scanner.nextLine();
         Player player = new Player(userName);
-        System.out.println("Nice to meet you, " + player.getName());
+        System.out.println("Nice to meet you, " + player.getName() + "!\n");
 
     }
 

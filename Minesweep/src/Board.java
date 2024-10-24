@@ -105,7 +105,9 @@ public class Board {
 
         while (true) {
 
-            System.out.println("1. Open cell \n 2. Add flag");
+            System.out.println("\nGame starts now! What do you want to do?\n" +
+                    "1. Open cell.\n" +
+                    "2. Add flag\n");
             int openOrFlag = scanner.nextInt();
             scanner.nextLine();
 
@@ -192,7 +194,7 @@ public class Board {
 
             } else if (openOrFlag == 2) {  // checks if opened, if not adds flag
 
-                if (hiddenBoard[inputRowNumber - 1][columnIndex] == ' ') {
+                if (hiddenBoard[inputRowNumber - 1][columnIndex] == ' ' || hiddenBoard[inputRowNumber - 1][columnIndex] == 'X' ) {
                     board[inputRowNumber - 1][columnIndex] = 'ꚰ';
                     //printBoard(hiddenBoard); mine shows in real board too
                     printBoard(board);
