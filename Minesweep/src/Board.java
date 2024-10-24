@@ -43,6 +43,18 @@ public class Board {
      * Prints visible board in terminal for user.
      */
     public void printBoard(char[][] chooseBoard) {
+        // ANSI escape code för grön text
+        String greenColor = "\033[32m";
+        // ANSI escape code för grön bakgrund
+        // ANSI escape code för röd text
+        String redColor = "\033[31m";
+        // ANSI escape code för grön bakgrund
+        String greenBackground = "\033[42m";
+        // ANSI escape code för röd bakgrund
+        String redBackground = "\033[41m";
+        // ANSI escape code för att återställa färgen
+        String resetColor = "\033[0m";
+
         System.out.print("    ");
         for (int c = 0; c < column; c++) {
             char letter = (char) ('A' + c);
@@ -60,8 +72,15 @@ public class Board {
         for (int r = 0; r <= row - 1; r++) {
             System.out.printf("%2d", r + 1);
             for (int c = 0; c < column; c++) {
-
-                System.out.print("  |  " + chooseBoard[r][c]);
+                char currentChar = chooseBoard[r][c];
+                if (currentChar == 'X') {
+                    // Skriv ut med röd bakgrund om tecknet är 'X'
+                    System.out.print("  |  " + redBackground +redColor+ currentChar + resetColor);}
+                else if(currentChar == 'O') {
+                    System.out.print("  |  " + greenBackground +greenColor+ currentChar + resetColor);
+                } else {
+                    System.out.print("  |  " + currentChar);
+                }
                 if (c == column - 1) {
                     System.out.println("  | ");
                 }
@@ -97,7 +116,7 @@ public class Board {
                     System.out.println("Choose column: ");
                     break;
                 } else {
-                    System.out.println("There's no row " + inputRowNumber + ", try again"); // it excludes last row!!!
+                    System.out.println("There's no row " + inputRowNumber + ", try again");
                 }
             } catch (Exception e) {
                 System.out.println("That doesn't look like a row number, try again");
@@ -126,7 +145,7 @@ public class Board {
 
         if (hiddenBoard[inputRowNumber - 1][columnIndex] == 'X') {
             System.out.println("Boom. There was a mine on " + inputColumnUpperCase + inputRowNumber);
-            board[inputRowNumber - 1][columnIndex] = '!';
+            board[inputRowNumber - 1][columnIndex] = 'X';
             //printBoard(hiddenBoard); mine shows in real board too
             printBoard(board);
             lostTimes++;
