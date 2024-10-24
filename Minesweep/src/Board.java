@@ -21,7 +21,7 @@ public class Board {
     }
 
     Scanner scanner = new Scanner(System.in);
-  //  Cell cell = new Cell();
+    //  Cell cell = new Cell();
 
 
     /**
@@ -38,7 +38,9 @@ public class Board {
 
     public Board() { //created to try to fix main manu  problem. Can be removed later if not needed
     }
+
     StringBuilder sb = new StringBuilder(); //when creating a board, add all column letters to a new string
+
     /**
      * Prints visible board in terminal for user.
      */
@@ -75,9 +77,9 @@ public class Board {
                 char currentChar = chooseBoard[r][c];
                 if (currentChar == 'X') {
                     // Skriv ut med röd bakgrund om tecknet är 'X'
-                    System.out.print("  |  " + redBackground +redColor+ currentChar + resetColor);}
-                else if(currentChar == 'O') {
-                    System.out.print("  |  " + greenBackground +greenColor+ currentChar + resetColor);
+                    System.out.print("  |  " + redBackground + redColor + currentChar + resetColor);
+                } else if (currentChar == 'O') {
+                    System.out.print("  |  " + greenBackground + greenColor + currentChar + resetColor);
                 } else {
                     System.out.print("  |  " + currentChar);
                 }
@@ -97,72 +99,138 @@ public class Board {
      * starts checkMove in the beginning to check if user won previous time
      * if not, asks user to open new cell
      *
-     * @param winTimes add +1 if user wins
+     * @param winTimes  add +1 if user wins
      * @param lostTimes add +1 if user lose
      */
-    public void makeMove(int winTimes,int lostTimes) {
+    public void makeMove(int winTimes, int lostTimes) {
         checkWin(winTimes, lostTimes);
         printBoard(hiddenBoard); // better to remove later
-        System.out.println("Choose row: ");
-        String inputRow;
-        int inputRowNumber;
+
         while (true) {
-            inputRow = scanner.nextLine(); //made string to avoid exception to nextInt
-            try {
-                inputRowNumber = Integer.parseInt(inputRow); // trying making string to int
-                if (inputRowNumber <= row && inputRowNumber >0) {
 
-                    System.out.println("Chosen row: " + inputRowNumber);
-                    System.out.println("Choose column: ");
-                    break;
-                } else {
-                    System.out.println("There's no row " + inputRowNumber + ", try again");
+            System.out.println("1. Open cell \n 2. Add flag");
+            int openOrFlag = scanner.nextInt();
+            scanner.nextLine();
+
+            if (openOrFlag == 1) {
+
+                System.out.println("Choose row: ");
+                String inputRow;
+                int inputRowNumber;
+
+                inputRow = scanner.nextLine(); //made string to avoid exception to nextInt
+                try {
+                    inputRowNumber = Integer.parseInt(inputRow); // trying making string to int
+                    if (inputRowNumber <= row && inputRowNumber > 0) {
+
+                        System.out.println("Chosen row: " + inputRowNumber);
+                        System.out.println("Choose column: ");
+                        //break;
+                    } else {
+                        System.out.println("There's no row " + inputRowNumber + ", try again");
+                        continue;
+                    }
+                } catch (Exception e) {
+                    System.out.println("That doesn't look like a row number, try again");
+                    continue;
                 }
-            } catch (Exception e) {
-                System.out.println("That doesn't look like a row number, try again");
-            }
-        }
 
-        String inputColumn;
-        String inputColumnUpperCase;
-        int columnIndex;
-        while (true) {
-            inputColumn = scanner.nextLine();
-            inputColumnUpperCase = inputColumn.toUpperCase();
-            if (inputColumnUpperCase.length() == 1) { //checks if input has more than 1 letter to make a char of it
-                char columnLetter = inputColumnUpperCase.charAt(0);
-                if (sb.indexOf(String.valueOf(columnLetter)) != -1) {
-                    System.out.println("Chosen column: " + inputColumnUpperCase);
-                    columnIndex = inputColumnUpperCase.charAt(0) - 'A';
-                    break;
+
+                String inputColumn;
+                String inputColumnUpperCase;
+                int columnIndex;
+                while (true) {
+                    inputColumn = scanner.nextLine();
+                    inputColumnUpperCase = inputColumn.toUpperCase();
+                    if (inputColumnUpperCase.length() == 1) { //checks if input has more than 1 letter to make a char of it
+                        char columnLetter = inputColumnUpperCase.charAt(0);
+                        if (sb.indexOf(String.valueOf(columnLetter)) != -1) {
+                            System.out.println("Chosen column: " + inputColumnUpperCase);
+                            columnIndex = inputColumnUpperCase.charAt(0) - 'A';
+                            break;
+                        } else {
+                            System.out.println("Looks like the column you want to check doesn't exist, try again");
+                        }
+                    } else {
+                        System.out.println("Hm. Can a column be called " + inputColumnUpperCase + "? Try again");
+                    }
+                } //hidwdjo
+                //while (true) {
+
+                if (hiddenBoard[inputRowNumber - 1][columnIndex] == 'X') {
+                    System.out.println("Boom. There was a mine on " + inputColumnUpperCase + inputRowNumber);
+                    board[inputRowNumber - 1][columnIndex] = 'X';
+                    //printBoard(hiddenBoard); mine shows in real board too
+                    printBoard(board);
+                    lostTimes++;
+                    System.out.println("You won " + winTimes + " times");
+                    System.out.println("You lost " + lostTimes + " times");
+                    playAgainQuestion(winTimes, lostTimes);
+
+                } else if (board[inputRowNumber - 1][columnIndex] != ' ') { //if a cell user picks isn't ' ' and has some other symbol
+                    System.out.println("You've already opened this cell, please pick another one");
+                    makeMove(winTimes, lostTimes);
                 } else {
-                    System.out.println("Looks like the column you want to check doesn't exist, try again");
+                    board[inputRowNumber - 1][columnIndex] = 'O';
+                    System.out.println("There was no bomb on " + inputColumnUpperCase + inputRowNumber + ". You can make next move:");
+
+                    printBoard(board);
+                    makeMove(winTimes, lostTimes);
                 }
-            } else {
-                System.out.println("Hm. Can a column be called " + inputColumnUpperCase + "? Try again");
+
+            } else if (openOrFlag == 2) {
+                System.out.println("Choose row: ");
+                String inputRow;
+                int inputRowNumber;
+                //while (true) {
+                inputRow = scanner.nextLine(); //made string to avoid exception to nextInt
+                try {
+                    inputRowNumber = Integer.parseInt(inputRow); // trying making string to int
+                    if (inputRowNumber <= row && inputRowNumber > 0) {
+
+                        System.out.println("Chosen row: " + inputRowNumber);
+                        System.out.println("Choose column: ");
+                        //break;
+                    } else {
+                        System.out.println("There's no row " + inputRowNumber + ", try again");
+                        continue;
+                    }
+                } catch (Exception e) {
+                    System.out.println("That doesn't look like a row number, try again");
+                    continue;
+                }
+
+                String inputColumn;
+                String inputColumnUpperCase;
+                int columnIndex;
+                while (true) {
+                    inputColumn = scanner.nextLine();
+                    inputColumnUpperCase = inputColumn.toUpperCase();
+                    if (inputColumnUpperCase.length() == 1) { //checks if input has more than 1 letter to make a char of it
+                        char columnLetter = inputColumnUpperCase.charAt(0);
+                        if (sb.indexOf(String.valueOf(columnLetter)) != -1) {
+                            System.out.println("Chosen column: " + inputColumnUpperCase);
+                            columnIndex = inputColumnUpperCase.charAt(0) - 'A';
+                            break;
+                        } else {
+                            System.out.println("Looks like the column you want to check doesn't exist, try again");
+                        }
+                    } else {
+                        System.out.println("Hm. Can a column be called " + inputColumnUpperCase + "? Try again");
+                    }
+                }
+
+                if (hiddenBoard[inputRowNumber - 1][columnIndex] == ' ') {
+                    board[inputRowNumber - 1][columnIndex] = 'ꚰ';
+                    //printBoard(hiddenBoard); mine shows in real board too
+                    printBoard(board);
+                    makeMove(winTimes, lostTimes);
+
+                } else {//if a cell user picks isn't ' ' and has some other symbol
+                    System.out.println("You've already opened this cell, please pick another one");
+                    makeMove(winTimes, lostTimes);
+                }
             }
-        }
-
-        if (hiddenBoard[inputRowNumber - 1][columnIndex] == 'X') {
-            System.out.println("Boom. There was a mine on " + inputColumnUpperCase + inputRowNumber);
-            board[inputRowNumber - 1][columnIndex] = 'X';
-            //printBoard(hiddenBoard); mine shows in real board too
-            printBoard(board);
-            lostTimes++;
-            System.out.println("You won " + winTimes + " times");
-            System.out.println("You lost " + lostTimes + " times");
-            playAgainQuestion(winTimes, lostTimes);
-
-        } else if( board[inputRowNumber - 1][columnIndex] != ' '){ //if a cell user picks isn't ' ' and has some other symbol
-            System.out.println("You've already opened this cell, please pick another one");
-            makeMove(winTimes, lostTimes);
-        }
-        else {
-            board[inputRowNumber - 1][columnIndex] = 'O';
-            System.out.println("There was no bomb on " + inputColumnUpperCase + inputRowNumber + ". You can make next move:");
-
-            printBoard(board);
-            makeMove(winTimes, lostTimes);
         }
 
     }
@@ -191,6 +259,7 @@ public class Board {
 
     /**
      * sets win and shows winning text unless there are some unopened cells that doesn't have mines according to hiddenboard
+     *
      * @param winTimes
      * @param lostTimes
      */

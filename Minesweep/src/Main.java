@@ -4,13 +4,8 @@ import java.util.Scanner;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-
-        System.out.println("Welcome to MineSweeper!");
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Print your name: ");
-        String userName = scanner.nextLine();
-        Player player = new Player(userName);
-        System.out.println("Nice to meet you, " + player.getName());
+        Player player = new Player("");
+        player.playerName();
         int winTimes = 0;
         int lostTimes = 0;
         Menu menu = new Menu();
