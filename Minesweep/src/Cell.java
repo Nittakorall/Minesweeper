@@ -1,4 +1,4 @@
-public class Cell {
+/* public class Cell {
 
     boolean isMine;
     boolean isAvailable;
@@ -8,3 +8,5 @@ public class Cell {
         this.isAvailable = false;
     }
 }
+
+ */
