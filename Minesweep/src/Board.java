@@ -156,7 +156,9 @@ public class Board {
      */
 
     public void makeMove(int winTimes, int lostTimes, int flagsAvailable) {
+
         startTimer();
+
 
         checkWin(winTimes, lostTimes);
         printBoard(hiddenBoard); // better to remove later
@@ -164,9 +166,19 @@ public class Board {
         while (true) {
 
 
-            System.out.println("\nWhat do you want to do?\n" +
-                    "1. Open cell.\n" +
-                    "2. Add flag (" + flagsAvailable + " left)\n");
+
+            System.out.println("\nWhat do you want to do?");
+            if (flagsAvailable > 0) {
+                System.out.println("1. Open cell.\n" +
+                        "2. Add flag (" + flagsAvailable + " left)\n");
+            } else if (flagsAvailable == 0) {
+                System.out.println("1. Open cell.\n" +
+                        "2. Add flag.\nBy the way, you've placed as many flags as there are mines.\n");
+            } else if (flagsAvailable < 0) {
+                System.out.println("1. Open cell.\n" +
+                        "2. Add flag.\nThere aren't that many mines, actually, you've already placed " + (flagsAvailable - (flagsAvailable * 2)) + " too many");
+            }
+
 
             String openOrFlag;
             while (true) {
@@ -271,11 +283,13 @@ public class Board {
 
             } else if (openOrFlag.equals("2")) {  // checks if opened, if not adds flag
 
-                if (flagsAvailable > 0) {
-                    if (board[inputRowNumber - 1][columnIndex] == ' ' || hiddenBoard[inputRowNumber - 1][columnIndex] == 'X') {
+
+              
+                    if (board[inputRowNumber - 1][columnIndex] == ' ' ) {
+
                         board[inputRowNumber - 1][columnIndex] = 'ꚰ';
                         flagsAvailable--;
-                        System.out.println(flagsAvailable);
+                       // System.out.println(flagsAvailable);
                         printBoard(board);
                         makeMove(winTimes, lostTimes, flagsAvailable);
                     } else if (board[inputRowNumber - 1][columnIndex] == 'ꚰ') {
@@ -285,13 +299,10 @@ public class Board {
                     } else if (board[inputRowNumber - 1][columnIndex] != ' ' && board[inputRowNumber - 1][columnIndex] != 'ꚰ') {//if a cell user picks isn't ' ' or a flag and has some other symbol
                         System.out.println("You've already opened this cell, please pick another one");
                         makeMove(winTimes, lostTimes, flagsAvailable);
+
                     }
-                } else if (flagsAvailable <= 0) {
 
-                    System.out.println("You don't have enough flags, please remove some flags before placing new!");
 
-                    printBoard(board);
-                    makeMove(winTimes, lostTimes, flagsAvailable);
                 }
             }
             //printBoard(hiddenBoard); mine shows in real board too
@@ -366,7 +377,6 @@ public class Board {
             }
         }
     }
-
 
 
 
