@@ -104,9 +104,13 @@ public class Board {
 
         checkWin(winTimes, lostTimes);
         printBoard(hiddenBoard); // better to remove later
+        System.out.println(flagsAvailable);
         while (true) {
-
-            System.out.println("1. Open cell \n 2. Add flag (" + flagsAvailable + " left)");
+            if (flagsAvailable <= 0) {
+                System.out.println("1. Open cell \n 2.No flags left to add");
+            } else {
+                System.out.println("1. Open cell \n 2. Add flag (" + flagsAvailable + " left)");
+            }
             int openOrFlag = scanner.nextInt();
             scanner.nextLine();
 
@@ -199,9 +203,13 @@ public class Board {
                         System.out.println(flagsAvailable);
                         printBoard(board);
                         makeMove(winTimes, lostTimes, flagsAvailable);
+                    } else if (board[inputRowNumber - 1][columnIndex] == 'ꚰ') {
+                        System.out.println("There's already a flag there");
+                        printBoard(board);
+                        makeMove(winTimes,lostTimes,flagsAvailable);
                     }
                 } else if (flagsAvailable <= 0) {
-                    System.out.println("You don't have enough flags, please remove some flags before placing new");
+                    System.out.println("You don't have enough flags, please remove some flags before placing new!");
                     printBoard(board);
                     makeMove(winTimes, lostTimes, flagsAvailable);
                 }
