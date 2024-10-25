@@ -160,7 +160,7 @@ public class Menu {
                         " 1. Read rules!\n" +
                         " 2. Start the game!\n");
             }
-                scanner.nextLine();
-            }
+            scanner.nextLine();
         }
     }
+}

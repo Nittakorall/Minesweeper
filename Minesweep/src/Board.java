@@ -157,14 +157,13 @@ public class Board {
 
     public void makeMove(int winTimes, int lostTimes, int flagsAvailable) {
 
-        startTimer();
+       // startTimer();
 
 
         checkWin(winTimes, lostTimes);
         printBoard(hiddenBoard); // better to remove later
         // System.out.println(flagsAvailable);
         while (true) {
-
 
 
             System.out.println("\nWhat do you want to do?");
@@ -284,12 +283,12 @@ public class Board {
             } else if (openOrFlag.equals("2")) {  // checks if opened, if not adds flag
 
 
-              
-                    if (board[inputRowNumber - 1][columnIndex] == ' ' ) {
+
+                    if (board[inputRowNumber - 1][columnIndex] == ' ') {
 
                         board[inputRowNumber - 1][columnIndex] = 'ꚰ';
                         flagsAvailable--;
-                       // System.out.println(flagsAvailable);
+                        // System.out.println(flagsAvailable);
                         printBoard(board);
                         makeMove(winTimes, lostTimes, flagsAvailable);
                     } else if (board[inputRowNumber - 1][columnIndex] == 'ꚰ') {
@@ -303,7 +302,7 @@ public class Board {
                     }
 
 
-                }
+
             }
             //printBoard(hiddenBoard); mine shows in real board too
 
@@ -377,7 +376,6 @@ public class Board {
             }
         }
     }
-
 
 
     public char minesAround(char[][] board, int rowOfACell, int columnOfACell) {
