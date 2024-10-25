@@ -19,8 +19,10 @@ public class Game {
        */
         board.initializeBoard();
         board.addMines();
+
         board.printBoard(board.board);
-        board.makeMove(winTimes, lostTimes);
+        int flagsAvailable = board.mines;
+        board.makeMove(winTimes, lostTimes, flagsAvailable);
 
 
     }
