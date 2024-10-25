@@ -269,20 +269,20 @@ public class Board {
                     printBoard(board);
                     makeMove(winTimes, lostTimes, flagsAvailable);
 
-
                 } else {
                     rowOfACell = inputRowNumber - 1;//need for minesAround
                     columnOfACell = columnIndex; //need for minesAround
-                    board[inputRowNumber - 1][columnIndex] = minesAround(board, rowOfACell, columnOfACell);
-                    System.out.println("Lucky you! There was no bomb on " + inputColumnUpperCase + inputRowNumber + ".");
+
+
+                    openCellsIfO(rowOfACell, columnOfACell);
+                 //  board[inputRowNumber - 1][columnIndex] = minesAround(board, rowOfACell, columnOfACell);
+                   System.out.println("Lucky you! There was no bomb on " + inputColumnUpperCase + inputRowNumber + ".");
+
                     printBoard(board);
                     makeMove(winTimes, lostTimes, flagsAvailable);
                 }
 
-
             } else if (openOrFlag.equals("2")) {  // checks if opened, if not adds flag
-
-
 
                     if (board[inputRowNumber - 1][columnIndex] == ' ') {
 
@@ -300,13 +300,8 @@ public class Board {
                         makeMove(winTimes, lostTimes, flagsAvailable);
 
                     }
-
-
-
             }
             //printBoard(hiddenBoard); mine shows in real board too
-
-
         }
     }
 
@@ -336,6 +331,7 @@ public class Board {
      */
     public void checkWin(int winTimes, int lostTimes) {
         boolean win = true;
+
         for (int x = 0; x < board.length; x++) { //check for all cells in board
             for (int y = 0; y < board[x].length; y++) {
                 if (board[x][y] == ' ' && hiddenBoard[x][y] != 'X') { //if there's at least one cell ' ' on board that isn't X on hiddenboard
@@ -377,7 +373,6 @@ public class Board {
         }
     }
 
-
     public char minesAround(char[][] board, int rowOfACell, int columnOfACell) {
         ArrayList<Character> allCellsAround = new ArrayList<>();
         ArrayList<Character> listWithMinesAround = new ArrayList<>();
@@ -408,7 +403,6 @@ public class Board {
             allCellsAround.add(hiddenBoard[rowOfACell + 1][columnOfACell + 1]);
         }
 
-
         for (Character character : allCellsAround) {
             if (character == 'X') {
                 listWithMinesAround.add(character);
@@ -417,6 +411,30 @@ public class Board {
         int amountMinesAround = listWithMinesAround.size();
         char amountMinesAroundChar = (char) ('0' + amountMinesAround);
         return amountMinesAroundChar;
+    }
+
+    public void openCellsIfO(int row, int column){
+
+        if (row < 0 || column < 0 || this.column <= column || row >= this.row) {
+            return;
+        }
+        if (board[row][column] != ' ' || hiddenBoard[row][column] == 'X') {
+            return;
+        }
+        char amountMines = minesAround(hiddenBoard, row, column);
+        board[row][column] = amountMines == '0' ? '0' : amountMines;
+
+        if (amountMines == '0') {
+            openCellsIfO(row - 1, column);
+            openCellsIfO(row - 1, column + 1);
+            openCellsIfO(row - 1, column - 1);
+            openCellsIfO(row + 1, column - 1);
+            openCellsIfO(row + 1, column + 1);
+            openCellsIfO(row + 1, column);
+            openCellsIfO(row, column + 1);
+            openCellsIfO(row, column - 1);
+        }
+
     }
 }
 
