@@ -1,17 +1,19 @@
 import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+
 public class Board {
     Scanner scanner = new Scanner(System.in);
     StringBuilder stringBuilder = new StringBuilder(); //when creating a board, add all column letters to a new string
 
-     // 2d arrays for visible board and hidden board (contains mines later).
+    // 2d arrays for visible board and hidden board (contains mines later).
 
     char[][] board;
     char[][] hiddenBoard;
     int row;
     int column;
     int mines;
+    int flagsAvailable;
 
     public Board(int row, int column, int mines) {
         this.board = new char[row][column];
@@ -73,7 +75,7 @@ public class Board {
                     System.out.print("  |  " + redBackground + redColor + currentChar + resetColor);
                 } else if (currentChar == 'O') {
                     System.out.print("  |  " + greenBackground + greenColor + currentChar + resetColor);
-                } else if(currentChar == 'ꚰ') {
+                } else if (currentChar == 'ꚰ') {
                     System.out.print("  |  " + orangeColor + currentChar + resetColor);
                 } else {
                     System.out.print("  |  " + currentChar);
@@ -97,18 +99,16 @@ public class Board {
      * @param winTimes  add +1 if user wins
      * @param lostTimes add +1 if user lose
      */
-    public void makeMove(int winTimes, int lostTimes) {
+    public void makeMove(int winTimes, int lostTimes, int flagsAvailable) {
 
 
         checkWin(winTimes, lostTimes);
         printBoard(hiddenBoard); // better to remove later
-
         while (true) {
 
-            System.out.println("1. Open cell \n 2. Add flag");
+            System.out.println("1. Open cell \n 2. Add flag (" + flagsAvailable + " left)");
             int openOrFlag = scanner.nextInt();
             scanner.nextLine();
-
 
             System.out.println("Choose row: ");
             String inputRow;
@@ -116,22 +116,22 @@ public class Board {
 
             while (true) {
 
-            inputRow = scanner.nextLine(); //made string to avoid exception to nextInt
-            try {
-                inputRowNumber = Integer.parseInt(inputRow); // trying making string to int
-                if (inputRowNumber <= row && inputRowNumber > 0) {
+                inputRow = scanner.nextLine(); //made string to avoid exception to nextInt
+                try {
+                    inputRowNumber = Integer.parseInt(inputRow); // trying making string to int
+                    if (inputRowNumber <= row && inputRowNumber > 0) {
 
-                    System.out.println("Choose column: ");
-                    break;
-                } else {
-                    System.out.println("There's no row " + inputRowNumber + ", try again");
+                        System.out.println("Choose column: ");
+                        break;
+                    } else {
+                        System.out.println("There's no row " + inputRowNumber + ", try again");
+
+                    }
+                } catch (Exception e) {
+                    System.out.println("That doesn't look like a row number, try again");
 
                 }
-            } catch (Exception e) {
-                System.out.println("That doesn't look like a row number, try again");
-
             }
-       }
             String inputColumn;
             String inputColumnUpperCase;
             int columnIndex;
@@ -166,45 +166,53 @@ public class Board {
                     playAgainQuestion(winTimes, lostTimes);
 
 
-                } else if (board[inputRowNumber - 1][columnIndex] == 'ꚰ'){
+                } else if (board[inputRowNumber - 1][columnIndex] == 'ꚰ') {
                     System.out.println("Do you want to remove flag? yes or no: ");
                     String yesOrNo = scanner.nextLine();
 
 
                     if (yesOrNo.equalsIgnoreCase("yes")) {  // if yes flag removes
                         board[inputRowNumber - 1][columnIndex] = ' ';
+                        flagsAvailable++;
                         printBoard(board);
-                        makeMove(winTimes, lostTimes);
+                        makeMove(winTimes, lostTimes, flagsAvailable);
                     } else {
                         printBoard(board);
-                        makeMove(winTimes, lostTimes);
+                        makeMove(winTimes, lostTimes, flagsAvailable);
                     }
 
                 } else if (board[inputRowNumber - 1][columnIndex] != ' ') { //if a cell user picks isn't ' ' and has some other symbol
                     System.out.println("You've already opened this cell, please pick another one");
-                    makeMove(winTimes, lostTimes);
+                    makeMove(winTimes, lostTimes, flagsAvailable);
                 } else {
                     board[inputRowNumber - 1][columnIndex] = 'O';  // open cell
                     System.out.println("There was no bomb on " + inputColumnUpperCase + inputRowNumber + ". You can make next move:");
                     printBoard(board);
-                    makeMove(winTimes, lostTimes);
+                    makeMove(winTimes, lostTimes, flagsAvailable);
                 }
 
             } else if (openOrFlag == 2) {  // checks if opened, if not adds flag
-
-                if (hiddenBoard[inputRowNumber - 1][columnIndex] == ' ') {
-                    board[inputRowNumber - 1][columnIndex] = 'ꚰ';
-                    //printBoard(hiddenBoard); mine shows in real board too
+                if (flagsAvailable > 0) {
+                    if (board[inputRowNumber - 1][columnIndex] == ' ') {
+                        board[inputRowNumber - 1][columnIndex] = 'ꚰ';
+                        flagsAvailable--;
+                        System.out.println(flagsAvailable);
+                        printBoard(board);
+                        makeMove(winTimes, lostTimes, flagsAvailable);
+                    }
+                } else if (flagsAvailable <= 0) {
+                    System.out.println("You don't have enough flags, please remove some flags before placing new");
                     printBoard(board);
-                    makeMove(winTimes, lostTimes);
-
-                } else {//if a cell user picks isn't ' ' and has some other symbol
-                    System.out.println("You've already opened this cell, please pick another one");
-                    makeMove(winTimes, lostTimes);
+                    makeMove(winTimes, lostTimes, flagsAvailable);
                 }
+
+                //printBoard(hiddenBoard); mine shows in real board too
+
+            } else {//if a cell user picks isn't ' ' and has some other symbol
+                System.out.println("You've already opened this cell, please pick another one");
+                makeMove(winTimes, lostTimes, flagsAvailable);
             }
         }
-
     }
 
     /**
