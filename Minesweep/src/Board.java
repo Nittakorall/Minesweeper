@@ -336,14 +336,33 @@ public class Board {
      * @param lostTimes
      */
     public void checkWin(int winTimes, int lostTimes) {
-        boolean win = true;
+        boolean allSameFlags = true;
+        for (int x = 0; x < board.length; x++) {
+            for (int y = 0; y < board[x].length; y++) {
+                if (board[x][y] != 'ꚰ') {
+                    allSameFlags = false;
+                    break;
+                }
+            }
+            if (!allSameFlags) {
+                break;
+            }
+        }
+        if (allSameFlags) {
+            return; // Avbryt om alla element är 'ꚰ'
+        }
 
+        boolean win = true;
         for (int x = 0; x < board.length; x++) { //check for all cells in board
             for (int y = 0; y < board[x].length; y++) {
-                if (board[x][y] == ' ' && hiddenBoard[x][y] != 'X') { //if there's at least one cell ' ' on board that isn't X on hiddenboard
+
+                if (board[x][y] == ' ' && hiddenBoard[x][y] != 'X') {//if there's at least one cell ' ' on board that isn't X on hiddenboard
+
                     win = false;
                     break; // go back to move() and continue game
                 }
+
+
             }
         }
         if (win) {
@@ -352,6 +371,17 @@ public class Board {
             System.out.println("You won " + winTimes + " times");
             System.out.println("You lost " + lostTimes + " times");
             playAgainQuestion(winTimes, lostTimes);
+        }
+
+        boolean winByFlags = true;
+        for (
+                int x = 0;
+                x < board.length; x++) { //check for all cells in board
+            for (int y = 0; y < board[x].length; y++) {
+                if (board[x][y] != 'ꚰ') {//
+                    return;
+                }
+            }
         }
     }
 
