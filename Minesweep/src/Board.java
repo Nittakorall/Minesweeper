@@ -163,7 +163,7 @@ public class Board {
 
             if (openOrFlag.equals("1")) {
 
-                if (hiddenBoard[inputRowNumber - 1][columnIndex] == 'X') { // checks if there are a bomb in choosen space
+                if (hiddenBoard[inputRowNumber - 1][columnIndex] == 'X' && board[inputRowNumber - 1][columnIndex] != 'ꚰ') { // checks if there are a bomb in choosen space
                     System.out.println("Boom. There was a mine on " + inputColumnUpperCase + inputRowNumber);
                     board[inputRowNumber - 1][columnIndex] = 'X';
                     //printBoard(hiddenBoard); mine shows in real board too
