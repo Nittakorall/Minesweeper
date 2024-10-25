@@ -100,8 +100,6 @@ public class Board {
      * @param lostTimes add +1 if user lose
      */
     public void makeMove(int winTimes, int lostTimes, int flagsAvailable) {
-
-
         checkWin(winTimes, lostTimes);
         printBoard(hiddenBoard); // better to remove later
         System.out.println(flagsAvailable);
@@ -111,9 +109,15 @@ public class Board {
             } else {
                 System.out.println("1. Open cell \n 2. Add flag (" + flagsAvailable + " left)");
             }
-            int openOrFlag = scanner.nextInt();
-            scanner.nextLine();
-
+            String openOrFlag;
+            while (true) {
+                openOrFlag = scanner.nextLine();
+                if (openOrFlag.equals("1") || openOrFlag.equals("2")) {
+                    break;
+                }else {
+                    System.out.println("Please pick 1 or 2");
+                }
+            }
             System.out.println("Choose row: ");
             String inputRow;
             int inputRowNumber;
@@ -157,7 +161,7 @@ public class Board {
                 }
             }
 
-            if (openOrFlag == 1) {
+            if (openOrFlag.equals("1")) {
 
                 if (hiddenBoard[inputRowNumber - 1][columnIndex] == 'X') { // checks if there are a bomb in choosen space
                     System.out.println("Boom. There was a mine on " + inputColumnUpperCase + inputRowNumber);
@@ -195,7 +199,7 @@ public class Board {
                     makeMove(winTimes, lostTimes, flagsAvailable);
                 }
 
-            } else if (openOrFlag == 2) {  // checks if opened, if not adds flag
+            } else if (openOrFlag.equals("2")) {  // checks if opened, if not adds flag
                 if (flagsAvailable > 0) {
                     if (board[inputRowNumber - 1][columnIndex] == ' ') {
                         board[inputRowNumber - 1][columnIndex] = 'ꚰ';
@@ -206,7 +210,7 @@ public class Board {
                     } else if (board[inputRowNumber - 1][columnIndex] == 'ꚰ') {
                         System.out.println("There's already a flag there");
                         printBoard(board);
-                        makeMove(winTimes,lostTimes,flagsAvailable);
+                        makeMove(winTimes, lostTimes, flagsAvailable);
                     }
                 } else if (flagsAvailable <= 0) {
                     System.out.println("You don't have enough flags, please remove some flags before placing new!");
