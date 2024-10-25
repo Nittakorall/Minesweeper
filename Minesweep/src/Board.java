@@ -102,19 +102,19 @@ public class Board {
     public void makeMove(int winTimes, int lostTimes, int flagsAvailable) {
         checkWin(winTimes, lostTimes);
         printBoard(hiddenBoard); // better to remove later
-        System.out.println(flagsAvailable);
+       // System.out.println(flagsAvailable);
         while (true) {
             if (flagsAvailable <= 0) {
-                System.out.println("1. Open cell \n 2.No flags left to add");
+                System.out.println("1. Open cell \n2.No flags left to add");
             } else {
-                System.out.println("1. Open cell \n 2. Add flag (" + flagsAvailable + " left)");
+                System.out.println("1. Open cell \n2. Add flag (" + flagsAvailable + " left)");
             }
             String openOrFlag;
             while (true) {
                 openOrFlag = scanner.nextLine();
                 if (openOrFlag.equals("1") || openOrFlag.equals("2")) {
                     break;
-                }else {
+                } else {
                     System.out.println("Please pick 1 or 2");
                 }
             }
@@ -211,19 +211,19 @@ public class Board {
                         System.out.println("There's already a flag there");
                         printBoard(board);
                         makeMove(winTimes, lostTimes, flagsAvailable);
+                    } else if (board[inputRowNumber - 1][columnIndex] != ' ' && board[inputRowNumber - 1][columnIndex] != 'ꚰ') {//if a cell user picks isn't ' ' or a flag and has some other symbol
+                        System.out.println("You've already opened this cell, please pick another one");
+                        makeMove(winTimes, lostTimes, flagsAvailable);
                     }
                 } else if (flagsAvailable <= 0) {
                     System.out.println("You don't have enough flags, please remove some flags before placing new!");
                     printBoard(board);
                     makeMove(winTimes, lostTimes, flagsAvailable);
                 }
-
-                //printBoard(hiddenBoard); mine shows in real board too
-
-            } else {//if a cell user picks isn't ' ' and has some other symbol
-                System.out.println("You've already opened this cell, please pick another one");
-                makeMove(winTimes, lostTimes, flagsAvailable);
             }
+            //printBoard(hiddenBoard); mine shows in real board too
+
+
         }
     }
 
