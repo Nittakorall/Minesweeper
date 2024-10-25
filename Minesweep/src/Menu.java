@@ -17,8 +17,9 @@ public class Menu {
                 "1. Read the rules.\n" +
                 "2. Start the game!\n");
         int rulesOrGame;
+        boolean isRunning = true;
 
-        while (true) {//checks is input is either 1 or 2, crashes if input is anything but number, need try catch
+        while (isRunning) {//checks is input is either 1 or 2, crashes if input is anything but number, need try catch
             try {
                 rulesOrGame = scanner.nextInt();
                 if (rulesOrGame == 2) {
@@ -27,12 +28,14 @@ public class Menu {
                     System.out.println("1. Easy");
                     System.out.println("2. Medium");
                     System.out.println("3. Hard");
-                    System.out.println("4. Choose your own size and mine amount\n");
+                    System.out.println("4. Choose your own size and mine amount");
+                    System.out.println("5. Quit\n");
                     int a;
-                    while (true) { // loops until user choose 1, 2 or 3, crashes if input is not a number, need try catch
+
+                    while (true) { // loops until user choose 1, 2 or 3, 4 , 5 crashes if input is not a number, need try catch
                         try {
                             a = scanner.nextInt();
-                            if (a == 1 || a == 2 || a == 3 || a == 4) {
+                            if (a == 1 || a == 2 || a == 3 || a == 4 || a == 5) {
                                 Game game = new Game();
                                 switch (a) {
                                     case 1:
@@ -115,6 +118,10 @@ public class Menu {
                                             }
                                         }
                                         break;
+                                    case 5:
+                                        System.out.println("Goodbye! ");
+                                        isRunning = false;
+                                        break;
                                 }
                                 break;
                             } else {
@@ -122,14 +129,16 @@ public class Menu {
                                         "1. Easy\n" +
                                         "2. Medium\n" +
                                         "3. Hard\n" +
-                                        "4. Choose your own size and mine amount");
+                                        "4. Choose your own size and mine amount" +
+                                        "5. Quit");
                             }
                         } catch (InputMismatchException e) {
                             System.out.println("Invalid input. Choose again!\n " +
                                     "1. Easy\n" +
                                     "2. Medium\n" +
                                     "3. Hard\n" +
-                                    "4. Choose your own size and mine amount");
+                                    "4. Choose your own size and mine amount\n" +
+                                    "5. Quit\n");
                             scanner.nextLine();
                         }
                     }
@@ -151,7 +160,7 @@ public class Menu {
                         " 1. Read rules!\n" +
                         " 2. Start the game!\n");
             }
-                scanner.nextLine();
-            }
+            scanner.nextLine();
         }
     }
+}
