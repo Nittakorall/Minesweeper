@@ -44,11 +44,11 @@ public class Menu {
 
                                         break;
                                     case 2:
-                                        Board mediumBoard = new Board(12, 12, 10);
+                                        Board mediumBoard = new Board(12, 12, 20);
                                         game.game(mediumBoard, winTimes, lostTimes);
                                         break;
                                     case 3:
-                                        Board hardBoard = new Board(15, 15, 12);
+                                        Board hardBoard = new Board(15, 15, 100);
                                         game.game(hardBoard, winTimes, lostTimes);
                                         break;
                                     case 4:
