@@ -33,7 +33,7 @@ public class Board {
     }
 
     // Timer-method
-    public void startTimer() {
+   /* public void startTimer() {
         gameTimer = true;
         displayMinutes = 0;
         startTime = System.currentTimeMillis();
@@ -64,7 +64,7 @@ public class Board {
         long secondsPassed = (timePassed / 1000) % 60;
         System.out.println("\nFinal time: " + displayMinutes + ":" + secondsPassed + " minutes::seconds");
     }
-
+*/
     /**
      * Fills board and hiddenBoard with empty places.
      */
@@ -95,6 +95,7 @@ public class Board {
         String orangeColor = "\u001B[38;5;214m";
         // ANSI escape code to reset color
         String resetColor = "\033[0m";
+
 
         System.out.print("    ");
         for (int c = 0; c < column; c++) {
@@ -156,7 +157,7 @@ public class Board {
      */
 
     public void makeMove(int winTimes, int lostTimes, int flagsAvailable) {
-  startTimer();
+
 
         checkWin(winTimes, lostTimes);
         printBoard(hiddenBoard); // better to remove later
@@ -370,7 +371,7 @@ printBoard(board);
         }
     }
 
-}
+
 
 
     public char minesAround(char[][] board, int rowOfACell, int columnOfACell) {
