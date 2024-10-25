@@ -55,7 +55,7 @@ public class Board {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-        } ).start();
+        }).start();
     }
 
     public void stopTimer() {
@@ -127,7 +127,7 @@ public class Board {
                     System.out.print("  |  " + yellowColor + currentChar + resetColor);
                 } else if (currentChar == '3') {
                     System.out.print("  |  " + redColor + currentChar + resetColor);
-                } else if (currentChar == '4' || currentChar == '5' || currentChar == '6' || currentChar == '7' ||currentChar == '8') {
+                } else if (currentChar == '4' || currentChar == '5' || currentChar == '6' || currentChar == '7' || currentChar == '8') {
                     System.out.print("  |  " + magentaColor + currentChar + resetColor);
 
                 } else if (currentChar == 'ꚰ') {
@@ -156,14 +156,12 @@ public class Board {
      */
 
     public void makeMove(int winTimes, int lostTimes, int flagsAvailable) {
-  startTimer();
+        startTimer();
 
         checkWin(winTimes, lostTimes);
         printBoard(hiddenBoard); // better to remove later
-       // System.out.println(flagsAvailable);
+        // System.out.println(flagsAvailable);
         while (true) {
-
-
 
 
             System.out.println("\nWhat do you want to do?\n" +
@@ -257,10 +255,9 @@ public class Board {
 
                 } else if (board[inputRowNumber - 1][columnIndex] != ' ') { //if a cell user picks isn't ' ' and has some other symbol
                     System.out.println("You've already opened this cell, please pick another one");
-printBoard(board);
+                    printBoard(board);
                     makeMove(winTimes, lostTimes, flagsAvailable);
-                    
- 
+
 
                 } else {
                     rowOfACell = inputRowNumber - 1;//need for minesAround
@@ -275,7 +272,7 @@ printBoard(board);
             } else if (openOrFlag.equals("2")) {  // checks if opened, if not adds flag
 
                 if (flagsAvailable > 0) {
-                    if (board[inputRowNumber - 1][columnIndex] == ' ' || hiddenBoard[inputRowNumber - 1][columnIndex] == 'X' ) {
+                    if (board[inputRowNumber - 1][columnIndex] == ' ' || hiddenBoard[inputRowNumber - 1][columnIndex] == 'X') {
                         board[inputRowNumber - 1][columnIndex] = 'ꚰ';
                         flagsAvailable--;
                         System.out.println(flagsAvailable);
@@ -370,7 +367,7 @@ printBoard(board);
         }
     }
 
-}
+
 
 
     public char minesAround(char[][] board, int rowOfACell, int columnOfACell) {
