@@ -156,12 +156,15 @@ public class Board {
      */
 
     public void makeMove(int winTimes, int lostTimes, int flagsAvailable) {
-      //  startTimer();
+
+        startTimer();
+
 
         checkWin(winTimes, lostTimes);
         printBoard(hiddenBoard); // better to remove later
         // System.out.println(flagsAvailable);
         while (true) {
+
 
 
             System.out.println("\nWhat do you want to do?");
@@ -175,6 +178,7 @@ public class Board {
                 System.out.println("1. Open cell.\n" +
                         "2. Add flag.\nThere aren't that many mines, actually, you've already placed " + (flagsAvailable - (flagsAvailable * 2)) + " too many");
             }
+
 
             String openOrFlag;
             while (true) {
@@ -279,8 +283,10 @@ public class Board {
 
             } else if (openOrFlag.equals("2")) {  // checks if opened, if not adds flag
 
-                {
+
+              
                     if (board[inputRowNumber - 1][columnIndex] == ' ' ) {
+
                         board[inputRowNumber - 1][columnIndex] = 'ꚰ';
                         flagsAvailable--;
                        // System.out.println(flagsAvailable);
@@ -371,6 +377,7 @@ public class Board {
             }
         }
     }
+
 
 
     public char minesAround(char[][] board, int rowOfACell, int columnOfACell) {
