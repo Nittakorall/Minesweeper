@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -39,7 +40,9 @@ public class Board {
      * Prints visible board in terminal for user.
      */
     public void printBoard(char[][] chooseBoard) {
-        // ANSI escape code for green text
+        String blueColor = "\033[34m";
+        String magentaColor = "\u001B[35m";
+        String yellowColor = "\033[33m";// ANSI escape code for green text
         String greenColor = "\033[32m";
         // ANSI escape code for green background
         // ANSI escape code for red text
@@ -73,8 +76,19 @@ public class Board {
                 if (currentChar == 'X') {
                     // prints background color red if symbol is 'X'
                     System.out.print("  |  " + redBackground + redColor + currentChar + resetColor);
-                } else if (currentChar == 'O') {
-                    System.out.print("  |  " + greenBackground + greenColor + currentChar + resetColor);
+
+
+                } else if (currentChar == '0') {
+                    System.out.print("  |  " + blueColor + currentChar + resetColor);
+                } else if (currentChar == '1') {
+                    System.out.print("  |  " + greenColor + currentChar + resetColor);
+                } else if (currentChar == '2') {
+                    System.out.print("  |  " + yellowColor + currentChar + resetColor);
+                } else if (currentChar == '3') {
+                    System.out.print("  |  " + redColor + currentChar + resetColor);
+                } else if (currentChar == '4' || currentChar == '5' || currentChar == '6' || currentChar == '7' ||currentChar == '8') {
+                    System.out.print("  |  " + magentaColor + currentChar + resetColor);
+
                 } else if (currentChar == 'ꚰ') {
                     System.out.print("  |  " + orangeColor + currentChar + resetColor);
                 } else {
@@ -106,7 +120,12 @@ public class Board {
         printBoard(hiddenBoard); // better to remove later
         while (true) {
 
-            System.out.println("1. Open cell \n 2. Add flag (" + flagsAvailable + " left)");
+
+
+            System.out.println("\nWhat do you want to do?\n" +
+                    "1. Open cell.\n" +
+                    "2. Add flag (" + flagsAvailable + " left)\n");
+
             int openOrFlag = scanner.nextInt();
             scanner.nextLine();
 
@@ -134,6 +153,9 @@ public class Board {
             }
             String inputColumn;
             String inputColumnUpperCase;
+            int rowOfACell;
+            int columnOfACell;
+
             int columnIndex;
             while (true) {
 
@@ -158,6 +180,7 @@ public class Board {
                 if (hiddenBoard[inputRowNumber - 1][columnIndex] == 'X') { // checks if there are a bomb in choosen space
                     System.out.println("Boom. There was a mine on " + inputColumnUpperCase + inputRowNumber);
                     board[inputRowNumber - 1][columnIndex] = 'X';
+
                     //printBoard(hiddenBoard); mine shows in real board too
                     printBoard(board);
                     lostTimes++;
@@ -183,17 +206,24 @@ public class Board {
 
                 } else if (board[inputRowNumber - 1][columnIndex] != ' ') { //if a cell user picks isn't ' ' and has some other symbol
                     System.out.println("You've already opened this cell, please pick another one");
+printBoard(board);
                     makeMove(winTimes, lostTimes, flagsAvailable);
+                    
+ 
+
                 } else {
-                    board[inputRowNumber - 1][columnIndex] = 'O';  // open cell
+                    rowOfACell = inputRowNumber - 1;//need for minesAround
+                    columnOfACell = columnIndex; //need for minesAround
+                    board[inputRowNumber - 1][columnIndex] = minesAround(board, rowOfACell, columnOfACell);
                     System.out.println("There was no bomb on " + inputColumnUpperCase + inputRowNumber + ". You can make next move:");
                     printBoard(board);
                     makeMove(winTimes, lostTimes, flagsAvailable);
                 }
 
             } else if (openOrFlag == 2) {  // checks if opened, if not adds flag
+
                 if (flagsAvailable > 0) {
-                    if (board[inputRowNumber - 1][columnIndex] == ' ') {
+                    if (board[inputRowNumber - 1][columnIndex] == ' ' || hiddenBoard[inputRowNumber - 1][columnIndex] == 'X' ) {
                         board[inputRowNumber - 1][columnIndex] = 'ꚰ';
                         flagsAvailable--;
                         System.out.println(flagsAvailable);
@@ -202,6 +232,8 @@ public class Board {
                     }
                 } else if (flagsAvailable <= 0) {
                     System.out.println("You don't have enough flags, please remove some flags before placing new");
+
+
                     printBoard(board);
                     makeMove(winTimes, lostTimes, flagsAvailable);
                 }
@@ -280,6 +312,47 @@ public class Board {
                 System.out.println("Yes or no?");
             }
         }
+    }
+
+    public char minesAround(char[][] board, int rowOfACell, int columnOfACell) {
+        ArrayList<Character> allCellsAround = new ArrayList<>();
+        ArrayList<Character> listWithMinesAround = new ArrayList<>();
+        int lastColumnIndex = board[0].length - 1;
+
+        if (rowOfACell - 1 >= 0) {
+            allCellsAround.add(hiddenBoard[rowOfACell - 1][columnOfACell]);
+        }
+        if (columnOfACell - 1 >= 0) {
+            allCellsAround.add(hiddenBoard[rowOfACell][columnOfACell - 1]);
+        }
+        if (rowOfACell + 1 < board.length) {
+            allCellsAround.add(hiddenBoard[rowOfACell + 1][columnOfACell]);
+        }
+        if (columnOfACell + 1 <= lastColumnIndex) {
+            allCellsAround.add(hiddenBoard[rowOfACell][columnOfACell + 1]);
+        }
+        if (rowOfACell - 1 >= 0 && columnOfACell - 1 >= 0) {
+            allCellsAround.add(hiddenBoard[rowOfACell - 1][columnOfACell - 1]);
+        }
+        if (rowOfACell + 1 < board.length && columnOfACell - 1 >= 0) {
+            allCellsAround.add(hiddenBoard[rowOfACell + 1][columnOfACell - 1]);
+        }
+        if (rowOfACell - 1 >= 0 && columnOfACell + 1 <= lastColumnIndex) {
+            allCellsAround.add(hiddenBoard[rowOfACell - 1][columnOfACell + 1]);
+        }
+        if (rowOfACell + 1 < board.length && columnOfACell + 1 <= lastColumnIndex) {
+            allCellsAround.add(hiddenBoard[rowOfACell + 1][columnOfACell + 1]);
+        }
+
+
+        for (Character character : allCellsAround) {
+            if (character == 'X') {
+                listWithMinesAround.add(character);
+            }
+        }
+        int amountMinesAround = listWithMinesAround.size();
+        char amountMinesAroundChar = (char) ('0' + amountMinesAround);
+        return amountMinesAroundChar;
     }
 }
 
