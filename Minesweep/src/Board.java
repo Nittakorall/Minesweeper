@@ -3,6 +3,9 @@ import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import java.util.concurrent.TimeUnit;
+
+
 public class Board {
     Scanner scanner = new Scanner(System.in);
     StringBuilder stringBuilder = new StringBuilder(); //when creating a board, add all column letters to a new string
@@ -16,12 +19,50 @@ public class Board {
     int mines;
     int flagsAvailable;
 
+    // Timer
+    private boolean gameTimer;
+    private long displayMinutes = 0;
+    private long startTime;
+
     public Board(int row, int column, int mines) {
         this.board = new char[row][column];
         this.row = row;
         this.column = column;
         this.mines = mines;
         this.hiddenBoard = new char[row][column];
+    }
+
+    // Timer-method
+    public void startTimer() {
+        gameTimer = true;
+        displayMinutes = 0;
+        startTime = System.currentTimeMillis();
+
+        System.out.println("Timer: ");
+
+        new Thread(() -> {
+            try {
+                while (gameTimer) {
+                    TimeUnit.SECONDS.sleep(1);
+                    long timePassed = System.currentTimeMillis() - startTime;
+                    long secondsPassed = (timePassed / 1000) % 60;
+
+                    if (secondsPassed == 0 && timePassed > 0) {
+                        displayMinutes++;
+                    }
+                    System.out.print("\rTimer: " + displayMinutes + ":" + secondsPassed);
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        } ).start();
+    }
+
+    public void stopTimer() {
+        gameTimer = false;
+        long timePassed = System.currentTimeMillis() - startTime;
+        long secondsPassed = (timePassed / 1000) % 60;
+        System.out.println("\nFinal time: " + displayMinutes + ":" + secondsPassed + " minutes::seconds");
     }
 
     /**
@@ -113,7 +154,10 @@ public class Board {
      * @param winTimes  add +1 if user wins
      * @param lostTimes add +1 if user lose
      */
+
     public void makeMove(int winTimes, int lostTimes, int flagsAvailable) {
+  startTimer();
+
         checkWin(winTimes, lostTimes);
         printBoard(hiddenBoard); // better to remove later
        // System.out.println(flagsAvailable);
@@ -325,6 +369,9 @@ printBoard(board);
             }
         }
     }
+
+}
+
 
     public char minesAround(char[][] board, int rowOfACell, int columnOfACell) {
         ArrayList<Character> allCellsAround = new ArrayList<>();
