@@ -274,7 +274,7 @@ public class Board {
                     rowOfACell = inputRowNumber - 1;//need for minesAround
                     columnOfACell = columnIndex; //need for minesAround
                     board[inputRowNumber - 1][columnIndex] = minesAround(board, rowOfACell, columnOfACell);
-                    System.out.println("There was no bomb on " + inputColumnUpperCase + inputRowNumber + ". You can make next move:");
+                    System.out.println("Lucky you! There was no bomb on " + inputColumnUpperCase + inputRowNumber + ".");
                     printBoard(board);
                     makeMove(winTimes, lostTimes, flagsAvailable);
                 }
