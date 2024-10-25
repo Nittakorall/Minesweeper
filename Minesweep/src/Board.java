@@ -95,6 +95,7 @@ public class Board {
         String orangeColor = "\u001B[38;5;214m";
         // ANSI escape code to reset color
         String resetColor = "\033[0m";
+        String explosion = "\uD83D\uDCA5";
 
         System.out.print("    ");
         for (int c = 0; c < column; c++) {
@@ -116,7 +117,7 @@ public class Board {
                 char currentChar = chooseBoard[r][c];
                 if (currentChar == 'X') {
                     // prints background color red if symbol is 'X'
-                    System.out.print("  |  " + redBackground + redColor + currentChar + resetColor);
+                    System.out.print("  | "+explosion);
 
 
                 } else if (currentChar == '0') {
@@ -136,7 +137,7 @@ public class Board {
                     System.out.print("  |  " + currentChar);
                 }
                 if (c == column - 1) {
-                    System.out.println("  | ");
+                    System.out.println("  |  ");
                 }
             }
             System.out.print("----");
@@ -227,7 +228,7 @@ public class Board {
             if (openOrFlag.equals("1")) {
 
                 if (hiddenBoard[inputRowNumber - 1][columnIndex] == 'X' && board[inputRowNumber - 1][columnIndex] != 'ꚰ') { // checks if there are a bomb in choosen space
-                    System.out.println("Boom. There was a mine on " + inputColumnUpperCase + inputRowNumber);
+                    System.out.println("Boom! There was a mine on " + inputColumnUpperCase + inputRowNumber + "! Game Over! ");
                     board[inputRowNumber - 1][columnIndex] = 'X';
 
                     //printBoard(hiddenBoard); mine shows in real board too
