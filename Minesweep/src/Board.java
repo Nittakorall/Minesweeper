@@ -338,7 +338,7 @@ public class Board {
     public void checkWin(int winTimes, int lostTimes) {
         boolean allSameFlags = true;
         for (int x = 0; x < board.length; x++) {
-            for (int y = 0; y < board[x].length; y++) {
+            for (int y = 0; y < board[x].length; y++) {//if all cells has flags
                 if (board[x][y] != 'ꚰ') {
                     allSameFlags = false;
                     break;
@@ -356,8 +356,8 @@ public class Board {
         for (int x = 0; x < board.length; x++) { //check for all cells in board
             for (int y = 0; y < board[x].length; y++) {
 
-                if (board[x][y] == ' ' && hiddenBoard[x][y] != 'X') {//if there's at least one cell ' ' on board that isn't X on hiddenboard
-
+                if ((board[x][y] != 'ꚰ' && board[x][y] == ' ' && hiddenBoard[x][y] != 'X')) {//if there's at least one cell ' ' on board that isn't X on hiddenboard
+                    //and flags are ignored
                     win = false;
                     break; // go back to move() and continue game
                 }
@@ -373,16 +373,16 @@ public class Board {
             playAgainQuestion(winTimes, lostTimes);
         }
 
-        boolean winByFlags = true;
-        for (
-                int x = 0;
-                x < board.length; x++) { //check for all cells in board
-            for (int y = 0; y < board[x].length; y++) {
-                if (board[x][y] != 'ꚰ') {//
-                    return;
-                }
-            }
-        }
+//           boolean winByFlags = true;    old debugger for flags
+//        for (
+//                int x = 0;
+//                x < board.length; x++) { //check for all cells in board
+//            for (int y = 0; y < board[x].length; y++) {
+//                if (board[x][y] != 'ꚰ') {//
+//                    return;
+//                }
+//            }
+//        }
     }
 
     /**
