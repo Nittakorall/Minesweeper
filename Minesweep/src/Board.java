@@ -19,6 +19,7 @@ public class Board {
     int mines;
     int flagsAvailable;
 
+
     // Timer
     private boolean gameTimer;
     private long displayMinutes = 0;
@@ -161,7 +162,7 @@ public class Board {
 
 
         checkWin(winTimes, lostTimes);
-        printBoard(hiddenBoard); // better to remove later
+       // printBoard(hiddenBoard); // better to remove later
         // System.out.println(flagsAvailable);
         while (true) {
 
@@ -258,6 +259,7 @@ public class Board {
                         if (yesOrNo.equalsIgnoreCase("yes")) {  // if yes flag removes
                             board[inputRowNumber - 1][columnIndex] = ' ';
                             flagsAvailable++;
+
                             printBoard(board);
                             makeMove(winTimes, lostTimes, flagsAvailable);
                             break;
@@ -294,6 +296,7 @@ public class Board {
 
                     board[inputRowNumber - 1][columnIndex] = 'ꚰ';
                     flagsAvailable--;
+
                     // System.out.println(flagsAvailable);
                     printBoard(board);
                     makeMove(winTimes, lostTimes, flagsAvailable);
