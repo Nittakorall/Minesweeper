@@ -95,6 +95,7 @@ public class Board {
         // ANSI escape code to reset color
         String resetColor = "\033[0m";
         String explosion = "\uD83D\uDCA5";
+        String grayBackground = "\033[47m";
 
         System.out.print("    ");
         for (int c = 0; c < column; c++) {
@@ -117,6 +118,9 @@ public class Board {
                 if (currentChar == 'X') {
                     // prints background color red if symbol is 'X'
                     System.out.print("  | " + explosion);
+                } else if (currentChar == ' ') {
+                    System.out.print("  |  " +  grayBackground + currentChar + resetColor);
+
 
 
                 } else if (currentChar == '0') {
@@ -238,7 +242,7 @@ public class Board {
 
             if (openOrFlag.equals("1")) {
 
-                if (hiddenBoard[inputRowNumber - 1][columnIndex] == 'X' && board[inputRowNumber - 1][columnIndex] != 'ꚰ') { // checks if there are a bomb in choosen space
+                if (hiddenBoard[inputRowNumber - 1][columnIndex] == 'X' && board[inputRowNumber - 1][columnIndex] != 'ꚰ') { // checks if there are a bomb in choosen space and not a flag.
                     System.out.println("Boom! There was a mine on " + inputColumnUpperCase + inputRowNumber + "! Game Over! ");
                     board[inputRowNumber - 1][columnIndex] = 'X';
 
