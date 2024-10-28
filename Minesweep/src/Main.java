@@ -9,6 +9,6 @@ public class Main {
         int winTimes = 0;
         int lostTimes = 0;
         Menu menu = new Menu();
-        menu.menu(winTimes, lostTimes);
+        menu.menu(winTimes,lostTimes);
     }
 }
