@@ -83,18 +83,11 @@ public class Board {
         String blueColor = "\033[34m";
         String magentaColor = "\u001B[35m";
         String yellowColor = "\033[33m";// ANSI escape code for green text
-        String greenColor = "\033[32m";
-        // ANSI escape code for green background
-        // ANSI escape code for red text
-        String redColor = "\033[31m";
-        // ANSI escape code for green background
-        String greenBackground = "\033[42m";
-        // ANSI escape code för röd bakgrund
-        String redBackground = "\033[41m";
+        String greenColor = "\033[32m";// ANSI escape code for green background
+        String redColor = "\033[31m"; // ANSI escape code for red text
         String orangeColor = "\u001B[38;5;214m";
-        // ANSI escape code to reset color
-        String resetColor = "\033[0m";
-        String explosion = "\uD83D\uDCA5";
+        String resetColor = "\033[0m";// ANSI escape code to reset color
+        String explosion = "\uD83D\uDCA5"; // explosion symbol
 
         System.out.print("    ");
         for (int c = 0; c < column; c++) {
@@ -115,10 +108,10 @@ public class Board {
             for (int c = 0; c < column; c++) {
                 char currentChar = chooseBoard[r][c];
                 if (currentChar == 'X') {
-                    // prints background color red if symbol is 'X'
+                    // prints explosion symbol if symbol is 'X'
                     System.out.print("  | " + explosion);
 
-
+                    // sets color to numbers and symbols
                 } else if (currentChar == '0') {
                     System.out.print("  |  " + blueColor + currentChar + resetColor);
                 } else if (currentChar == '1') {
@@ -156,16 +149,11 @@ public class Board {
      */
 
     public void makeMove(int winTimes, int lostTimes, int flagsAvailable) {
-
-
         // startTimer();
 
-
         checkWin(winTimes, lostTimes);
-        // printBoard(hiddenBoard); // better to remove later
-        // System.out.println(flagsAvailable);
-        while (true) {
 
+        while (true) {
 
             System.out.println("\nWhat do you want to do?");
             if (flagsAvailable > 0) {
@@ -178,8 +166,7 @@ public class Board {
                 System.out.println("1. Open cell.\n" +
                         "2. Add flag.\nThere aren't that many mines, actually, you've already placed " + (flagsAvailable - (flagsAvailable * 2)) + " too many");
             }
-
-
+            // allows 2 choices, open cell or place a flag.
             String openOrFlag;
             while (true) {
                 openOrFlag = scanner.nextLine();
@@ -194,7 +181,7 @@ public class Board {
             String inputRow;
             int inputRowNumber;
 
-            while (true) {
+            while (true) {  // allows choice of row with error handling
 
                 inputRow = scanner.nextLine(); //made string to avoid exception to nextInt
                 try {
@@ -218,7 +205,7 @@ public class Board {
             int columnOfACell;
 
             int columnIndex;
-            while (true) {
+            while (true) {  // allows choice of column with error handling
 
                 inputColumn = scanner.nextLine();
                 inputColumnUpperCase = inputColumn.toUpperCase();
@@ -244,8 +231,6 @@ public class Board {
 
                     showBoard();
 
-                    //printBoard(hiddenBoard); mine shows in real board too
-                    // printBoard(board);
                     lostTimes++;
                     System.out.println("You won " + winTimes + " times"); // prints if you win or lose
                     System.out.println("You lost " + lostTimes + " times");
@@ -257,7 +242,7 @@ public class Board {
                     String yesOrNo;
 
                     while (true) {
-                        yesOrNo = scanner.nextLine();
+                        yesOrNo = scanner.nextLine();  // mayby change yes to y
                         if (yesOrNo.equalsIgnoreCase("yes")) {  // if yes flag removes
                             board[inputRowNumber - 1][columnIndex] = ' ';
                             flagsAvailable++;
@@ -313,7 +298,6 @@ public class Board {
 
                 }
             }
-            //printBoard(hiddenBoard); mine shows in real board too
         }
     }
 
@@ -355,7 +339,7 @@ public class Board {
             }
         }
         if (allSameFlags) {
-            return; // Avbryt om alla element är 'ꚰ'
+            return; // Abort if all cells is 'ꚰ'
         }
 
         boolean win = true;
@@ -450,16 +434,8 @@ public class Board {
                 }
             }
         }
-        // for(int i = 0; i < combinedBoard.length; i ++){
-        //for(int j = 0; j< combinedBoard[i].length; j++){
         printBoard(combinedBoard);
 
-        //System.out.print(combinedBoard[i][j]);
-        // }
-
-        // System.out.println();
-
-        // }
     }
 
 
@@ -511,7 +487,6 @@ public class Board {
      * @param column
      */
     public void openAdjacentCells(int row, int column) {
-
 
         //Check if cell is inside board and not outside. If outside, return.
         if (row < 0 || column < 0 || this.column <= column || row >= this.row) {
