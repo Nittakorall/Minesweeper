@@ -136,8 +136,18 @@ public class Board {
             for (int c = 0; c < column; c++) {
                 System.out.print("+-----");
             }
+
             System.out.println();
+
         }
+        System.out.print("    ");
+        for (int c = 0; c < column; c++) {
+            char letter = (char) ('A' + c);
+            stringBuilder.append(letter); // works weird because it adds letters several times, but works
+            System.out.printf("  %2s  ", letter);
+
+        }
+        System.out.println();
     }
 
     /**
