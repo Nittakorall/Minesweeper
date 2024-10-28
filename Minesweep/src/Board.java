@@ -116,7 +116,7 @@ public class Board {
                 char currentChar = chooseBoard[r][c];
                 if (currentChar == 'X') {
                     // prints background color red if symbol is 'X'
-                    System.out.print("  | "+explosion);
+                    System.out.print("  | " + explosion);
 
 
                 } else if (currentChar == '0') {
@@ -161,10 +161,8 @@ public class Board {
         // startTimer();
 
 
-
-
         checkWin(winTimes, lostTimes);
-       // printBoard(hiddenBoard); // better to remove later
+        // printBoard(hiddenBoard); // better to remove later
         // System.out.println(flagsAvailable);
         while (true) {
 
@@ -243,10 +241,11 @@ public class Board {
                 if (hiddenBoard[inputRowNumber - 1][columnIndex] == 'X' && board[inputRowNumber - 1][columnIndex] != 'ꚰ') { // checks if there are a bomb in choosen space
                     System.out.println("Boom! There was a mine on " + inputColumnUpperCase + inputRowNumber + "! Game Over! ");
                     board[inputRowNumber - 1][columnIndex] = 'X';
+
                     showBoard();
 
                     //printBoard(hiddenBoard); mine shows in real board too
-                    printBoard(board);
+                    // printBoard(board);
                     lostTimes++;
                     System.out.println("You won " + winTimes + " times"); // prints if you win or lose
                     System.out.println("You lost " + lostTimes + " times");
@@ -285,12 +284,9 @@ public class Board {
                     columnOfACell = columnIndex; //need for minesAround
 
 
-
-                   
-
                     openAdjacentCells(rowOfACell, columnOfACell);
-                 //  board[inputRowNumber - 1][columnIndex] = minesAround(board, rowOfACell, columnOfACell);
-                   System.out.println("Lucky you! There was no bomb on " + inputColumnUpperCase + inputRowNumber + ".");
+                    //  board[inputRowNumber - 1][columnIndex] = minesAround(board, rowOfACell, columnOfACell);
+                    System.out.println("Lucky you! There was no bomb on " + inputColumnUpperCase + inputRowNumber + ".");
 
 
                     printBoard(board);
@@ -418,34 +414,53 @@ public class Board {
             }
         }
     }
+
     /**
      * prints board when game over, shows placed flags, mines and opened cells
      * needs more work on it
      */
-    public void showBoard(){
-    char [][] combinedBoard = new char [hiddenBoard.length][hiddenBoard[0].length];
-    for (int i = 0; i < hiddenBoard.length; i++) {
-        for (int j = 0; j < hiddenBoard[i].length; j++) {
-            if (board[i][j] == 'O') {
-                combinedBoard[i][j] = '0';   // Lägg till logik för att visa öppnad cell
-            } else if (board[i][j] == 'ꚰ') {
-                combinedBoard[i][j] = 'ꚰ'; // Lägg till logik för att visa flagga
-            } else if (hiddenBoard[i][j] == 'X') {
-               combinedBoard[i][j] = 'X'; // Lägg till logik för att visa mina eller dold cell
-            } else {
-                combinedBoard[i][j] = ' ';// Lägg till logik för att visa dold cell
+    public void showBoard() {
+        char[][] combinedBoard = new char[hiddenBoard.length][hiddenBoard[0].length];
+        for (int i = 0; i < hiddenBoard.length; i++) {
+            for (int j = 0; j < hiddenBoard[i].length; j++) {
+                if (board[i][j] == '0') {
+                    combinedBoard[i][j] = '0';
+                } else if (board[i][j] == 'ꚰ') {
+                    combinedBoard[i][j] = 'ꚰ';
+                } else if (hiddenBoard[i][j] == 'X') {
+                    combinedBoard[i][j] = 'X';
+                } else if (board[i][j] == ' ') {
+                    combinedBoard[i][j] = ' ';
+                } else if (board[i][j] == '1') {
+                    combinedBoard[i][j] = '1';
+                }else if (board[i][j] == '2') {
+                    combinedBoard[i][j] = '2';
+                }else if (board[i][j] == '3') {
+                    combinedBoard[i][j] = '3';
+                }else if (board[i][j] == '4') {
+                    combinedBoard[i][j] = '4';
+                }else if (board[i][j] == '5') {
+                    combinedBoard[i][j] = '5';
+                }else if (board[i][j] == '6') {
+                    combinedBoard[i][j] = '6';
+                }else if (board[i][j] == '7') {
+                    combinedBoard[i][j] = '7';
+                }else if (board[i][j] == '8') {
+                    combinedBoard[i][j] = '8';
+                }
             }
         }
-    }
-    for(int i = 0; i < combinedBoard.length; i ++){
-        for(int j = 0; j< combinedBoard[i].length; j++){
-            //System.out.print(combinedBoard[i][j]);
-        }
-        System.out.println();
+        // for(int i = 0; i < combinedBoard.length; i ++){
+        //for(int j = 0; j< combinedBoard[i].length; j++){
+        printBoard(combinedBoard);
 
-    }
-}
+        //System.out.print(combinedBoard[i][j]);
+        // }
 
+        // System.out.println();
+
+        // }
+    }
 
 
     public char minesAround(char[][] board, int rowOfACell, int columnOfACell) {
@@ -491,10 +506,11 @@ public class Board {
 
     /**
      * Method that opens up adjacent cells if they are no bombs around.
+     *
      * @param row
      * @param column
      */
-    public void openAdjacentCells(int row, int column){
+    public void openAdjacentCells(int row, int column) {
 
 
         //Check if cell is inside board and not outside. If outside, return.
@@ -507,7 +523,7 @@ public class Board {
         }
         // Checks with minesAround() if there are mines adjacent and saves result in char numberOfMines.
         char numberOfMines = minesAround(hiddenBoard, row, column);
-       // Open up cell and write number of mines around on cell.
+        // Open up cell and write number of mines around on cell.
         board[row][column] = numberOfMines;
 
         //Check first cell you open if it's '0'. Then repeat the whole method with adjacent cells.
