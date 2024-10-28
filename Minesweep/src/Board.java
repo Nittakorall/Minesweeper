@@ -17,6 +17,7 @@ public class Board {
     int mines;
     int flagsAvailable;
 
+
     // Timer
     private boolean gameTimer;
     private long displayMinutes = 0;
@@ -156,15 +157,14 @@ public class Board {
 
     public void makeMove(int winTimes, int lostTimes, int flagsAvailable) {
 
-        //startTimer();
 
+        // startTimer();
 
-       // startTimer();
 
 
 
         checkWin(winTimes, lostTimes);
-        printBoard(hiddenBoard); // better to remove later
+       // printBoard(hiddenBoard); // better to remove later
         // System.out.println(flagsAvailable);
         while (true) {
 
@@ -255,19 +255,26 @@ public class Board {
 
                 } else if (board[inputRowNumber - 1][columnIndex] == 'ꚰ') {
                     System.out.println("Do you want to remove flag? yes or no: ");
-                    String yesOrNo = scanner.nextLine();
+                    String yesOrNo;
 
+                    while (true) {
+                        yesOrNo = scanner.nextLine();
+                        if (yesOrNo.equalsIgnoreCase("yes")) {  // if yes flag removes
+                            board[inputRowNumber - 1][columnIndex] = ' ';
+                            flagsAvailable++;
 
-                    if (yesOrNo.equalsIgnoreCase("yes")) {  // if yes flag removes
-                        board[inputRowNumber - 1][columnIndex] = ' ';
-                        flagsAvailable++;
-                        printBoard(board);
-                        makeMove(winTimes, lostTimes, flagsAvailable);
-                    } else {
-                        printBoard(board);
-                        makeMove(winTimes, lostTimes, flagsAvailable);
+                            printBoard(board);
+                            makeMove(winTimes, lostTimes, flagsAvailable);
+                            break;
+                        } else if (yesOrNo.equalsIgnoreCase("no")) {
+                            printBoard(board);
+                            makeMove(winTimes, lostTimes, flagsAvailable);
+                            break;
+                        } else {
+                            System.out.println("Please choose yes or no");
+                        }
+
                     }
-
                 } else if (board[inputRowNumber - 1][columnIndex] != ' ') { //if a cell user picks isn't ' ' and has some other symbol
                     System.out.println("You've already opened this cell, please pick another one");
                     printBoard(board);
@@ -278,9 +285,13 @@ public class Board {
                     columnOfACell = columnIndex; //need for minesAround
 
 
+
+                   
+
                     openAdjacentCells(rowOfACell, columnOfACell);
                  //  board[inputRowNumber - 1][columnIndex] = minesAround(board, rowOfACell, columnOfACell);
                    System.out.println("Lucky you! There was no bomb on " + inputColumnUpperCase + inputRowNumber + ".");
+
 
                     printBoard(board);
                     makeMove(winTimes, lostTimes, flagsAvailable);
@@ -288,22 +299,23 @@ public class Board {
 
             } else if (openOrFlag.equals("2")) {  // checks if opened, if not adds flag
 
-                    if (board[inputRowNumber - 1][columnIndex] == ' ') {
+                if (board[inputRowNumber - 1][columnIndex] == ' ') {
 
-                        board[inputRowNumber - 1][columnIndex] = 'ꚰ';
-                        flagsAvailable--;
-                        // System.out.println(flagsAvailable);
-                        printBoard(board);
-                        makeMove(winTimes, lostTimes, flagsAvailable);
-                    } else if (board[inputRowNumber - 1][columnIndex] == 'ꚰ') {
-                        System.out.println("There's already a flag there");
-                        printBoard(board);
-                        makeMove(winTimes, lostTimes, flagsAvailable);
-                    } else if (board[inputRowNumber - 1][columnIndex] != ' ' && board[inputRowNumber - 1][columnIndex] != 'ꚰ') {//if a cell user picks isn't ' ' or a flag and has some other symbol
-                        System.out.println("You've already opened this cell, please pick another one");
-                        makeMove(winTimes, lostTimes, flagsAvailable);
+                    board[inputRowNumber - 1][columnIndex] = 'ꚰ';
+                    flagsAvailable--;
 
-                    }
+                    // System.out.println(flagsAvailable);
+                    printBoard(board);
+                    makeMove(winTimes, lostTimes, flagsAvailable);
+                } else if (board[inputRowNumber - 1][columnIndex] == 'ꚰ') {
+                    System.out.println("There's already a flag there");
+                    printBoard(board);
+                    makeMove(winTimes, lostTimes, flagsAvailable);
+                } else if (board[inputRowNumber - 1][columnIndex] != ' ' && board[inputRowNumber - 1][columnIndex] != 'ꚰ') {//if a cell user picks isn't ' ' or a flag and has some other symbol
+                    System.out.println("You've already opened this cell, please pick another one");
+                    makeMove(winTimes, lostTimes, flagsAvailable);
+
+                }
             }
             //printBoard(hiddenBoard); mine shows in real board too
         }
@@ -334,14 +346,33 @@ public class Board {
      * @param lostTimes
      */
     public void checkWin(int winTimes, int lostTimes) {
-        boolean win = true;
+        boolean allSameFlags = true;
+        for (int x = 0; x < board.length; x++) {
+            for (int y = 0; y < board[x].length; y++) {//if all cells has flags
+                if (board[x][y] != 'ꚰ') {
+                    allSameFlags = false;
+                    break;
+                }
+            }
+            if (!allSameFlags) {
+                break;
+            }
+        }
+        if (allSameFlags) {
+            return; // Avbryt om alla element är 'ꚰ'
+        }
 
+        boolean win = true;
         for (int x = 0; x < board.length; x++) { //check for all cells in board
             for (int y = 0; y < board[x].length; y++) {
-                if (board[x][y] == ' ' && hiddenBoard[x][y] != 'X') { //if there's at least one cell ' ' on board that isn't X on hiddenboard
+
+                if ((board[x][y] != 'ꚰ' && board[x][y] == ' ' && hiddenBoard[x][y] != 'X')) {//if there's at least one cell ' ' on board that isn't X on hiddenboard
+                    //and flags are ignored
                     win = false;
                     break; // go back to move() and continue game
                 }
+
+
             }
         }
         if (win) {
@@ -351,6 +382,17 @@ public class Board {
             System.out.println("You lost " + lostTimes + " times");
             playAgainQuestion(winTimes, lostTimes);
         }
+
+//           boolean winByFlags = true;    old debugger for flags
+//        for (
+//                int x = 0;
+//                x < board.length; x++) { //check for all cells in board
+//            for (int y = 0; y < board[x].length; y++) {
+//                if (board[x][y] != 'ꚰ') {//
+//                    return;
+//                }
+//            }
+//        }
     }
 
     /**
@@ -446,12 +488,14 @@ public class Board {
         return amountMinesAroundChar;
     }
 
+
     /**
      * Method that opens up adjacent cells if they are no bombs around.
      * @param row
      * @param column
      */
     public void openAdjacentCells(int row, int column){
+
 
         //Check if cell is inside board and not outside. If outside, return.
         if (row < 0 || column < 0 || this.column <= column || row >= this.row) {
