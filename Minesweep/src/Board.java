@@ -1,6 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import java.util.concurrent.TimeUnit;
@@ -280,7 +278,7 @@ public class Board {
                     columnOfACell = columnIndex; //need for minesAround
 
 
-                    openCellsIfO(rowOfACell, columnOfACell);
+                    openAdjacentCells(rowOfACell, columnOfACell);
                  //  board[inputRowNumber - 1][columnIndex] = minesAround(board, rowOfACell, columnOfACell);
                    System.out.println("Lucky you! There was no bomb on " + inputColumnUpperCase + inputRowNumber + ".");
 
@@ -448,26 +446,37 @@ public class Board {
         return amountMinesAroundChar;
     }
 
-    public void openCellsIfO(int row, int column){
+    /**
+     * Method that opens up adjacent cells if they are no bombs around.
+     * @param row
+     * @param column
+     */
+    public void openAdjacentCells(int row, int column){
 
+        //Check if cell is inside board and not outside. If outside, return.
         if (row < 0 || column < 0 || this.column <= column || row >= this.row) {
             return;
         }
+        // Check if cell is opened or have a mine. If true, return.
         if (board[row][column] != ' ' || hiddenBoard[row][column] == 'X') {
             return;
         }
-        char amountMines = minesAround(hiddenBoard, row, column);
-        board[row][column] = amountMines == '0' ? '0' : amountMines;
+        // Checks with minesAround() if there are mines adjacent and saves result in char numberOfMines.
+        char numberOfMines = minesAround(hiddenBoard, row, column);
+       // Open up cell and write number of mines around on cell.
+        board[row][column] = numberOfMines;
 
-        if (amountMines == '0') {
-            openCellsIfO(row - 1, column);
-            openCellsIfO(row - 1, column + 1);
-            openCellsIfO(row - 1, column - 1);
-            openCellsIfO(row + 1, column - 1);
-            openCellsIfO(row + 1, column + 1);
-            openCellsIfO(row + 1, column);
-            openCellsIfO(row, column + 1);
-            openCellsIfO(row, column - 1);
+        //Check first cell you open if it's '0'. Then repeat the whole method with adjacent cells.
+        //Only tries opens up adjacent cells if it is a '0' on the opened cell.
+        if (numberOfMines == '0') {
+            openAdjacentCells(row - 1, column);
+            openAdjacentCells(row - 1, column + 1);
+            openAdjacentCells(row - 1, column - 1);
+            openAdjacentCells(row + 1, column - 1);
+            openAdjacentCells(row + 1, column + 1);
+            openAdjacentCells(row + 1, column);
+            openAdjacentCells(row, column + 1);
+            openAdjacentCells(row, column - 1);
         }
 
     }
