@@ -11,9 +11,6 @@ public class Player {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
     /**
      * Welcomes and ask for name and prints name
      */
