@@ -5,6 +5,8 @@ import java.util.Scanner;
 
 
 public class Menu {
+    Scanner scanner = new Scanner(System.in);
+
     /**
      * function that presents a menu.
      * First with options 1. Rules, 2. Start game.
@@ -12,10 +14,10 @@ public class Menu {
      * Error handling added.
      */
     public void menu(int winTimes, int lostTimes) {
-        Scanner scanner = new Scanner(System.in);
         System.out.println("What do you want to do: \n" +
                 "1. Read the rules.\n" +
                 "2. Start the game!\n");
+
         int rulesOrGame;
         boolean isRunning = true;
 
@@ -28,7 +30,7 @@ public class Menu {
                     System.out.println("1. Easy");
                     System.out.println("2. Medium");
                     System.out.println("3. Hard");
-                    System.out.println("4. Choose your own size and mine amount");
+                    System.out.println("4. Custom");
                     System.out.println("5. Quit\n");
                     int a;
 
@@ -129,7 +131,7 @@ public class Menu {
                                         "1. Easy\n" +
                                         "2. Medium\n" +
                                         "3. Hard\n" +
-                                        "4. Choose your own size and mine amount" +
+                                        "4. Custom" +
                                         "5. Quit");
                             }
                         } catch (InputMismatchException e) {
@@ -137,7 +139,7 @@ public class Menu {
                                     "1. Easy\n" +
                                     "2. Medium\n" +
                                     "3. Hard\n" +
-                                    "4. Choose your own size and mine amount\n" +
+                                    "4. Custom\n" +
                                     "5. Quit\n");
                             scanner.nextLine();
                         }
