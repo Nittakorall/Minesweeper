@@ -157,7 +157,13 @@ public class Board {
      */
 
     public void makeMove(int winTimes, int lostTimes, int flagsAvailable) {
+
         //startTimer();
+
+
+       // startTimer();
+
+
 
         checkWin(winTimes, lostTimes);
         printBoard(hiddenBoard); // better to remove later
@@ -165,9 +171,18 @@ public class Board {
         while (true) {
 
 
-            System.out.println("\nWhat do you want to do?\n" +
-                    "1. Open cell.\n" +
-                    "2. Add flag (" + flagsAvailable + " left)\n");
+            System.out.println("\nWhat do you want to do?");
+            if (flagsAvailable > 0) {
+                System.out.println("1. Open cell.\n" +
+                        "2. Add flag (" + flagsAvailable + " left)\n");
+            } else if (flagsAvailable == 0) {
+                System.out.println("1. Open cell.\n" +
+                        "2. Add flag.\nBy the way, you've placed as many flags as there are mines.\n");
+            } else if (flagsAvailable < 0) {
+                System.out.println("1. Open cell.\n" +
+                        "2. Add flag.\nThere aren't that many mines, actually, you've already placed " + (flagsAvailable - (flagsAvailable * 2)) + " too many");
+            }
+
 
             String openOrFlag;
             while (true) {
@@ -260,24 +275,26 @@ public class Board {
                     printBoard(board);
                     makeMove(winTimes, lostTimes, flagsAvailable);
 
-
                 } else {
                     rowOfACell = inputRowNumber - 1;//need for minesAround
                     columnOfACell = columnIndex; //need for minesAround
-                    board[inputRowNumber - 1][columnIndex] = minesAround(board, rowOfACell, columnOfACell);
-                    System.out.println("There was no bomb on " + inputColumnUpperCase + inputRowNumber + ". You can make next move:");
+
+
+                    openCellsIfO(rowOfACell, columnOfACell);
+                 //  board[inputRowNumber - 1][columnIndex] = minesAround(board, rowOfACell, columnOfACell);
+                   System.out.println("Lucky you! There was no bomb on " + inputColumnUpperCase + inputRowNumber + ".");
+
                     printBoard(board);
                     makeMove(winTimes, lostTimes, flagsAvailable);
                 }
 
-
             } else if (openOrFlag.equals("2")) {  // checks if opened, if not adds flag
 
-                if (flagsAvailable > 0) {
-                    if (board[inputRowNumber - 1][columnIndex] == ' ' || hiddenBoard[inputRowNumber - 1][columnIndex] == 'X') {
+                    if (board[inputRowNumber - 1][columnIndex] == ' ') {
+
                         board[inputRowNumber - 1][columnIndex] = 'ꚰ';
                         flagsAvailable--;
-                        System.out.println(flagsAvailable);
+                        // System.out.println(flagsAvailable);
                         printBoard(board);
                         makeMove(winTimes, lostTimes, flagsAvailable);
                     } else if (board[inputRowNumber - 1][columnIndex] == 'ꚰ') {
@@ -287,18 +304,10 @@ public class Board {
                     } else if (board[inputRowNumber - 1][columnIndex] != ' ' && board[inputRowNumber - 1][columnIndex] != 'ꚰ') {//if a cell user picks isn't ' ' or a flag and has some other symbol
                         System.out.println("You've already opened this cell, please pick another one");
                         makeMove(winTimes, lostTimes, flagsAvailable);
+
                     }
-                } else if (flagsAvailable <= 0) {
-
-                    System.out.println("You don't have enough flags, please remove some flags before placing new!");
-
-                    printBoard(board);
-                    makeMove(winTimes, lostTimes, flagsAvailable);
-                }
             }
             //printBoard(hiddenBoard); mine shows in real board too
-
-
         }
     }
 
@@ -328,6 +337,7 @@ public class Board {
      */
     public void checkWin(int winTimes, int lostTimes) {
         boolean win = true;
+
         for (int x = 0; x < board.length; x++) { //check for all cells in board
             for (int y = 0; y < board[x].length; y++) {
                 if (board[x][y] == ' ' && hiddenBoard[x][y] != 'X') { //if there's at least one cell ' ' on board that isn't X on hiddenboard
@@ -368,7 +378,6 @@ public class Board {
             }
         }
     }
-
     /**
      * prints board when game over, shows placed flags, mines and opened cells
      * needs more work on it
@@ -396,6 +405,7 @@ public class Board {
 
     }
 }
+
 
 
     public char minesAround(char[][] board, int rowOfACell, int columnOfACell) {
@@ -428,7 +438,6 @@ public class Board {
             allCellsAround.add(hiddenBoard[rowOfACell + 1][columnOfACell + 1]);
         }
 
-
         for (Character character : allCellsAround) {
             if (character == 'X') {
                 listWithMinesAround.add(character);
@@ -437,6 +446,30 @@ public class Board {
         int amountMinesAround = listWithMinesAround.size();
         char amountMinesAroundChar = (char) ('0' + amountMinesAround);
         return amountMinesAroundChar;
+    }
+
+    public void openCellsIfO(int row, int column){
+
+        if (row < 0 || column < 0 || this.column <= column || row >= this.row) {
+            return;
+        }
+        if (board[row][column] != ' ' || hiddenBoard[row][column] == 'X') {
+            return;
+        }
+        char amountMines = minesAround(hiddenBoard, row, column);
+        board[row][column] = amountMines == '0' ? '0' : amountMines;
+
+        if (amountMines == '0') {
+            openCellsIfO(row - 1, column);
+            openCellsIfO(row - 1, column + 1);
+            openCellsIfO(row - 1, column - 1);
+            openCellsIfO(row + 1, column - 1);
+            openCellsIfO(row + 1, column + 1);
+            openCellsIfO(row + 1, column);
+            openCellsIfO(row, column + 1);
+            openCellsIfO(row, column - 1);
+        }
+
     }
 }
 
