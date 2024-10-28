@@ -95,6 +95,7 @@ public class Board {
         String orangeColor = "\u001B[38;5;214m";
         // ANSI escape code to reset color
         String resetColor = "\033[0m";
+        String explosion = "\uD83D\uDCA5";
 
         System.out.print("    ");
         for (int c = 0; c < column; c++) {
@@ -116,7 +117,7 @@ public class Board {
                 char currentChar = chooseBoard[r][c];
                 if (currentChar == 'X') {
                     // prints background color red if symbol is 'X'
-                    System.out.print("  |  " + redBackground + redColor + currentChar + resetColor);
+                    System.out.print("  | "+explosion);
 
 
                 } else if (currentChar == '0') {
@@ -136,7 +137,7 @@ public class Board {
                     System.out.print("  |  " + currentChar);
                 }
                 if (c == column - 1) {
-                    System.out.println("  | ");
+                    System.out.println("  |  ");
                 }
             }
             System.out.print("----");
@@ -157,7 +158,11 @@ public class Board {
 
     public void makeMove(int winTimes, int lostTimes, int flagsAvailable) {
 
+        //startTimer();
+
+
        // startTimer();
+
 
 
         checkWin(winTimes, lostTimes);
@@ -238,8 +243,9 @@ public class Board {
             if (openOrFlag.equals("1")) {
 
                 if (hiddenBoard[inputRowNumber - 1][columnIndex] == 'X' && board[inputRowNumber - 1][columnIndex] != 'ꚰ') { // checks if there are a bomb in choosen space
-                    System.out.println("Boom. There was a mine on " + inputColumnUpperCase + inputRowNumber);
+                    System.out.println("Boom! There was a mine on " + inputColumnUpperCase + inputRowNumber + "! Game Over! ");
                     board[inputRowNumber - 1][columnIndex] = 'X';
+                    showBoard();
 
                     //printBoard(hiddenBoard); mine shows in real board too
                     printBoard(board);
@@ -372,6 +378,35 @@ public class Board {
             }
         }
     }
+    /**
+     * prints board when game over, shows placed flags, mines and opened cells
+     * needs more work on it
+     */
+    public void showBoard(){
+    char [][] combinedBoard = new char [hiddenBoard.length][hiddenBoard[0].length];
+    for (int i = 0; i < hiddenBoard.length; i++) {
+        for (int j = 0; j < hiddenBoard[i].length; j++) {
+            if (board[i][j] == 'O') {
+                combinedBoard[i][j] = '0';   // Lägg till logik för att visa öppnad cell
+            } else if (board[i][j] == 'ꚰ') {
+                combinedBoard[i][j] = 'ꚰ'; // Lägg till logik för att visa flagga
+            } else if (hiddenBoard[i][j] == 'X') {
+               combinedBoard[i][j] = 'X'; // Lägg till logik för att visa mina eller dold cell
+            } else {
+                combinedBoard[i][j] = ' ';// Lägg till logik för att visa dold cell
+            }
+        }
+    }
+    for(int i = 0; i < combinedBoard.length; i ++){
+        for(int j = 0; j< combinedBoard[i].length; j++){
+            //System.out.print(combinedBoard[i][j]);
+        }
+        System.out.println();
+
+    }
+}
+
+
 
     public char minesAround(char[][] board, int rowOfACell, int columnOfACell) {
         ArrayList<Character> allCellsAround = new ArrayList<>();
