@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit;
 public class Board {
     Scanner scanner = new Scanner(System.in);
     StringBuilder stringBuilder = new StringBuilder(); //when creating a board, add all column letters to a new string
-
+    //ScoreTotal ScoreTotal = new ScoreTotal();
     // 2d arrays for visible board and hidden board (contains mines later).
 
     char[][] board;
@@ -16,6 +16,7 @@ public class Board {
     int column;
     int mines;
     int flagsAvailable;
+    private ScoreTotal scoreTotal;
 
 
     // Timer
@@ -29,6 +30,7 @@ public class Board {
         this.column = column;
         this.mines = mines;
         this.hiddenBoard = new char[row][column];
+        // this.scoreTotal = ScoreTotal;
     }
 
     // Timer-method
@@ -154,15 +156,15 @@ public class Board {
      * starts checkMove in the beginning to check if user won previous time
      * if not, asks user to open new cell
      *
-     * @param winTimes  add +1 if user wins
-     * @param lostTimes add +1 if user lose
+     * @param //winTimes  add +1 if user wins
+     * @param //lostTimes add +1 if user lose
      */
 
     public void makeMove(int winTimes, int lostTimes, int flagsAvailable) {
-        // startTimer();
+        //startTimer();
 
         checkWin(winTimes, lostTimes);
-        printBoard(hiddenBoard);
+
         while (true) {
 
             System.out.println("\nWhat do you want to do?");
@@ -240,7 +242,7 @@ public class Board {
                     board[inputRowNumber - 1][columnIndex] = 'X';
 
                     showBoard();
-
+                    //    ScoreTotal.countLost();
                     lostTimes++;
                     System.out.println("You won " + winTimes + " times"); // prints if you win or lose
                     System.out.println("You lost " + lostTimes + " times");
@@ -332,13 +334,13 @@ public class Board {
     /**
      * sets win and shows winning text unless there are some unopened cells that doesn't have mines according to hiddenboard
      *
-     * @param winTimes
-     * @param lostTimes
+     * @param //winTimes
+     * @param //lostTimes
      */
-    public void checkWin(int winTimes, int lostTimes) {
+    public void checkWin(int winTimes,int lostTimes) {
         boolean allSameFlags = true;
         for (int x = 0; x < board.length; x++) {
-            for (int y = 0; y < board[x].length; y++) {//if all cells have flags
+            for (int y = 0; y < board[x].length; y++) {//if all cells has flags
                 if (board[x][y] != 'ꚰ') {
                     allSameFlags = false;
                     break;
@@ -356,19 +358,13 @@ public class Board {
         for (int x = 0; x < board.length; x++) { //check for all cells in board
             for (int y = 0; y < board[x].length; y++) {
 
-                if (board[x][y] == ' ' && hiddenBoard[x][y] != 'X') {//if there's at least one cell ' ' on board that isn't X on hiddenboard
+                if ((board[x][y] != 'ꚰ' && board[x][y] == ' ' && hiddenBoard[x][y] != 'X')) {//if there's at least one cell ' ' on board that isn't X on hiddenboard
+                    //and flags are ignored
                     win = false;
                     break; // go back to move() and continue game
                 }
-            }
-        }
-        for (int x = 0; x < board.length; x++) { //check for all cells in board
-            for (int y = 0; y < board[x].length; y++) {
 
-                if (board[x][y] == 'ꚰ' && hiddenBoard[x][y] != 'X') {//if there's at least one cell 'ꚰ' on board that isn't X on hiddenboard
-                    win = false;
-                    break; // go back to move() and continue game
-                }
+
             }
         }
         if (win) {
@@ -379,22 +375,22 @@ public class Board {
             playAgainQuestion(winTimes, lostTimes);
         }
 
-//          boolean winByFlags = true;   // old debugger for flags
+//           boolean winByFlags = true;    old debugger for flags
 //        for (
-//               int x = 0;
-//              x < board.length; x++) { //check for all cells in board
+//                int x = 0;
+//                x < board.length; x++) { //check for all cells in board
 //            for (int y = 0; y < board[x].length; y++) {
 //                if (board[x][y] != 'ꚰ') {//
 //                    return;
 //                }
 //            }
-//       }
+//        }
     }
 
     /**
      * Asks if you want to play again or not
      */
-    public void playAgainQuestion(int winTimes, int lostTimes) {
+    public void playAgainQuestion(int winTimes,int lostTimes) {
         System.out.println("Would you like to play again? yes or no");
         String answer;
         String answerLowerCase;
@@ -404,7 +400,7 @@ public class Board {
             answerLowerCase = answer.toLowerCase();
             if (answerLowerCase.equals("yes")) {
                 Menu menu = new Menu();
-                menu.menu(winTimes, lostTimes);
+                menu.secondMenu(winTimes, lostTimes);
                 break;
             } else if (answerLowerCase.equals("no")) {
                 System.out.println("Thank you for coming!");
@@ -433,19 +429,19 @@ public class Board {
                     combinedBoard[i][j] = ' ';
                 } else if (board[i][j] == '1') {
                     combinedBoard[i][j] = '1';
-                } else if (board[i][j] == '2') {
+                }else if (board[i][j] == '2') {
                     combinedBoard[i][j] = '2';
-                } else if (board[i][j] == '3') {
+                }else if (board[i][j] == '3') {
                     combinedBoard[i][j] = '3';
-                } else if (board[i][j] == '4') {
+                }else if (board[i][j] == '4') {
                     combinedBoard[i][j] = '4';
-                } else if (board[i][j] == '5') {
+                }else if (board[i][j] == '5') {
                     combinedBoard[i][j] = '5';
-                } else if (board[i][j] == '6') {
+                }else if (board[i][j] == '6') {
                     combinedBoard[i][j] = '6';
-                } else if (board[i][j] == '7') {
+                }else if (board[i][j] == '7') {
                     combinedBoard[i][j] = '7';
-                } else if (board[i][j] == '8') {
+                }else if (board[i][j] == '8') {
                     combinedBoard[i][j] = '8';
                 }
             }
@@ -532,6 +528,4 @@ public class Board {
 
     }
 }
-
-
 
