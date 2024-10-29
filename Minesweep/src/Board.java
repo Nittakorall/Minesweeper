@@ -76,14 +76,19 @@ public class Board {
         }
     }
 
+    String resetColor = "\033[0m";
+    String redBackground = "\033[41m";
+
     /**
      * Prints visible board in terminal for user.
      */
     public void printBoard(char[][] chooseBoard) {
         String blueColor = "\033[34m";
         String magentaColor = "\u001B[35m";
+        String blackColor = "\033[30m";
         String yellowColor = "\033[33m";// ANSI escape code for green text
         String greenColor = "\033[32m";// ANSI escape code for green background
+        String redBackground = "\033[41m";
         String redColor = "\033[31m"; // ANSI escape code for red text
         String orangeColor = "\u001B[38;5;214m";
         String resetColor = "\033[0m";// ANSI escape code to reset color
@@ -122,10 +127,12 @@ public class Board {
                     System.out.print("  |  " + redColor + currentChar + resetColor);
                 } else if (currentChar == '4' || currentChar == '5' || currentChar == '6' || currentChar == '7' || currentChar == '8') {
                     System.out.print("  |  " + magentaColor + currentChar + resetColor);
-
                 } else if (currentChar == 'ꚰ') {
                     System.out.print("  |  " + orangeColor + currentChar + resetColor);
-                } else {
+                } else if (currentChar == 'i') {
+                    System.out.print("  |  " + redBackground + blackColor + 'ꚰ' + resetColor);
+                }
+                else {
                     System.out.print("  |  " + currentChar);
                 }
                 if (c == column - 1) {
@@ -423,14 +430,24 @@ public class Board {
         char[][] combinedBoard = new char[hiddenBoard.length][hiddenBoard[0].length];
         for (int i = 0; i < hiddenBoard.length; i++) {
             for (int j = 0; j < hiddenBoard[i].length; j++) {
-                if (board[i][j] == '0') {
-                    combinedBoard[i][j] = '0';
-                } else if (board[i][j] == 'ꚰ') {
-                    combinedBoard[i][j] = 'ꚰ';
+                if (board[i][j] == 'ꚰ' && hiddenBoard[i][j] != 'X') {
+                    combinedBoard[i][j] = 'i';
+                }
+                else if (board[i][j] == 'ꚰ' || (board[i][j] >= '0' && board[i][j] <= '8')) {
+                    combinedBoard[i][j] = board[i][j];
                 } else if (hiddenBoard[i][j] == 'X') {
+                    combinedBoard[i][j] = 'X';
+                }
+                else {
+                    combinedBoard[i][j] = ' ';
+                }
+
+            /*(hiddenBoard[i][j] == 'X') {
                     combinedBoard[i][j] = 'X';
                 } else if (board[i][j] == ' ') {
                     combinedBoard[i][j] = ' ';
+                } else if (board[i][j] == '0') {
+                    combinedBoard[i][j] = '0';
                 } else if (board[i][j] == '1') {
                     combinedBoard[i][j] = '1';
                 } else if (board[i][j] == '2') {
@@ -448,10 +465,11 @@ public class Board {
                 } else if (board[i][j] == '8') {
                     combinedBoard[i][j] = '8';
                 }
+*/
             }
+
         }
         printBoard(combinedBoard);
-
     }
 
 
