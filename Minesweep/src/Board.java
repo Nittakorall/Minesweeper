@@ -162,7 +162,7 @@ public class Board {
         // startTimer();
 
         checkWin(winTimes, lostTimes);
-
+        printBoard(hiddenBoard);
         while (true) {
 
             System.out.println("\nWhat do you want to do?");
@@ -338,7 +338,7 @@ public class Board {
     public void checkWin(int winTimes, int lostTimes) {
         boolean allSameFlags = true;
         for (int x = 0; x < board.length; x++) {
-            for (int y = 0; y < board[x].length; y++) {//if all cells has flags
+            for (int y = 0; y < board[x].length; y++) {//if all cells have flags
                 if (board[x][y] != 'ꚰ') {
                     allSameFlags = false;
                     break;
@@ -356,13 +356,19 @@ public class Board {
         for (int x = 0; x < board.length; x++) { //check for all cells in board
             for (int y = 0; y < board[x].length; y++) {
 
-                if ((board[x][y] != 'ꚰ' && board[x][y] == ' ' && hiddenBoard[x][y] != 'X')) {//if there's at least one cell ' ' on board that isn't X on hiddenboard
-                    //and flags are ignored
+                if (board[x][y] == ' ' && hiddenBoard[x][y] != 'X') {//if there's at least one cell ' ' on board that isn't X on hiddenboard
                     win = false;
                     break; // go back to move() and continue game
                 }
+            }
+        }
+        for (int x = 0; x < board.length; x++) { //check for all cells in board
+            for (int y = 0; y < board[x].length; y++) {
 
-
+                if (board[x][y] == 'ꚰ' && hiddenBoard[x][y] != 'X') {//if there's at least one cell 'ꚰ' on board that isn't X on hiddenboard
+                    win = false;
+                    break; // go back to move() and continue game
+                }
             }
         }
         if (win) {
@@ -373,16 +379,16 @@ public class Board {
             playAgainQuestion(winTimes, lostTimes);
         }
 
-//           boolean winByFlags = true;    old debugger for flags
+//          boolean winByFlags = true;   // old debugger for flags
 //        for (
-//                int x = 0;
-//                x < board.length; x++) { //check for all cells in board
+//               int x = 0;
+//              x < board.length; x++) { //check for all cells in board
 //            for (int y = 0; y < board[x].length; y++) {
 //                if (board[x][y] != 'ꚰ') {//
 //                    return;
 //                }
 //            }
-//        }
+//       }
     }
 
     /**
@@ -427,19 +433,19 @@ public class Board {
                     combinedBoard[i][j] = ' ';
                 } else if (board[i][j] == '1') {
                     combinedBoard[i][j] = '1';
-                }else if (board[i][j] == '2') {
+                } else if (board[i][j] == '2') {
                     combinedBoard[i][j] = '2';
-                }else if (board[i][j] == '3') {
+                } else if (board[i][j] == '3') {
                     combinedBoard[i][j] = '3';
-                }else if (board[i][j] == '4') {
+                } else if (board[i][j] == '4') {
                     combinedBoard[i][j] = '4';
-                }else if (board[i][j] == '5') {
+                } else if (board[i][j] == '5') {
                     combinedBoard[i][j] = '5';
-                }else if (board[i][j] == '6') {
+                } else if (board[i][j] == '6') {
                     combinedBoard[i][j] = '6';
-                }else if (board[i][j] == '7') {
+                } else if (board[i][j] == '7') {
                     combinedBoard[i][j] = '7';
-                }else if (board[i][j] == '8') {
+                } else if (board[i][j] == '8') {
                     combinedBoard[i][j] = '8';
                 }
             }
