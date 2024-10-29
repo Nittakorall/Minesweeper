@@ -86,10 +86,14 @@ public class Board {
         String blueColor = "\033[34m";
         String magentaColor = "\u001B[35m";
         String blackColor = "\033[30m";
+        String lightRedBackground = "\033[101m";
+        String cyanColor = "\033[36m";
         String yellowColor = "\033[33m";// ANSI escape code for green text
         String greenColor = "\033[32m";// ANSI escape code for green background
         String redBackground = "\033[41m";
-        String redColor = "\033[31m"; // ANSI escape code for red text
+        String redColor = "\033[31m";
+        String pinkBackgroundColor = "\033[48;5;13m";// ANSI escape code for red text
+        String lightRedBackgroundColor = "\033[48;5;210m";
         String orangeColor = "\u001B[38;5;214m";
         String resetColor = "\033[0m";// ANSI escape code to reset color
         String explosion = "\uD83D\uDCA5"; // explosion symbol
@@ -112,25 +116,26 @@ public class Board {
             System.out.printf("%2d", r + 1);
             for (int c = 0; c < column; c++) {
                 char currentChar = chooseBoard[r][c];
-                if (currentChar == 'X') {
+                if (currentChar == 'B' ) {
+                    System.out.print("  | " + redBackground+ explosion + resetColor);
+                }else if (currentChar == 'X') {
                     // prints explosion symbol if symbol is 'X'
                     System.out.print("  | " + explosion);
-
                     // sets color to numbers and symbols
                 } else if (currentChar == '0') {
                     System.out.print("  |  " + blueColor + currentChar + resetColor);
                 } else if (currentChar == '1') {
-                    System.out.print("  |  " + greenColor + currentChar + resetColor);
-                } else if (currentChar == '2') {
-                    System.out.print("  |  " + yellowColor + currentChar + resetColor);
-                } else if (currentChar == '3') {
-                    System.out.print("  |  " + redColor + currentChar + resetColor);
-                } else if (currentChar == '4' || currentChar == '5' || currentChar == '6' || currentChar == '7' || currentChar == '8') {
                     System.out.print("  |  " + magentaColor + currentChar + resetColor);
+                } else if (currentChar == '2') {
+                    System.out.print("  |  " + greenColor + currentChar + resetColor);
+                } else if (currentChar == '3') {
+                    System.out.print("  |  " + cyanColor + currentChar + resetColor);
+                } else if (currentChar == '4' || currentChar == '5' || currentChar == '6' || currentChar == '7' || currentChar == '8') {
+                    System.out.print("  |  " + orangeColor + currentChar + resetColor);
                 } else if (currentChar == 'ꚰ') {
                     System.out.print("  |  " + orangeColor + currentChar + resetColor);
                 } else if (currentChar == 'i') {
-                    System.out.print("  |  " + redBackground + blackColor + 'ꚰ' + resetColor);
+                    System.out.print("  |  " + lightRedBackgroundColor + blackColor + 'ꚰ' + resetColor);
                 }
                 else {
                     System.out.print("  |  " + currentChar);
@@ -229,7 +234,7 @@ public class Board {
                 if (inputColumnUpperCase.length() == 1) { //checks if input has more than 1 letter to make a char of it
                     char columnLetter = inputColumnUpperCase.charAt(0);
                     if (stringBuilder.indexOf(String.valueOf(columnLetter)) != -1) {
-                        System.out.println("Chosen column: " + inputColumnUpperCase);
+                        System.out.println("Chosen cell: " + inputRow + inputColumnUpperCase);
                         columnIndex = inputColumnUpperCase.charAt(0) - 'A';
                         break;
                     } else {
@@ -243,10 +248,10 @@ public class Board {
             if (openOrFlag.equals("1")) {
 
                 if (hiddenBoard[inputRowNumber - 1][columnIndex] == 'X' && board[inputRowNumber - 1][columnIndex] != 'ꚰ') { // checks if there are a bomb in choosen space
-                    System.out.println("Boom! There was a mine on " + inputColumnUpperCase + inputRowNumber + "! Game Over! ");
+                    System.out.println("Boom! There was a mine on "  + inputRowNumber + inputColumnUpperCase + "! Game Over! ");
                     board[inputRowNumber - 1][columnIndex] = 'X';
 
-                    showBoard();
+                    showBoard(inputRowNumber, columnIndex);
 
                     lostTimes++;
                     System.out.println("You won " + winTimes + " times"); // prints if you win or lose
@@ -288,7 +293,7 @@ public class Board {
 
                     openAdjacentCells(rowOfACell, columnOfACell);
                     //  board[inputRowNumber - 1][columnIndex] = minesAround(board, rowOfACell, columnOfACell);
-                    System.out.println("Lucky you! There was no bomb on " + inputColumnUpperCase + inputRowNumber + ".");
+                    System.out.println("Lucky you! There was no bomb on " + inputRowNumber + inputColumnUpperCase + ".");
 
 
                     printBoard(board);
@@ -426,14 +431,14 @@ public class Board {
      * prints board when game over, shows placed flags, mines and opened cells
      * needs more work on it
      */
-    public void showBoard() {
+    public void showBoard(int inputRowNumber, int inputColumnIndex) {
         char[][] combinedBoard = new char[hiddenBoard.length][hiddenBoard[0].length];
+
         for (int i = 0; i < hiddenBoard.length; i++) {
             for (int j = 0; j < hiddenBoard[i].length; j++) {
                 if (board[i][j] == 'ꚰ' && hiddenBoard[i][j] != 'X') {
                     combinedBoard[i][j] = 'i';
-                }
-                else if (board[i][j] == 'ꚰ' || (board[i][j] >= '0' && board[i][j] <= '8')) {
+                } else if (board[i][j] == 'ꚰ' || (board[i][j] >= '0' && board[i][j] <= '8')) {
                     combinedBoard[i][j] = board[i][j];
                 } else if (hiddenBoard[i][j] == 'X') {
                     combinedBoard[i][j] = 'X';
@@ -468,6 +473,8 @@ public class Board {
 */
             }
 
+        } if (hiddenBoard[inputRowNumber-1][inputColumnIndex] == 'X') {
+            combinedBoard[inputRowNumber-1][inputColumnIndex] = 'B';
         }
         printBoard(combinedBoard);
     }
