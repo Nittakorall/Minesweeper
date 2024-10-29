@@ -75,10 +75,6 @@ public class Board {
             }
         }
     }
-
-    String resetColor = "\033[0m";
-    String redBackground = "\033[41m";
-
     /**
      * Prints visible board in terminal for user.
      */
@@ -86,13 +82,11 @@ public class Board {
         String blueColor = "\033[34m";
         String magentaColor = "\u001B[35m";
         String blackColor = "\033[30m";
-        String lightRedBackground = "\033[101m";
         String cyanColor = "\033[36m";
         String yellowColor = "\033[33m";// ANSI escape code for green text
         String greenColor = "\033[32m";// ANSI escape code for green background
         String redBackground = "\033[41m";
         String redColor = "\033[31m";
-        String pinkBackgroundColor = "\033[48;5;13m";// ANSI escape code for red text
         String lightRedBackgroundColor = "\033[48;5;210m";
         String orangeColor = "\u001B[38;5;214m";
         String resetColor = "\033[0m";// ANSI escape code to reset color
@@ -341,6 +335,8 @@ public class Board {
         }
     }
 
+    //TODO More comments for checkWin? So all parts are explained.
+
     /**
      * sets win and shows winning text unless there are some unopened cells that doesn't have mines according to hiddenboard
      *
@@ -406,6 +402,9 @@ public class Board {
     /**
      * Asks if you want to play again or not
      */
+
+    //TODO felhantering där man bara ska kunna skria j, ye, y för att bli ett yes? Om no, fråga igen om de är säkra?
+
     public void playAgainQuestion(int winTimes, int lostTimes) {
         System.out.println("Would you like to play again? yes or no");
         String answer;
@@ -429,56 +428,37 @@ public class Board {
 
     /**
      * prints board when game over, shows placed flags, mines and opened cells
-     * needs more work on it
+     * If hit a mine: Use the latest opened cell's row and column to make the mine have a red background.
      */
     public void showBoard(int inputRowNumber, int inputColumnIndex) {
         char[][] combinedBoard = new char[hiddenBoard.length][hiddenBoard[0].length];
 
+        //Loop through the entire play-board and copies board and hiddenBoard to combinedBoard.
         for (int i = 0; i < hiddenBoard.length; i++) {
             for (int j = 0; j < hiddenBoard[i].length; j++) {
+               // finds wrongly placed flags. 'i' can then be used in printBoard() to give it a pinkish background to indicate wrongly placed flag.
                 if (board[i][j] == 'ꚰ' && hiddenBoard[i][j] != 'X') {
                     combinedBoard[i][j] = 'i';
+                //Rightly placed flags and opened numbers copies over to combinedBoards.
                 } else if (board[i][j] == 'ꚰ' || (board[i][j] >= '0' && board[i][j] <= '8')) {
                     combinedBoard[i][j] = board[i][j];
+                //Mines from hiddenBoard copies over to combinedBoard
                 } else if (hiddenBoard[i][j] == 'X') {
                     combinedBoard[i][j] = 'X';
                 }
+                //All unopened cells stays the same.
                 else {
                     combinedBoard[i][j] = ' ';
                 }
-
-            /*(hiddenBoard[i][j] == 'X') {
-                    combinedBoard[i][j] = 'X';
-                } else if (board[i][j] == ' ') {
-                    combinedBoard[i][j] = ' ';
-                } else if (board[i][j] == '0') {
-                    combinedBoard[i][j] = '0';
-                } else if (board[i][j] == '1') {
-                    combinedBoard[i][j] = '1';
-                } else if (board[i][j] == '2') {
-                    combinedBoard[i][j] = '2';
-                } else if (board[i][j] == '3') {
-                    combinedBoard[i][j] = '3';
-                } else if (board[i][j] == '4') {
-                    combinedBoard[i][j] = '4';
-                } else if (board[i][j] == '5') {
-                    combinedBoard[i][j] = '5';
-                } else if (board[i][j] == '6') {
-                    combinedBoard[i][j] = '6';
-                } else if (board[i][j] == '7') {
-                    combinedBoard[i][j] = '7';
-                } else if (board[i][j] == '8') {
-                    combinedBoard[i][j] = '8';
-                }
-*/
             }
-
+            // the mine user hit will be named 'B' so 'B' could be changed in printBoard to both have a red background and an explosion emoji.
         } if (hiddenBoard[inputRowNumber-1][inputColumnIndex] == 'X') {
             combinedBoard[inputRowNumber-1][inputColumnIndex] = 'B';
         }
         printBoard(combinedBoard);
     }
 
+//TODO need comments for minesAround.
 
     public char minesAround(char[][] board, int rowOfACell, int columnOfACell) {
         ArrayList<Character> allCellsAround = new ArrayList<>();
