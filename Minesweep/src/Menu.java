@@ -7,12 +7,8 @@ import java.util.Scanner;
 public class Menu {
     Scanner scanner = new Scanner(System.in);
     int rulesOrGame;
-    //  final ScoreTotal scoreTotal;
-    // ScoreTotal ScoreTotal = new ScoreTotal();
-
 
     public Menu() {
-
     }
 
     /**
@@ -28,7 +24,6 @@ public class Menu {
                 "2. Start the game!\n");
         try {
             rulesOrGame = scanner.nextInt();
-            // scanner.nextLine();
         } catch (InputMismatchException e) {
             System.out.println("What do you want to do: \n" +
                     "1. Read the rules.\n" +
@@ -43,7 +38,7 @@ public class Menu {
                         "Put flags where you think there might be a mine.\n" +
                         "Difficulty can be increased by adding mines or starting with a larger grid.\n" +
                         "Good luck!\n");
-                menu(winTimes,lostTimes);
+                menu(winTimes, lostTimes);
 
                 break;
             case 2:
@@ -60,24 +55,30 @@ public class Menu {
         }
     }
 
-    public void secondMenu(int winTimes,int lostTimes) {
-        // int rulesOrGame;
-        // int winTimes = 0;
-        //int lostTimes = 0;
+    public void secondMenu(int winTimes, int lostTimes) {
         boolean isRunning = true;
-
+        int a;
+        System.out.println("Please choose difficulty level: ");
+        System.out.println("1. Easy");
+        System.out.println("2. Medium");
+        System.out.println("3. Hard");
+        System.out.println("4. Custom");
+        System.out.println("5. Quit\n");
         while (isRunning) {//checks is input is either 1 or 2, crashes if input is anything but number, need try catch
             try {
-                //scanner.nextLine();
-                System.out.println("Please choose difficulty level: ");
-                System.out.println("1. Easy");
-                System.out.println("2. Medium");
-                System.out.println("3. Hard");
-                System.out.println("4. Custom");
-                System.out.println("5. Quit\n");
-            }
-            catch (InputMismatchException e) {
-                System.out.println("Invalid input. Choose again!\n " +
+                a = scanner.nextInt();
+                isRunning = false;
+if(a>5 || a<1) {
+    System.out.println("Invalid input. Choose again!\n" +
+            "1. Easy\n" +
+            "2. Medium\n" +
+            "3. Hard\n" +
+            "4. Custom\n" +
+            "5. Quit\n");
+    continue;
+}break;
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Choose again!\n" +
                         "1. Easy\n" +
                         "2. Medium\n" +
                         "3. Hard\n" +
@@ -85,65 +86,63 @@ public class Menu {
                         "5. Quit\n");
                 scanner.nextLine();
             }
-            int a;
+        }
 
-            //while (isRunning) { // loops until user choose 1, 2 or 3, 4 , 5 crashes if input is not a number, need try catch
+        //while (isRunning) { // loops until user choose 1, 2 or 3, 4 , 5 crashes if input is not a number, need try catch
 
-            a = scanner.nextInt();
-            //if (a == 1 || a == 2 || a == 3 || a == 4 || a == 5) {
-            Game game = new Game();
-            switch (a) {
-                case 1:
-                    Board easyBoard = new Board(2, 2, 1);
-                    game.game(easyBoard,winTimes, lostTimes);
+        a = scanner.nextInt();
 
+        Game game = new Game();
+        switch (a) {
+            case 1:
+                Board easyBoard = new Board(2, 2, 1);
+                game.game(easyBoard, winTimes, lostTimes);
+
+                break;
+            case 2:
+                Board mediumBoard = new Board(12, 12, 20);
+                game.game(mediumBoard, winTimes, lostTimes);
+                break;
+            case 3:
+                Board hardBoard = new Board(15, 15, 100);
+                game.game(hardBoard, winTimes, lostTimes);
+                break;
+            case 4:
+                Game Custom = new Game();
+                Custom.customGame(winTimes, lostTimes);
+                break;
+            case 5:
+                scanner.nextLine();
+                System.out.println("säker på att du vill avsluta? yes or no.");
+                String answer;
+                String answerLowerCase;
+
+                answer = scanner.nextLine();
+                answerLowerCase = answer.toLowerCase();
+
+                if (answerLowerCase.equals("yes") || answerLowerCase.equals("y") || answerLowerCase.equals("ja") || answerLowerCase.equals("j")) {
+                    System.out.println("Goodbye! ");
+                    isRunning = false;
                     break;
-                case 2:
-                    Board mediumBoard = new Board(12, 12, 20);
-                    game.game(mediumBoard, winTimes, lostTimes);
-                    break;
-                case 3:
-                    Board hardBoard = new Board(15, 15, 100);
-                    game.game(hardBoard, winTimes, lostTimes);
-                    break;
-                case 4:
-                    Game Custom = new Game();
-                    Custom.customGame(winTimes, lostTimes);
-                    break;
-                case 5:
-                    scanner.nextLine();
-                    System.out.println("säker på att du vill avsluta? yes or no.");
-                    String answer;
-                    String answerLowerCase;
+                } else if (answerLowerCase.equals("no") || answerLowerCase.equals("n") || answerLowerCase.equals("nej")) {
 
-                    answer = scanner.nextLine();
-                    answerLowerCase = answer.toLowerCase();
-
-                    if (answerLowerCase.equals("yes") || answerLowerCase.equals("y") || answerLowerCase.equals("ja") || answerLowerCase.equals("j")) {
-                        System.out.println("Goodbye! ");
-                        isRunning = false;
-                        break;
-                    } else if (answerLowerCase.equals("no") || answerLowerCase.equals("n") || answerLowerCase.equals("nej")) {
-
-                        secondMenu(winTimes, lostTimes);
-                        //scanner.nextLine();
-                    } else {
-                        System.out.println("Invalid choice, try again! ");
-                        secondMenu(winTimes, lostTimes);
-                        // scanner.nextLine();
-                    }
+                    secondMenu(winTimes, lostTimes);
+                } else {
+                    System.out.println("Invalid choice, try again! ");
+                    secondMenu(winTimes, lostTimes);
+                }
 
 
-                    break;
-                default:
-                    System.out.println("Invalid input. Choose again!\n " +
-                            "1. Easy\n" +
-                            "2. Medium\n" +
-                            "3. Hard\n" +
-                            "4. Custom\n" +
-                            "5. Quit\n");
-                    scanner.nextLine();
-            }
+                break;
+            default:
+                System.out.println("Invalid input. Choose again!\n " +
+                        "1. Easy\n" +
+                        "2. Medium\n" +
+                        "3. Hard\n" +
+                        "4. Custom\n" +
+                        "5. Quit\n");
+                scanner.nextLine();
         }
     }
 }
+
