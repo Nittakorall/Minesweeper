@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit;
 public class Board {
     Scanner scanner = new Scanner(System.in);
     StringBuilder stringBuilder = new StringBuilder(); //when creating a board, add all column letters to a new string
-    //ScoreTotal ScoreTotal = new ScoreTotal();
+
     // 2d arrays for visible board and hidden board (contains mines later).
 
     char[][] board;
@@ -16,7 +16,6 @@ public class Board {
     int column;
     int mines;
     int flagsAvailable;
-    private ScoreTotal scoreTotal;
 
 
     // Timer
@@ -30,7 +29,7 @@ public class Board {
         this.column = column;
         this.mines = mines;
         this.hiddenBoard = new char[row][column];
-        // this.scoreTotal = ScoreTotal;
+
     }
 
     // Timer-method
@@ -251,7 +250,7 @@ public class Board {
                     showBoard(inputRowNumber, columnIndex);
 
 
-                    //    ScoreTotal.countLost();
+
 
                     lostTimes++;
                     System.out.println("Your high score: " + highScore + "!");
@@ -399,16 +398,6 @@ public class Board {
             playAgainQuestion(winTimes, lostTimes, highScore);
         }
 
-//           boolean winByFlags = true;    old debugger for flags
-//        for (
-//                int x = 0;
-//                x < board.length; x++) { //check for all cells in board
-//            for (int y = 0; y < board[x].length; y++) {
-//                if (board[x][y] != 'ꚰ') {//
-//                    return;
-//                }
-//            }
-//        }
     }
 
     /**
