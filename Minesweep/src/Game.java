@@ -18,14 +18,14 @@ public class Game {
      * @param// winTimes
      * @param //lostTimes
      */
-    public void game(Board board, int winTimes, int lostTimes) {
+    public void game(Board board, int winTimes, int lostTimes, int highScore) {
 
         board.initializeBoard();
         board.addMines();
 
         board.printBoard(board.board);
         int flagsAvailable = board.mines;
-        board.makeMove(winTimes, lostTimes, flagsAvailable);
+        board.makeMove(winTimes, lostTimes, flagsAvailable, highScore);
 
         System.out.println("Total wins " + winTimes);
         System.out.println("Total losts " + lostTimes);
@@ -33,7 +33,9 @@ public class Game {
 
     }
 
-    public void customGame(int winTimes, int lostTimes){
+    
+    public void customGame(int winTimes, int lostTimes, int highScore){
+
         int inputChooseRows = -1;
         int inputChooseColumns = -1;
         int inputChooseMines = -1;
@@ -91,7 +93,7 @@ public class Game {
                 }
                 System.out.println("You have chosen a " + inputChooseRows + "x" + inputChooseColumns + " with " + inputChooseMines + " mines!\n");
                 Board userBoard = new Board(inputChooseRows, inputChooseColumns, inputChooseMines);
-                game(userBoard, winTimes, lostTimes);
+                game(userBoard, winTimes, lostTimes, highScore);
                 break;
 
             } catch (InputMismatchException e) {

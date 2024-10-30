@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit;
 public class Board {
     Scanner scanner = new Scanner(System.in);
     StringBuilder stringBuilder = new StringBuilder(); //when creating a board, add all column letters to a new string
-    //ScoreTotal ScoreTotal = new ScoreTotal();
+
     // 2d arrays for visible board and hidden board (contains mines later).
 
     char[][] board;
@@ -16,7 +16,6 @@ public class Board {
     int column;
     int mines;
     int flagsAvailable;
-    private ScoreTotal scoreTotal;
 
 
     // Timer
@@ -30,7 +29,7 @@ public class Board {
         this.column = column;
         this.mines = mines;
         this.hiddenBoard = new char[row][column];
-        // this.scoreTotal = ScoreTotal;
+
     }
 
     // Timer-method
@@ -166,10 +165,10 @@ public class Board {
      * @param //lostTimes add +1 if user lose
      */
 
-    public void makeMove(int winTimes, int lostTimes, int flagsAvailable) {
+    public void makeMove(int winTimes, int lostTimes, int flagsAvailable, int highScore) {
         //startTimer();
 
-        checkWin(winTimes, lostTimes);
+        checkWin(winTimes, lostTimes, highScore);
 
         while (true) {
 
@@ -251,12 +250,13 @@ public class Board {
                     showBoard(inputRowNumber, columnIndex);
 
 
-                    //    ScoreTotal.countLost();
+
 
                     lostTimes++;
+                    System.out.println("Your high score: " + highScore + "!");
                     System.out.println("You won " + winTimes + " times"); // prints if you win or lose
                     System.out.println("You lost " + lostTimes + " times");
-                    playAgainQuestion(winTimes, lostTimes);
+                    playAgainQuestion(winTimes, lostTimes, highScore);
 
 
                 } else if (board[inputRowNumber - 1][columnIndex] == 'ꚰ') {
@@ -270,11 +270,11 @@ public class Board {
                             flagsAvailable++;
 
                             printBoard(board);
-                            makeMove(winTimes, lostTimes, flagsAvailable);
+                            makeMove(winTimes, lostTimes, flagsAvailable, highScore);
                             break;
                         } else if (yesOrNo.equalsIgnoreCase("no")) {
                             printBoard(board);
-                            makeMove(winTimes, lostTimes, flagsAvailable);
+                            makeMove(winTimes, lostTimes, flagsAvailable, highScore);
                             break;
                         } else {
                             System.out.println("Please choose yes or no");
@@ -284,7 +284,7 @@ public class Board {
                 } else if (board[inputRowNumber - 1][columnIndex] != ' ') { //if a cell user picks isn't ' ' and has some other symbol
                     System.out.println("You've already opened this cell, please pick another one");
                     printBoard(board);
-                    makeMove(winTimes, lostTimes, flagsAvailable);
+                    makeMove(winTimes, lostTimes, flagsAvailable, highScore);
 
                 } else {
                     rowOfACell = inputRowNumber - 1;//need for minesAround
@@ -297,7 +297,7 @@ public class Board {
 
 
                     printBoard(board);
-                    makeMove(winTimes, lostTimes, flagsAvailable);
+                    makeMove(winTimes, lostTimes, flagsAvailable, highScore);
                 }
 
             } else if (openOrFlag.equals("2")) {  // checks if opened, if not adds flag
@@ -309,14 +309,14 @@ public class Board {
 
                     // System.out.println(flagsAvailable);
                     printBoard(board);
-                    makeMove(winTimes, lostTimes, flagsAvailable);
+                    makeMove(winTimes, lostTimes, flagsAvailable, highScore);
                 } else if (board[inputRowNumber - 1][columnIndex] == 'ꚰ') {
                     System.out.println("There's already a flag there");
                     printBoard(board);
-                    makeMove(winTimes, lostTimes, flagsAvailable);
+                    makeMove(winTimes, lostTimes, flagsAvailable, highScore);
                 } else if (board[inputRowNumber - 1][columnIndex] != ' ' && board[inputRowNumber - 1][columnIndex] != 'ꚰ') {//if a cell user picks isn't ' ' or a flag and has some other symbol
                     System.out.println("You've already opened this cell, please pick another one");
-                    makeMove(winTimes, lostTimes, flagsAvailable);
+                    makeMove(winTimes, lostTimes, flagsAvailable, highScore);
 
                 }
             }
@@ -349,7 +349,7 @@ public class Board {
      * @param //winTimes
      * @param //lostTimes
      */
-    public void checkWin(int winTimes,int lostTimes) {
+    public void checkWin(int winTimes,int lostTimes, int highScore) {
         boolean allSameFlags = true;
         for (int x = 0; x < board.length; x++) {
             for (int y = 0; y < board[x].length; y++) {//if all cells has flags
@@ -382,9 +382,20 @@ public class Board {
         if (win) {
             System.out.println("You win!");
             winTimes++;
+
+            int score = ((row * column) / mines);
+
+            if (score > 7.5) {
+                highScore += 10;
+            } else if (score < 2.5) {
+                highScore += 50;
+            } else {
+                highScore += 30;
+            }
+            System.out.println("Your high score: " + highScore + "!");
             System.out.println("You won " + winTimes + " times");
             System.out.println("You lost " + lostTimes + " times");
-            playAgainQuestion(winTimes, lostTimes);
+            playAgainQuestion(winTimes, lostTimes, highScore);
         }
 
     }
@@ -392,7 +403,7 @@ public class Board {
     //TODO felhantering där man bara ska kunna skria j, ye, y för att bli ett yes? Om no, fråga igen om de är säkra?
 
 
-    public void playAgainQuestion(int winTimes,int lostTimes) {
+    public void playAgainQuestion(int winTimes,int lostTimes, int highScore) {
 
         System.out.println("Would you like to play again? yes or no");
         String answer;
@@ -403,7 +414,7 @@ public class Board {
             answerLowerCase = answer.toLowerCase();
             if (answerLowerCase.equals("yes") || answerLowerCase.equals("y") || answerLowerCase.equals("ja") || answerLowerCase.equals("j")) {
                 Menu menu = new Menu();
-                menu.secondMenu(winTimes, lostTimes);
+                menu.secondMenu(winTimes, lostTimes, highScore);
                 break;
             } else if (answerLowerCase.equals("no") || answerLowerCase.equals("n") || answerLowerCase.equals("nej")) {
                 System.out.println("Thank you for coming!");
