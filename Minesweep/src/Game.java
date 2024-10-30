@@ -32,7 +32,10 @@ public class Game {
 
 
     }
+
+    
     public void customGame(int winTimes, int lostTimes, int highScore){
+
         int inputChooseRows = -1;
         int inputChooseColumns = -1;
         int inputChooseMines = -1;

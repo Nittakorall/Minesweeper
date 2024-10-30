@@ -400,11 +400,6 @@ public class Board {
 
     }
 
-    /**
-     * Asks if you want to play again or not
-     */
-
-
     //TODO felhantering där man bara ska kunna skria j, ye, y för att bli ett yes? Om no, fråga igen om de är säkra?
 
 
@@ -417,11 +412,11 @@ public class Board {
         while (true) {
             answer = scanner.nextLine();
             answerLowerCase = answer.toLowerCase();
-            if (answerLowerCase.equals("yes")) {
+            if (answerLowerCase.equals("yes") || answerLowerCase.equals("y") || answerLowerCase.equals("ja") || answerLowerCase.equals("j")) {
                 Menu menu = new Menu();
                 menu.secondMenu(winTimes, lostTimes, highScore);
                 break;
-            } else if (answerLowerCase.equals("no")) {
+            } else if (answerLowerCase.equals("no") || answerLowerCase.equals("n") || answerLowerCase.equals("nej")) {
                 System.out.println("Thank you for coming!");
                 System.exit(0);
             } else {
