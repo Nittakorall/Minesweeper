@@ -26,9 +26,7 @@ public class Menu {
             rulesOrGame = scanner.nextInt();
 
         } catch (InputMismatchException e) {
-            System.out.println("What do you want to do: \n" +
-                    "1. Read the rules.\n" +
-                    "2. Start the game!\n");
+            System.out.println("Invalid input.");
             scanner.nextLine();
             menu(winTimes, lostTimes, highScore);
             return;
@@ -49,9 +47,7 @@ public class Menu {
 
                 break;
             default:
-                System.out.println("What do you want to do: \n" +
-                        "1. Read the rules.\n" +
-                        "2. Start the game!\n");
+                System.out.println("Invalid input.");
                 scanner.nextLine();
                 menu(winTimes, lostTimes, highScore);
                 break;
@@ -79,6 +75,7 @@ public class Menu {
                             "3. Hard\n" +
                             "4. Custom\n" +
                             "5. Quit\n");
+                    scanner.nextLine();
                     continue;
                 }
                 // a = scanner.nextInt();
@@ -88,7 +85,6 @@ public class Menu {
                     case 1:
                         Board easyBoard = new Board(6, 6, 6);
                         game.game(easyBoard, winTimes, lostTimes, highScore);
-
                         break;
                     case 2:
                         Board mediumBoard = new Board(12, 12, 20);
@@ -112,9 +108,10 @@ public class Menu {
                         answerLowerCase = answer.toLowerCase();
 
                         if (answerLowerCase.equals("yes") || answerLowerCase.equals("y") || answerLowerCase.equals("ja") || answerLowerCase.equals("j")) {
-                            System.out.println("Goodbye! ");
-                            isRunning = false;
-                            break;
+                            System.out.println("Goodbye!");
+                            System.exit(0);
+                          //  isRunning = false;
+                         //   break;
                         } else if (answerLowerCase.equals("no") || answerLowerCase.equals("n") || answerLowerCase.equals("nej")) {
 
                             secondMenu(winTimes, lostTimes, highScore);
@@ -122,7 +119,6 @@ public class Menu {
                         } else {
                             System.out.println("Invalid choice, try again! ");
                             secondMenu(winTimes, lostTimes, highScore);
-
                         }
                         break;
                 }
