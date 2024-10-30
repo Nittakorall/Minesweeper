@@ -161,8 +161,8 @@ public class Board {
      * starts checkMove in the beginning to check if user won previous time
      * if not, asks user to open new cell
      *
-     * @param //winTimes  add +1 if user wins
-     * @param //lostTimes add +1 if user lose
+     * @param winTimes  add +1 if user wins .
+     * @param lostTimes add +1 if user lose .
      */
 
     public void makeMove(int winTimes, int lostTimes, int flagsAvailable, int highScore) {
@@ -248,9 +248,6 @@ public class Board {
 
 
                     showBoard(inputRowNumber, columnIndex);
-
-
-
 
                     lostTimes++;
                     System.out.println("Your high score: " + highScore + "!");
@@ -346,8 +343,8 @@ public class Board {
     /**
      * sets win and shows winning text unless there are some unopened cells that doesn't have mines according to hiddenboard
      *
-     * @param //winTimes
-     * @param //lostTimes
+     * @param winTimes .
+     * @param lostTimes .
      */
     public void checkWin(int winTimes,int lostTimes, int highScore) {
         boolean allSameFlags = true;
@@ -396,7 +393,9 @@ public class Board {
             } else {
                 highScore += 30;
             }
-            System.out.println("Your high score: " + highScore + "!");
+
+
+            System.out.println( "Your high score: " + highScore + "!");
             System.out.println("You won " + winTimes + " times");
             System.out.println("You lost " + lostTimes + " times");
             playAgainQuestion(winTimes, lostTimes, highScore);
@@ -404,23 +403,24 @@ public class Board {
 
     }
 
-    //TODO felhantering där man bara ska kunna skria j, ye, y för att bli ett yes? Om no, fråga igen om de är säkra?
-
-
+    /**
+     * Asks if player wants to play again or not.
+     * @param winTimes .
+     * @param lostTimes .
+     * @param highScore .
+     */
     public void playAgainQuestion(int winTimes,int lostTimes, int highScore) {
 
         System.out.println("Would you like to play again? yes or no");
         String answer;
-        String answerLowerCase;
 
         while (true) {
-            answer = scanner.nextLine();
-            answerLowerCase = answer.toLowerCase();
-            if (answerLowerCase.equals("yes") || answerLowerCase.equals("y") || answerLowerCase.equals("ja") || answerLowerCase.equals("j")) {
+            answer = scanner.nextLine().toLowerCase();
+            if (answer.equals("yes") || answer.equals("y") || answer.equals("ja") || answer.equals("j")) {
                 Menu menu = new Menu();
                 menu.secondMenu(winTimes, lostTimes, highScore);
                 break;
-            } else if (answerLowerCase.equals("no") || answerLowerCase.equals("n") || answerLowerCase.equals("nej")) {
+            } else if (answer.equals("no") || answer.equals("n") || answer.equals("nej")) {
                 System.out.println("Thank you for coming!");
                 System.exit(0);
             } else {
@@ -508,8 +508,8 @@ public class Board {
     /**
      * Method that opens up adjacent cells if they are no bombs around.
      *
-     * @param row
-     * @param column
+     * @param row .
+     * @param column .
      */
     public void openAdjacentCells(int row, int column) {
 

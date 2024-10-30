@@ -1,4 +1,4 @@
-import java.sql.SQLOutput;
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -13,9 +13,9 @@ public class Game {
     Scanner scanner = new Scanner(System.in);
     /**
      * Prints board, adds mines, sets flagsAvailible possible, prints wins and lost times.
-     * @param board
-     * @param// winTimes
-     * @param //lostTimes
+     * @param board .
+     * @param winTimes .
+     * @param lostTimes .
      */
     public void game(Board board, int winTimes, int lostTimes, int highScore) {
 
@@ -32,7 +32,12 @@ public class Game {
 
     }
 
-    
+    /**
+     * Choose your own board, size and how many mines.
+     * @param winTimes .
+     * @param lostTimes .
+     * @param highScore .
+     */
     public void customGame(int winTimes, int lostTimes, int highScore){
 
         int inputChooseRows = -1;
