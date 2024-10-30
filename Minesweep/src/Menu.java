@@ -19,7 +19,7 @@ public class Menu {
      */
     public void menu(int winTimes, int lostTimes, int highScore) {
 
-        System.out.println("What do you want to do: \n" +
+        System.out.println("What do you want to do:\n" +
                 "1. Read the rules.\n" +
                 "2. Start the game!\n");
         try {
