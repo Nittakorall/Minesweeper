@@ -40,7 +40,7 @@ public class Menu {
                         "Difficulty can be increased by adding mines or starting with a larger grid.\n" +
                         "Good luck!\n");
 
-                menu(winTimes,lostTimes, highScore);
+                menu(winTimes, lostTimes, highScore);
 
 
                 break;
@@ -58,15 +58,9 @@ public class Menu {
         }
     }
 
- 
 
-        
-
-    public void secondMenu(int winTimes,int lostTimes, int highScore) {
-
-
-
-    boolean isRunning = true;
+    public void secondMenu(int winTimes, int lostTimes, int highScore) {
+        boolean isRunning = true;
         int a;
         System.out.println("Please choose difficulty level: ");
         System.out.println("1. Easy");
@@ -77,16 +71,16 @@ public class Menu {
         while (isRunning) {//checks is input is either 1 or 2, crashes if input is anything but number, need try catch
             try {
                 a = scanner.nextInt();
-                isRunning = false;
-if(a>5 || a<1) {
-    System.out.println("Invalid input. Choose again!\n" +
-            "1. Easy\n" +
-            "2. Medium\n" +
-            "3. Hard\n" +
-            "4. Custom\n" +
-            "5. Quit\n");
-    continue;
-}break;
+                if (a > 5 || a < 1) {
+                    System.out.println("Invalid input. Choose again!\n" +
+                            "1. Easy\n" +
+                            "2. Medium\n" +
+                            "3. Hard\n" +
+                            "4. Custom\n" +
+                            "5. Quit\n");
+                    continue;
+                }
+                break;
             } catch (InputMismatchException e) {
                 System.out.println("Invalid input. Choose again!\n" +
                         "1. Easy\n" +
@@ -98,55 +92,49 @@ if(a>5 || a<1) {
             }
         }
 
-        //while (isRunning) { // loops until user choose 1, 2 or 3, 4 , 5 crashes if input is not a number, need try catch
+        a = scanner.nextInt();
+        Game game = new Game();
 
+        switch (a) {
+            case 1:
+                Board easyBoard = new Board(2, 2, 1);
+                game.game(easyBoard, winTimes, lostTimes, highScore);
 
+                break;
+            case 2:
+                Board mediumBoard = new Board(12, 12, 20);
+                game.game(mediumBoard, winTimes, lostTimes, highScore);
+                break;
+            case 3:
+                Board hardBoard = new Board(15, 15, 100);
+                game.game(hardBoard, winTimes, lostTimes, highScore);
+                break;
+            case 4:
+                Game Custom = new Game();
+                Custom.customGame(winTimes, lostTimes, highScore);
+                break;
+            case 5:
+                scanner.nextLine();
+                System.out.println("Are you sure you want to quit? yes/no.");
+                String answer;
+                String answerLowerCase;
 
-            a = scanner.nextInt();
+                answer = scanner.nextLine();
+                answerLowerCase = answer.toLowerCase();
 
-          
-            Game game = new Game();
-            switch (a) {
-                case 1:
-                    Board easyBoard = new Board(2, 2, 1);
-                    game.game(easyBoard,winTimes, lostTimes, highScore);
-
-
+                if (answerLowerCase.equals("yes") || answerLowerCase.equals("y") || answerLowerCase.equals("ja") || answerLowerCase.equals("j")) {
+                    System.out.println("Goodbye! ");
+                    isRunning = false;
                     break;
-                case 2:
-                    Board mediumBoard = new Board(12, 12, 20);
-                    game.game(mediumBoard, winTimes, lostTimes, highScore);
-                    break;
-                case 3:
-                    Board hardBoard = new Board(15, 15, 100);
-                    game.game(hardBoard, winTimes, lostTimes, highScore);
-                    break;
-                case 4:
-                    Game Custom = new Game();
-                    Custom.customGame(winTimes, lostTimes, highScore);
-                    break;
-                case 5:
-                    scanner.nextLine();
-                    System.out.println("Are you sure you want to quit? yes/no.");
-                    String answer;
-                    String answerLowerCase;
+                } else if (answerLowerCase.equals("no") || answerLowerCase.equals("n") || answerLowerCase.equals("nej")) {
 
-                    answer = scanner.nextLine();
-                    answerLowerCase = answer.toLowerCase();
+                    secondMenu(winTimes, lostTimes, highScore);
 
-                    if (answerLowerCase.equals("yes") || answerLowerCase.equals("y") || answerLowerCase.equals("ja") || answerLowerCase.equals("j")) {
-                        System.out.println("Goodbye! ");
-                        isRunning = false;
-                        break;
-                    } else if (answerLowerCase.equals("no") || answerLowerCase.equals("n") || answerLowerCase.equals("nej")) {
+                } else {
+                    System.out.println("Invalid choice, try again! ");
+                    secondMenu(winTimes, lostTimes, highScore);
 
-                        secondMenu(winTimes, lostTimes, highScore);
-                        
-                    } else {
-                        System.out.println("Invalid choice, try again! ");
-                        secondMenu(winTimes, lostTimes, highScore);
-                        
-                    }
+                }
 
                 break;
        
