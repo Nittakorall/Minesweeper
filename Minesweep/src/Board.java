@@ -369,14 +369,18 @@ public class Board {
         boolean win = true;
         for (int x = 0; x < board.length; x++) { //check for all cells in board
             for (int y = 0; y < board[x].length; y++) {
-
-                if ((board[x][y] != 'ꚰ' && board[x][y] == ' ' && hiddenBoard[x][y] != 'X')) {//if there's at least one cell ' ' on board that isn't X on hiddenboard
-                    //and flags are ignored
+                if (board[x][y] == ' ' && hiddenBoard[x][y] != 'X') {//if there's at least one cell ' ' on board that isn't X on hiddenboard
                     win = false;
                     break; // go back to move() and continue game
                 }
-
-
+            }
+        }
+        for (int x = 0; x < board.length; x++) { //check for all cells in board
+            for (int y = 0; y < board[x].length; y++) {
+                if (board[x][y] == 'ꚰ' && hiddenBoard[x][y] != 'X') {//if there's at least one cell ' ' on board that isn't X on hiddenboard
+                    win = false;
+                    break; // go back to move() and continue game
+                }
             }
         }
         if (win) {
