@@ -21,7 +21,7 @@ public class Menu {
      * Second with options for difficulty.
      * Error handling added.
      */
-    public void menu(int winTimes, int lostTimes) {
+    public void menu(int winTimes, int lostTimes, int highScore) {
 
         System.out.println("What do you want to do: \n" +
                 "1. Read the rules.\n" +
@@ -34,7 +34,7 @@ public class Menu {
                     "1. Read the rules.\n" +
                     "2. Start the game!\n");
             scanner.nextLine();
-            menu(winTimes, lostTimes);
+            menu(winTimes, lostTimes, highScore);
             return;
         }
         switch (rulesOrGame) {
@@ -43,11 +43,11 @@ public class Menu {
                         "Put flags where you think there might be a mine.\n" +
                         "Difficulty can be increased by adding mines or starting with a larger grid.\n" +
                         "Good luck!\n");
-                menu(winTimes,lostTimes);
+                menu(winTimes,lostTimes, highScore);
 
                 break;
             case 2:
-                secondMenu(winTimes, lostTimes);
+                secondMenu(winTimes, lostTimes, highScore);
 
                 break;
             default:
@@ -55,12 +55,12 @@ public class Menu {
                         "1. Läs reglerna!\n" +
                         "2. Starta spelet!\n");
                 scanner.nextLine();
-                menu(winTimes, lostTimes);
+                menu(winTimes, lostTimes, highScore);
                 break;
         }
     }
 
-    public void secondMenu(int winTimes,int lostTimes) {
+    public void secondMenu(int winTimes,int lostTimes, int highScore) {
         // int rulesOrGame;
         // int winTimes = 0;
         //int lostTimes = 0;
@@ -95,20 +95,20 @@ public class Menu {
             switch (a) {
                 case 1:
                     Board easyBoard = new Board(2, 2, 1);
-                    game.game(easyBoard,winTimes, lostTimes);
+                    game.game(easyBoard,winTimes, lostTimes, highScore);
 
                     break;
                 case 2:
                     Board mediumBoard = new Board(12, 12, 20);
-                    game.game(mediumBoard, winTimes, lostTimes);
+                    game.game(mediumBoard, winTimes, lostTimes, highScore);
                     break;
                 case 3:
                     Board hardBoard = new Board(15, 15, 100);
-                    game.game(hardBoard, winTimes, lostTimes);
+                    game.game(hardBoard, winTimes, lostTimes, highScore);
                     break;
                 case 4:
                     Game Custom = new Game();
-                    Custom.customGame(winTimes, lostTimes);
+                    Custom.customGame(winTimes, lostTimes, highScore);
                     break;
                 case 5:
                     scanner.nextLine();
@@ -125,11 +125,11 @@ public class Menu {
                         break;
                     } else if (answerLowerCase.equals("no") || answerLowerCase.equals("n") || answerLowerCase.equals("nej")) {
 
-                        secondMenu(winTimes, lostTimes);
+                        secondMenu(winTimes, lostTimes, highScore);
                         //scanner.nextLine();
                     } else {
                         System.out.println("Invalid choice, try again! ");
-                        secondMenu(winTimes, lostTimes);
+                        secondMenu(winTimes, lostTimes, highScore);
                         // scanner.nextLine();
                     }
 
