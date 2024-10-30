@@ -58,13 +58,7 @@ public class Menu {
         }
     }
 
- 
-
-        
-
     public void secondMenu(int winTimes,int lostTimes, int highScore) {
-
-
 
     boolean isRunning = true;
         int a;
@@ -109,9 +103,7 @@ if(a>5 || a<1) {
             switch (a) {
                 case 1:
                     Board easyBoard = new Board(2, 2, 1);
-                    game.game(easyBoard,winTimes, lostTimes, highScore);
-
-
+                    game.game(easyBoard, winTimes, lostTimes, highScore);
                     break;
                 case 2:
                     Board mediumBoard = new Board(12, 12, 20);
@@ -141,15 +133,14 @@ if(a>5 || a<1) {
                     } else if (answerLowerCase.equals("no") || answerLowerCase.equals("n") || answerLowerCase.equals("nej")) {
 
                         secondMenu(winTimes, lostTimes, highScore);
-                        
+
                     } else {
                         System.out.println("Invalid choice, try again! ");
                         secondMenu(winTimes, lostTimes, highScore);
-                        
-                    }
 
-                break;
-       
+                    }
+                    break;
+
             default:
                 System.out.println("Invalid input. Choose again!\n " +
                         "1. Easy\n" +
