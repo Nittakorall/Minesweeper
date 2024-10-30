@@ -7,9 +7,6 @@ import java.util.Scanner;
 public class Menu {
     Scanner scanner = new Scanner(System.in);
     int rulesOrGame;
-    //  final ScoreTotal scoreTotal;
-    // ScoreTotal ScoreTotal = new ScoreTotal();
-
 
     public Menu() {
 
@@ -28,7 +25,7 @@ public class Menu {
                 "2. Start the game!\n");
         try {
             rulesOrGame = scanner.nextInt();
-            // scanner.nextLine();
+
         } catch (InputMismatchException e) {
             System.out.println("What do you want to do: \n" +
                     "1. Read the rules.\n" +
@@ -51,9 +48,9 @@ public class Menu {
 
                 break;
             default:
-                System.out.println("Ogiltig inmatning. Välj:\n" +
-                        "1. Läs reglerna!\n" +
-                        "2. Starta spelet!\n");
+                System.out.println("What do you want to do: \n" +
+                        "1. Read the rules.\n" +
+                        "2. Start the game!\n");
                 scanner.nextLine();
                 menu(winTimes, lostTimes);
                 break;
@@ -61,9 +58,7 @@ public class Menu {
     }
 
     public void secondMenu(int winTimes,int lostTimes) {
-        // int rulesOrGame;
-        // int winTimes = 0;
-        //int lostTimes = 0;
+
         boolean isRunning = true;
 
         while (isRunning) {//checks is input is either 1 or 2, crashes if input is anything but number, need try catch
@@ -90,11 +85,11 @@ public class Menu {
             //while (isRunning) { // loops until user choose 1, 2 or 3, 4 , 5 crashes if input is not a number, need try catch
 
             a = scanner.nextInt();
-            //if (a == 1 || a == 2 || a == 3 || a == 4 || a == 5) {
+
             Game game = new Game();
             switch (a) {
                 case 1:
-                    Board easyBoard = new Board(2, 2, 1);
+                    Board easyBoard = new Board(6, 6, 6);
                     game.game(easyBoard,winTimes, lostTimes);
 
                     break;
@@ -112,7 +107,7 @@ public class Menu {
                     break;
                 case 5:
                     scanner.nextLine();
-                    System.out.println("säker på att du vill avsluta? yes or no.");
+                    System.out.println("Are you sure you want to quit? yes/no.");
                     String answer;
                     String answerLowerCase;
 
@@ -126,14 +121,12 @@ public class Menu {
                     } else if (answerLowerCase.equals("no") || answerLowerCase.equals("n") || answerLowerCase.equals("nej")) {
 
                         secondMenu(winTimes, lostTimes);
-                        //scanner.nextLine();
+
                     } else {
                         System.out.println("Invalid choice, try again! ");
                         secondMenu(winTimes, lostTimes);
-                        // scanner.nextLine();
+
                     }
-
-
                     break;
                 default:
                     System.out.println("Invalid input. Choose again!\n " +
