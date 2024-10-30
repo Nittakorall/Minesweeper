@@ -78,8 +78,6 @@ public class Menu {
                     scanner.nextLine();
                     continue;
                 }
-                // a = scanner.nextInt();
-
 
                 switch (a) {
                     case 1:
@@ -102,17 +100,12 @@ public class Menu {
                         scanner.nextLine();
                         System.out.println("Are you sure you want to quit? yes/no.");
                         String answer;
-                        String answerLowerCase;
 
-                        answer = scanner.nextLine();
-                        answerLowerCase = answer.toLowerCase();
-
-                        if (answerLowerCase.equals("yes") || answerLowerCase.equals("y") || answerLowerCase.equals("ja") || answerLowerCase.equals("j")) {
+                        answer = scanner.nextLine().toLowerCase();
+                        if (answer.equals("yes") || answer.equals("y") || answer.equals("ja") || answer.equals("j")) {
                             System.out.println("Goodbye!");
                             System.exit(0);
-                          //  isRunning = false;
-                         //   break;
-                        } else if (answerLowerCase.equals("no") || answerLowerCase.equals("n") || answerLowerCase.equals("nej")) {
+                        } else if (answer.equals("no") || answer.equals("n") || answer.equals("nej")) {
 
                             secondMenu(winTimes, lostTimes, highScore);
 
