@@ -24,6 +24,7 @@ public class Menu {
                 "2. Start the game!\n");
         try {
             rulesOrGame = scanner.nextInt();
+
         } catch (InputMismatchException e) {
             System.out.println("What do you want to do: \n" +
                     "1. Read the rules.\n" +
@@ -48,14 +49,15 @@ public class Menu {
 
                 break;
             default:
-                System.out.println("Ogiltig inmatning. Välj:\n" +
-                        "1. Läs reglerna!\n" +
-                        "2. Starta spelet!\n");
+                System.out.println("What do you want to do: \n" +
+                        "1. Read the rules.\n" +
+                        "2. Start the game!\n");
                 scanner.nextLine();
                 menu(winTimes, lostTimes, highScore);
                 break;
         }
     }
+
 
     public void secondMenu(int winTimes, int lostTimes, int highScore) {
         boolean isRunning = true;
@@ -89,6 +91,7 @@ public class Menu {
                 scanner.nextLine();
             }
         }
+
         a = scanner.nextInt();
         Game game = new Game();
 
@@ -112,7 +115,7 @@ public class Menu {
                 break;
             case 5:
                 scanner.nextLine();
-                System.out.println("säker på att du vill avsluta? yes or no.");
+                System.out.println("Are you sure you want to quit? yes/no.");
                 String answer;
                 String answerLowerCase;
 
@@ -132,7 +135,9 @@ public class Menu {
                     secondMenu(winTimes, lostTimes, highScore);
 
                 }
+
                 break;
+       
             default:
                 System.out.println("Invalid input. Choose again!\n " +
                         "1. Easy\n" +

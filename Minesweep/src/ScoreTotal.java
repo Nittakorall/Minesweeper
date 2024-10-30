@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class ScoreTotal { public ScoreTotal() {
 }
     public void starter() {
@@ -10,4 +12,6 @@ public class ScoreTotal { public ScoreTotal() {
         Menu menu = new Menu();
         menu.menu(winTimes, lostTimes, highScore);
     }
+
+
 }
