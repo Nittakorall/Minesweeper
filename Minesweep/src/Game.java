@@ -3,13 +3,12 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Game {
-    private ScoreTotal scoreTotal;
+
 
     /**
      * Starts game and allows degree of difficulty
      */
     public Game() {
-        this.scoreTotal = new ScoreTotal();
     }
     Scanner scanner = new Scanner(System.in);
     /**
